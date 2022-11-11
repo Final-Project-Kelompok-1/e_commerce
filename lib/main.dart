@@ -8,10 +8,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(360, 690),
-      builder: (context, _) => const Scaffold(
-        body: Center(
-          child: Text("Home"),
-        ),
+      builder: (context, _) => const MaterialApp(
+        home: HomeScreen(),
       ),
     );
   }
