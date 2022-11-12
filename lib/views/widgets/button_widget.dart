@@ -2,28 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:e_commerce/config/config.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class RoundedButtonWidget extends StatelessWidget {
+class ButtonWidget extends StatelessWidget {
   final String buttonText;
   final double width;
   final double height;
   final Function onpressed;
+  final double radius;
 
-  const RoundedButtonWidget({
-    super.key,
-    required this.buttonText,
-    required this.height,
-    required this.width,
-    required this.onpressed,
-  });
+  const ButtonWidget(
+      {super.key,
+      required this.buttonText,
+      required this.height,
+      required this.width,
+      required this.onpressed,
+      required this.radius});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.all(0.0),
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(10),
+            Radius.circular(radius),
           ),
         ),
       ),
@@ -31,11 +32,11 @@ class RoundedButtonWidget extends StatelessWidget {
         onpressed();
       },
       child: Ink(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
-            Radius.circular(10),
+            Radius.circular(radius),
           ),
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [AppColor.thirdColor, AppColor.secondColor],
@@ -45,9 +46,9 @@ class RoundedButtonWidget extends StatelessWidget {
           width: width.w,
           height: height.h,
           alignment: Alignment.center,
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             borderRadius: BorderRadius.all(
-              Radius.circular(10),
+              Radius.circular(radius),
             ),
           ),
           child: Text(

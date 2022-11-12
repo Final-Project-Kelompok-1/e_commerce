@@ -1,3 +1,5 @@
+import 'package:e_commerce/utils/utils.dart';
+import 'package:e_commerce/views/detail_product/detail_product_screen.dart';
 import 'package:e_commerce/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce/config/config.dart';
@@ -120,16 +122,18 @@ class HomeScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          RoundedButtonWidget(
+          ButtonWidget(
             buttonText: "Popular",
             height: 40,
             width: 147,
+            radius: 10,
             onpressed: () {},
           ),
-          RoundedButtonWidget(
+          ButtonWidget(
             buttonText: "New",
             height: 40,
             width: 147,
+            radius: 10,
             onpressed: () {},
           ),
         ],
@@ -190,8 +194,8 @@ class HomeScreen extends StatelessWidget {
         itemCount: 10,
         itemBuilder: (context, index) {
           return Container(
-            width: 35,
-            height: 35,
+            width: 35.w,
+            height: 35.h,
             decoration: BoxDecoration(
               color: Colors.grey.shade300,
               borderRadius: BorderRadius.circular(100),
@@ -215,20 +219,29 @@ class HomeScreen extends StatelessWidget {
             crossAxisSpacing: 12,
             mainAxisSpacing: 12),
         itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[50],
-              borderRadius: const BorderRadius.all(
-                Radius.circular(20),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.7),
-                  spreadRadius: 0,
-                  blurRadius: 7,
-                  offset: const Offset(0, 7),
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                NavigatorFadeTransitionHelper(
+                  child: const DetailProduct(),
                 ),
-              ],
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[50],
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(20),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.7),
+                    spreadRadius: 0,
+                    blurRadius: 7,
+                    offset: const Offset(0, 7),
+                  ),
+                ],
+              ),
             ),
           );
         },

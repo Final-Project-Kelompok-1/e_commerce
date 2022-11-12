@@ -52,17 +52,23 @@ class _MyStatefulWidgetState extends State<BotNavBar> {
               items: [
                 BottomNavigationBarItem(
                   activeIcon: SvgPicture.asset('assets/icons/home.svg',
-                      width: 26.w, height: 26.h, color: AppColor.secondColor),
+                      width: 24.w, height: 24.h, color: AppColor.secondColor),
                   icon: SvgPicture.asset('assets/icons/home.svg',
-                      width: 26.w, height: 26.h, color: Colors.grey),
+                      width: 24.w, height: 24.h, color: Colors.grey),
                   label: 'Home',
                 ),
-                const BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_bag_outlined),
+                BottomNavigationBarItem(
+                  activeIcon: SvgPicture.asset('assets/icons/shopping_bag.svg',
+                      width: 24.w, height: 24.h, color: AppColor.secondColor),
+                  icon: SvgPicture.asset('assets/icons/shopping_bag.svg',
+                      width: 24.w, height: 24.h, color: Colors.grey),
                   label: 'Wishlist',
                 ),
-                const BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_cart_outlined),
+                BottomNavigationBarItem(
+                  activeIcon: SvgPicture.asset('assets/icons/cart.svg',
+                      width: 24.w, height: 24.h, color: AppColor.secondColor),
+                  icon: SvgPicture.asset('assets/icons/cart.svg',
+                      width: 24.w, height: 24.h, color: Colors.grey),
                   label: 'Cart',
                 ),
                 const BottomNavigationBarItem(
