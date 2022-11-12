@@ -1,3 +1,5 @@
+import 'package:e_commerce/common/navigator_fade_transition.dart';
+import 'package:e_commerce/views/auth/register_screen.dart';
 import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce/config/config.dart';
@@ -17,10 +19,10 @@ class LoginScreen extends StatelessWidget {
           children: [
             _header(),
             Positioned(
-              top: 240.h,
-              right: 16.w,
-              left: 16.w,
-              child: _form(width),
+              top: 230.h,
+              right: 12.w,
+              left: 12.w,
+              child: _form(width, context),
             ),
           ],
         ),
@@ -49,7 +51,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _form(double width) {
+  Widget _form(double width, BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.grey[50],
@@ -84,7 +86,13 @@ class LoginScreen extends StatelessWidget {
                           .copyWith(color: Colors.grey.shade700),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          NavigatorFadeTransition(
+                            child: const RegisterScreen(),
+                          ),
+                        );
+                      },
                       child: Text(
                         "Register",
                         style: AppFont.paragraphMedium
@@ -108,6 +116,7 @@ class LoginScreen extends StatelessWidget {
         SizedBox(height: AppDimen.h32),
         Text("Email/Username", style: AppFont.paragraphMedium),
         SizedBox(height: AppDimen.h12),
+        //email field
         SizedBox(
           height: 45.h,
           width: width,
@@ -138,8 +147,10 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
         SizedBox(height: AppDimen.h16),
+
         Text("Password", style: AppFont.paragraphMedium),
         SizedBox(height: AppDimen.h12),
+        //password field
         SizedBox(
           height: 45.h,
           width: width,
