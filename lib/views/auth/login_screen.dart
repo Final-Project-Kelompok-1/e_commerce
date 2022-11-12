@@ -19,7 +19,7 @@ class LoginScreen extends StatelessWidget {
           children: [
             _header(),
             Positioned(
-              top: 230.h,
+              top: 250.h,
               right: 12.w,
               left: 12.w,
               child: _form(width, context),
@@ -32,7 +32,7 @@ class LoginScreen extends StatelessWidget {
 
   Widget _header() {
     return Container(
-      height: 300.h,
+      height: 350.h,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -46,7 +46,8 @@ class LoginScreen extends StatelessWidget {
       ),
       child: Container(
         alignment: Alignment.center,
-        child: Image.asset('assets/logo.png', width: 230.w, height: 230.w),
+        child:
+            Image.asset('assets/images/logo.png', width: 230.w, height: 230.w),
       ),
     );
   }

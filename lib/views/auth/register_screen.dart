@@ -1,3 +1,5 @@
+import 'package:e_commerce/common/navigator_fade_transition.dart';
+import 'package:e_commerce/views/auth/register_success_screen.dart';
 import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce/config/config.dart';
@@ -21,8 +23,8 @@ class RegisterScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 12.w),
                 child: Column(
                   children: [
-                    SizedBox(height: 200.h),
-                    _form(width),
+                    SizedBox(height: 180.h),
+                    _form(width, context),
                     SizedBox(height: AppDimen.w32)
                   ],
                 ),
@@ -36,32 +38,33 @@ class RegisterScreen extends StatelessWidget {
 
   Widget _header(double width) {
     return Container(
-        height: 350.h,
-        width: width,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [AppColor.mainColor, AppColor.thirdColor],
-          ),
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(45),
-            bottomRight: Radius.circular(45),
-          ),
+      height: 350.h,
+      width: width,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [AppColor.mainColor, AppColor.thirdColor],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 100.h),
-            Text(
-              'Register',
-              style: AppFont.display3.copyWith(color: Colors.white),
-            ),
-          ],
-        ));
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(45),
+          bottomRight: Radius.circular(45),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 100.h),
+          Text(
+            'Register',
+            style: AppFont.display3.copyWith(color: Colors.white),
+          ),
+        ],
+      ),
+    );
   }
 
-  Widget _form(double width) {
+  Widget _form(double width, BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.grey[50],
@@ -80,24 +83,32 @@ class RegisterScreen extends StatelessWidget {
               _formLogin(width),
               SizedBox(height: AppDimen.h16),
               ButtonWidget(
-                  buttonText: "Login",
+                  buttonText: "Register",
                   height: 45.h,
                   width: width,
-                  onpressed: () {},
+                  onpressed: () {
+                    Navigator.of(context).push(
+                      NavigatorFadeTransition(
+                        child: const RegisterSuccessScreen(),
+                      ),
+                    );
+                  },
                   radius: 5),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Row(
                   children: [
                     Text(
-                      "Don’t have an account?",
+                      "Already have an account?",
                       style: AppFont.paragraphMedium
                           .copyWith(color: Colors.grey.shade700),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       child: Text(
-                        "Register",
+                        "Login",
                         style: AppFont.paragraphMedium
                             .copyWith(color: AppColor.mainColor),
                       ),
