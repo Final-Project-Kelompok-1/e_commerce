@@ -1,7 +1,6 @@
 import 'package:e_commerce/views/auth/login_screen.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../common/navigator_fade_transition.dart';
 import 'package:e_commerce/config/config.dart';
 
@@ -16,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   AssetImage? assetImage;
   startTime() async {
     await Future.delayed(
-      const Duration(seconds: 4),
+      const Duration(seconds: 3),
       () => Navigator.of(context).pushReplacement(
         NavigatorFadeTransition(
           child: const LoginScreen(),
@@ -43,36 +42,26 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-            gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [AppColor.mainColor, AppColor.thirdColor],
-        )),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(
-              8,
-            ),
-            child: Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 312,
-                      height: 413,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: assetImage!,
-                        ),
-                      ),
-                    ),
-                  ],
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [AppColor.mainColor, AppColor.thirdColor],
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 312.w,
+                height: 413.h,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: assetImage!,
+                  ),
                 ),
-              ],
-            )),
+              ),
+            ],
           ),
         ),
       ),

@@ -120,16 +120,18 @@ class HomeScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          RoundedButtonWidget(
+          ButtonWidget(
             buttonText: "Popular",
             height: 40,
             width: 147,
+            radius: 10,
             onpressed: () {},
           ),
-          RoundedButtonWidget(
+          ButtonWidget(
             buttonText: "New",
             height: 40,
             width: 147,
+            radius: 10,
             onpressed: () {},
           ),
         ],
