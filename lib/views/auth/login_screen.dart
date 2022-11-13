@@ -1,10 +1,11 @@
 import 'package:e_commerce/utils/navigator/navigator.dart';
-import 'package:e_commerce/view_models/providers/auth_view_model.dart';
+import 'package:e_commerce/view_models/auth_view_model.dart';
 import 'package:e_commerce/views/auth/register_screen.dart';
 import 'package:e_commerce/views/widgets/botnavbar.dart';
 import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce/config/config.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -83,6 +84,7 @@ class LoginScreen extends StatelessWidget {
                     onpressed: () async {
                       try {
                         await auth.postLogin();
+
                         Fluttertoast.showToast(msg: 'Berhasil Login').then(
                           (_) => Navigator.of(context).pushAndRemoveUntil(
                               NavigatorFadeTransitionHelper(
@@ -135,13 +137,20 @@ class LoginScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: AppDimen.h32),
-          Text("Email/Username", style: AppFont.paragraphMedium),
+          Text("Email", style: AppFont.paragraphMedium),
           SizedBox(height: AppDimen.h12),
           //email field
           SizedBox(
             height: 45.h,
             width: width,
             child: TextField(
+              textInputAction: TextInputAction.next,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(32),
+                FilteringTextInputFormatter.allow(
+                  RegExp("[a-zA-Z0-9@. ]"),
+                ),
+              ],
               controller: auth.emailController,
               onChanged: (value) => auth.emailController.text,
               decoration: InputDecoration(
@@ -179,6 +188,13 @@ class LoginScreen extends StatelessWidget {
             height: 45.h,
             width: width,
             child: TextField(
+              textInputAction: TextInputAction.next,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(16),
+                FilteringTextInputFormatter.allow(
+                  RegExp("[a-zA-Z0-9 ]"),
+                ),
+              ],
               obscureText: auth.obscureText,
               controller: auth.passwordController,
               onChanged: (value) => auth.passwordController.text,

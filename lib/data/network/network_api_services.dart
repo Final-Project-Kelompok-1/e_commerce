@@ -36,7 +36,27 @@ class NetworkApiServices implements BaseApiServices {
   }
 
   @override
-  void register(String url) {}
+  Future<void> postRequest(String url, data) async {
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        body: data.toJson(),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+      );
+
+      return responseJson = returnResponse(response);
+    } on SocketException {
+      throw 'No Internet Connection';
+    }
+  }
+
+  @override
+  Future getRequest(String url) {
+    throw UnimplementedError();
+  }
 
   dynamic returnResponse(http.Response response) {
     switch (response.statusCode) {

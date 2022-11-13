@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-import '../../view_models/providers/bot_nav_bar_view_model.dart';
+import '../../view_models/bot_nav_bar_view_model.dart';
 
 class BotNavBar extends StatefulWidget {
   const BotNavBar({super.key});
