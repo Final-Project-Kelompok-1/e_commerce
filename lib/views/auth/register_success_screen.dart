@@ -1,4 +1,4 @@
-import 'package:e_commerce/common/navigator_fade_transition.dart';
+import 'package:e_commerce/utils/navigator/navigator.dart';
 import 'package:e_commerce/views/auth/login_screen.dart';
 import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +42,7 @@ class RegisterSuccessScreen extends StatelessWidget {
                     onpressed: () {
                       Navigator.pushAndRemoveUntil(
                           context,
-                          NavigatorFadeTransition(
+                          NavigatorFadeTransitionHelper(
                             child: const LoginScreen(),
                           ),
                           (route) => false);

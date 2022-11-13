@@ -1,9 +1,13 @@
-import 'package:e_commerce/common/navigator_fade_transition.dart';
+import 'package:e_commerce/utils/navigator/navigator.dart';
+import 'package:e_commerce/view_models/auth_view_model.dart';
 import 'package:e_commerce/views/auth/register_success_screen.dart';
 import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce/config/config.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -82,18 +86,51 @@ class RegisterScreen extends StatelessWidget {
             children: [
               _formLogin(width),
               SizedBox(height: AppDimen.h16),
-              ButtonWidget(
-                  buttonText: "Register",
-                  height: 45.h,
-                  width: width,
-                  onpressed: () {
-                    Navigator.of(context).push(
-                      NavigatorFadeTransition(
-                        child: const RegisterSuccessScreen(),
-                      ),
-                    );
-                  },
-                  radius: 5),
+              Consumer<AuthViewModel>(
+                builder: (context, auth, _) => ButtonWidget(
+                    buttonText: "Register",
+                    height: 45.h,
+                    width: width,
+                    onpressed: () async {
+                      if (auth.passwordController.text !=
+                          auth.passwordConfirmationController.text) {
+                        return Fluttertoast.showToast(
+                            msg: 'Password tidak sama');
+                      }
+
+                      if (auth.usernameController.text.length < 6) {
+                        return Fluttertoast.showToast(
+                            msg: 'Username min 8 karakter');
+                      }
+
+                      if (auth.passwordController.text.length < 8) {
+                        return Fluttertoast.showToast(
+                            msg: 'Password min 8 karakter');
+                      }
+
+                      if (!auth.emailController.text
+                              .contains(RegExp('[a-zA-Z0-9_-]@gmail.com')) ||
+                          !auth.emailController.text
+                              .contains(RegExp('[a-zA-Z0-9_-]@yahoo.com'))) {
+                        return Fluttertoast.showToast(msg: 'Enter valid email');
+                      }
+
+                      try {
+                        await auth.postRegister().then(
+                              (_) => Navigator.of(context).push(
+                                NavigatorFadeTransitionHelper(
+                                  child: const RegisterSuccessScreen(),
+                                ),
+                              ),
+                            );
+                      } catch (e) {
+                        Fluttertoast.showToast(
+                          msg: e.toString(),
+                        );
+                      }
+                    },
+                    radius: 5),
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Row(
@@ -124,179 +161,243 @@ class RegisterScreen extends StatelessWidget {
   }
 
   Widget _formLogin(double width) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: AppDimen.h32),
-        Text("Username", style: AppFont.paragraphMedium),
-        SizedBox(height: AppDimen.h12),
-        //username field
-        SizedBox(
-          height: 45.h,
-          width: width,
-          child: TextField(
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(left: 8, top: 5, right: 8),
-              hintStyle:
-                  AppFont.paragraphMedium.copyWith(color: Colors.grey.shade400),
-              hintText: "Username",
-              filled: true,
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
+    return Consumer<AuthViewModel>(
+      builder: (context, auth, _) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: AppDimen.h32),
+          Text("Username", style: AppFont.paragraphMedium),
+          SizedBox(height: AppDimen.h12),
+          //username field
+          SizedBox(
+            height: 45.h,
+            width: width,
+            child: TextField(
+              controller: auth.usernameController,
+              textInputAction: TextInputAction.next,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(32),
+                FilteringTextInputFormatter.allow(
+                  RegExp("[a-zA-Z0-9 ]"),
+                ),
+              ],
+              decoration: InputDecoration(
+                contentPadding:
+                    const EdgeInsets.only(left: 8, top: 5, right: 8),
+                hintStyle: AppFont.paragraphMedium
+                    .copyWith(color: Colors.grey.shade400),
+                hintText: "Username",
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                errorBorder: InputBorder.none,
+                focusedErrorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                fillColor: Colors.grey[50],
               ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              errorBorder: InputBorder.none,
-              focusedErrorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              fillColor: Colors.grey[50],
             ),
           ),
-        ),
-        SizedBox(height: AppDimen.h16),
+          SizedBox(height: AppDimen.h16),
 
-        Text("Email", style: AppFont.paragraphMedium),
-        SizedBox(height: AppDimen.h12),
-        //email field
-        SizedBox(
-          height: 45.h,
-          width: width,
-          child: TextField(
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(left: 8, top: 5, right: 8),
-              hintStyle:
-                  AppFont.paragraphMedium.copyWith(color: Colors.grey.shade400),
-              hintText: "Enter the email",
-              filled: true,
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
+          Text("Email", style: AppFont.paragraphMedium),
+          SizedBox(height: AppDimen.h12),
+          //email field
+          SizedBox(
+            height: 45.h,
+            width: width,
+            child: TextField(
+              controller: auth.emailController,
+              textInputAction: TextInputAction.next,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                  RegExp("[a-zA-Z0-9@. ]"),
+                ),
+              ],
+              decoration: InputDecoration(
+                contentPadding:
+                    const EdgeInsets.only(left: 8, top: 5, right: 8),
+                hintStyle: AppFont.paragraphMedium
+                    .copyWith(color: Colors.grey.shade400),
+                hintText: "Enter the email",
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                errorBorder: InputBorder.none,
+                focusedErrorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                fillColor: Colors.grey[50],
               ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              errorBorder: InputBorder.none,
-              focusedErrorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              fillColor: Colors.grey[50],
             ),
           ),
-        ),
-        SizedBox(height: AppDimen.h16),
+          SizedBox(height: AppDimen.h16),
 
-        Text("Phone Number", style: AppFont.paragraphMedium),
-        SizedBox(height: AppDimen.h12),
-        //phone number field
-        SizedBox(
-          height: 45.h,
-          width: width,
-          child: TextField(
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(left: 8, top: 5, right: 8),
-              hintStyle:
-                  AppFont.paragraphMedium.copyWith(color: Colors.grey.shade400),
-              hintText: "Enter the phone number",
-              filled: true,
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
+          Text("Phone Number", style: AppFont.paragraphMedium),
+          SizedBox(height: AppDimen.h12),
+          //phone number field
+          SizedBox(
+            height: 45.h,
+            width: width,
+            child: TextField(
+              controller: auth.phoneController,
+              textInputAction: TextInputAction.next,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(14),
+                FilteringTextInputFormatter.allow(
+                  RegExp("[0-9]"),
+                ),
+              ],
+              decoration: InputDecoration(
+                contentPadding:
+                    const EdgeInsets.only(left: 8, top: 5, right: 8),
+                hintStyle: AppFont.paragraphMedium
+                    .copyWith(color: Colors.grey.shade400),
+                hintText: "Enter the phone number",
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                errorBorder: InputBorder.none,
+                focusedErrorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                fillColor: Colors.grey[50],
               ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              errorBorder: InputBorder.none,
-              focusedErrorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              fillColor: Colors.grey[50],
             ),
           ),
-        ),
-        SizedBox(height: AppDimen.h16),
+          SizedBox(height: AppDimen.h16),
 
-        Text("Passowrd", style: AppFont.paragraphMedium),
-        SizedBox(height: AppDimen.h12),
-        //password field
-        SizedBox(
-          height: 45.h,
-          width: width,
-          child: TextField(
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(left: 8, top: 5, right: 8),
-              hintStyle:
-                  AppFont.paragraphMedium.copyWith(color: Colors.grey.shade400),
-              hintText: "Enter the password",
-              filled: true,
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
+          Text("Passowrd", style: AppFont.paragraphMedium),
+          SizedBox(height: AppDimen.h12),
+          //password field
+          SizedBox(
+            height: 45.h,
+            width: width,
+            child: TextField(
+              controller: auth.passwordController,
+              textInputAction: TextInputAction.next,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(16),
+                FilteringTextInputFormatter.allow(
+                  RegExp("[a-zA-Z0-9 ]"),
+                ),
+              ],
+              obscureText: auth.obscureText,
+              decoration: InputDecoration(
+                suffixIcon: InkWell(
+                  onTap: () {
+                    auth.changeVisibleText(!auth.obscureText);
+                  },
+                  child: auth.obscureText
+                      ? const Icon(Icons.visibility_off, color: Colors.grey)
+                      : const Icon(Icons.visibility, color: Colors.grey),
+                ),
+                contentPadding:
+                    const EdgeInsets.only(left: 8, top: 5, right: 8),
+                hintStyle: AppFont.paragraphMedium
+                    .copyWith(color: Colors.grey.shade400),
+                hintText: "Enter the password",
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                errorBorder: InputBorder.none,
+                focusedErrorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                fillColor: Colors.grey[50],
               ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              errorBorder: InputBorder.none,
-              focusedErrorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              fillColor: Colors.grey[50],
             ),
           ),
-        ),
-        SizedBox(height: AppDimen.h16),
+          SizedBox(height: AppDimen.h16),
 
-        Text("Confirm Passowrd", style: AppFont.paragraphMedium),
-        SizedBox(height: AppDimen.h12),
-        //confirm password field
-        SizedBox(
-          height: 45.h,
-          width: width,
-          child: TextField(
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(left: 8, top: 5, right: 8),
-              hintStyle:
-                  AppFont.paragraphMedium.copyWith(color: Colors.grey.shade400),
-              hintText: "Enter the password",
-              filled: true,
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
+          Text("Confirm Passowrd", style: AppFont.paragraphMedium),
+          SizedBox(height: AppDimen.h12),
+          //confirm password field
+          SizedBox(
+            height: 45.h,
+            width: width,
+            child: TextField(
+              controller: auth.passwordConfirmationController,
+              textInputAction: TextInputAction.next,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(16),
+                FilteringTextInputFormatter.allow(
+                  RegExp("[a-zA-Z0-9 ]"),
+                ),
+              ],
+              obscureText: auth.obscureText2,
+              decoration: InputDecoration(
+                suffixIcon: InkWell(
+                  onTap: () {
+                    auth.changeVisibleText2(!auth.obscureText2);
+                  },
+                  child: auth.obscureText2
+                      ? const Icon(Icons.visibility_off, color: Colors.grey)
+                      : const Icon(Icons.visibility, color: Colors.grey),
+                ),
+                contentPadding:
+                    const EdgeInsets.only(left: 8, top: 5, right: 8),
+                hintStyle: AppFont.paragraphMedium
+                    .copyWith(color: Colors.grey.shade400),
+                hintText: "Enter the password",
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                errorBorder: InputBorder.none,
+                focusedErrorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                fillColor: Colors.grey[50],
               ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              errorBorder: InputBorder.none,
-              focusedErrorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              fillColor: Colors.grey[50],
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
