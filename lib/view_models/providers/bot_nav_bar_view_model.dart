@@ -4,7 +4,7 @@ import 'package:e_commerce/views/profile/profile_scree.dart';
 import 'package:e_commerce/views/wishlist/wish_list_screen.dart';
 import 'package:flutter/cupertino.dart';
 
-class BotNavBarProvider extends ChangeNotifier {
+class BotNavBarViewModel extends ChangeNotifier {
   final List<Widget> _pages = [
     const HomeScreen(),
     const WishListScreen(),

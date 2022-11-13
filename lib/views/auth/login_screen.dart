@@ -1,9 +1,13 @@
-import 'package:e_commerce/common/navigator_fade_transition.dart';
+import 'package:e_commerce/utils/navigator/navigator.dart';
+import 'package:e_commerce/view_models/providers/auth_view_model.dart';
 import 'package:e_commerce/views/auth/register_screen.dart';
+import 'package:e_commerce/views/widgets/botnavbar.dart';
 import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce/config/config.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -71,12 +75,27 @@ class LoginScreen extends StatelessWidget {
             children: [
               _formLogin(width),
               SizedBox(height: AppDimen.h16),
-              ButtonWidget(
-                  buttonText: "Login",
-                  height: 45.h,
-                  width: width,
-                  onpressed: () {},
-                  radius: 5),
+              Consumer<AuthViewModel>(
+                builder: (context, auth, _) => ButtonWidget(
+                    buttonText: "Login",
+                    height: 45.h,
+                    width: width,
+                    onpressed: () async {
+                      try {
+                        await auth.postLogin();
+                        Fluttertoast.showToast(msg: 'Berhasil Login').then(
+                          (_) => Navigator.of(context).pushAndRemoveUntil(
+                              NavigatorFadeTransitionHelper(
+                                child: const BotNavBar(),
+                              ),
+                              (route) => false),
+                        );
+                      } catch (e) {
+                        Fluttertoast.showToast(msg: e.toString());
+                      }
+                    },
+                    radius: 5),
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Row(
@@ -89,7 +108,7 @@ class LoginScreen extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                          NavigatorFadeTransition(
+                          NavigatorFadeTransitionHelper(
                             child: const RegisterScreen(),
                           ),
                         );
@@ -111,77 +130,94 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _formLogin(double width) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: AppDimen.h32),
-        Text("Email/Username", style: AppFont.paragraphMedium),
-        SizedBox(height: AppDimen.h12),
-        //email field
-        SizedBox(
-          height: 45.h,
-          width: width,
-          child: TextField(
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(left: 8, top: 5, right: 8),
-              hintStyle:
-                  AppFont.paragraphMedium.copyWith(color: Colors.grey.shade400),
-              hintText: "Enter the email",
-              filled: true,
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
+    return Consumer<AuthViewModel>(
+      builder: (context, auth, _) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: AppDimen.h32),
+          Text("Email/Username", style: AppFont.paragraphMedium),
+          SizedBox(height: AppDimen.h12),
+          //email field
+          SizedBox(
+            height: 45.h,
+            width: width,
+            child: TextField(
+              controller: auth.emailController,
+              onChanged: (value) => auth.emailController.text,
+              decoration: InputDecoration(
+                contentPadding:
+                    const EdgeInsets.only(left: 8, top: 5, right: 8),
+                hintStyle: AppFont.paragraphMedium
+                    .copyWith(color: Colors.grey.shade400),
+                hintText: "Enter the email",
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                errorBorder: InputBorder.none,
+                focusedErrorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                fillColor: Colors.grey[50],
               ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              errorBorder: InputBorder.none,
-              focusedErrorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              fillColor: Colors.grey[50],
             ),
           ),
-        ),
-        SizedBox(height: AppDimen.h16),
+          SizedBox(height: AppDimen.h16),
 
-        Text("Password", style: AppFont.paragraphMedium),
-        SizedBox(height: AppDimen.h12),
-        //password field
-        SizedBox(
-          height: 45.h,
-          width: width,
-          child: TextField(
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(left: 8, top: 5, right: 8),
-              hintStyle:
-                  AppFont.paragraphMedium.copyWith(color: Colors.grey.shade400),
-              hintText: "Enter the password",
-              filled: true,
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
+          Text("Password", style: AppFont.paragraphMedium),
+          SizedBox(height: AppDimen.h12),
+          //password field
+          SizedBox(
+            height: 45.h,
+            width: width,
+            child: TextField(
+              obscureText: auth.obscureText,
+              controller: auth.passwordController,
+              onChanged: (value) => auth.passwordController.text,
+              decoration: InputDecoration(
+                suffixIcon: InkWell(
+                  onTap: () {
+                    auth.changeVisibleText(!auth.obscureText);
+                  },
+                  child: auth.obscureText
+                      ? const Icon(Icons.visibility_off, color: Colors.grey)
+                      : const Icon(Icons.visibility, color: Colors.grey),
+                ),
+                contentPadding:
+                    const EdgeInsets.only(left: 8, top: 5, right: 8),
+                hintStyle: AppFont.paragraphMedium
+                    .copyWith(color: Colors.grey.shade400),
+                hintText: "Enter the password",
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                errorBorder: InputBorder.none,
+                focusedErrorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                fillColor: Colors.grey[50],
               ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              errorBorder: InputBorder.none,
-              focusedErrorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              fillColor: Colors.grey[50],
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

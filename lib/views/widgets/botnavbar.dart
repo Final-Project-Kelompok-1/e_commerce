@@ -1,9 +1,10 @@
 import 'package:e_commerce/config/config.dart';
-import 'package:e_commerce/states/providers/botnavbar/botnavbar_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+
+import '../../view_models/providers/bot_nav_bar_view_model.dart';
 
 class BotNavBar extends StatefulWidget {
   const BotNavBar({super.key});
@@ -16,7 +17,7 @@ class _MyStatefulWidgetState extends State<BotNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<BotNavBarProvider>(
+      body: Consumer<BotNavBarViewModel>(
         builder: (context, navbar, _) => Center(
           child: navbar.pages[navbar.selectedIndex],
         ),
@@ -47,7 +48,7 @@ class _MyStatefulWidgetState extends State<BotNavBar> {
             bottomLeft: Radius.circular(0),
             bottomRight: Radius.circular(0),
           ),
-          child: Consumer<BotNavBarProvider>(
+          child: Consumer<BotNavBarViewModel>(
             builder: (context, navbar, _) => BottomNavigationBar(
               items: [
                 BottomNavigationBarItem(
