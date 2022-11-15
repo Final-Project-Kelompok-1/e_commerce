@@ -1,6 +1,5 @@
 import 'package:e_commerce/utils/navigator/navigator.dart';
-import 'package:e_commerce/view_models/auth_view_model.dart';
-import 'package:e_commerce/views/auth/register_success_screen.dart';
+import 'package:e_commerce/view_models/register_view_model.dart';
 import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce/config/config.dart';
@@ -8,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+
+import 'register_success_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -84,39 +85,39 @@ class RegisterScreen extends StatelessWidget {
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
-              _formLogin(width),
+              _formRegister(width),
               SizedBox(height: AppDimen.h16),
-              Consumer<AuthViewModel>(
-                builder: (context, auth, _) => ButtonWidget(
+              Consumer<RegisterViewModel>(
+                builder: (context, register, _) => ButtonWidget(
                     buttonText: "Register",
                     height: 45.h,
                     width: width,
                     onpressed: () async {
-                      if (auth.passwordController.text !=
-                          auth.passwordConfirmationController.text) {
+                      if (register.passwordController.text !=
+                          register.passwordConfirmationController.text) {
                         return Fluttertoast.showToast(
                             msg: 'Password tidak sama');
                       }
 
-                      if (auth.usernameController.text.length < 6) {
+                      if (register.usernameController.text.length < 6) {
                         return Fluttertoast.showToast(
                             msg: 'Username min 8 karakter');
                       }
 
-                      if (auth.passwordController.text.length < 8) {
+                      if (register.passwordController.text.length < 8) {
                         return Fluttertoast.showToast(
                             msg: 'Password min 8 karakter');
                       }
 
-                      if (!auth.emailController.text
+                      if (!register.emailController.text
                               .contains(RegExp('[a-zA-Z0-9_-]@gmail.com')) ||
-                          !auth.emailController.text
+                          !register.emailController.text
                               .contains(RegExp('[a-zA-Z0-9_-]@yahoo.com'))) {
                         return Fluttertoast.showToast(msg: 'Enter valid email');
                       }
 
                       try {
-                        await auth.postRegister().then(
+                        await register.postRegister().then(
                               (_) => Navigator.of(context).push(
                                 NavigatorFadeTransitionHelper(
                                   child: const RegisterSuccessScreen(),
@@ -160,9 +161,9 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  Widget _formLogin(double width) {
-    return Consumer<AuthViewModel>(
-      builder: (context, auth, _) => Column(
+  Widget _formRegister(double width) {
+    return Consumer<RegisterViewModel>(
+      builder: (context, register, _) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: AppDimen.h32),
@@ -173,7 +174,7 @@ class RegisterScreen extends StatelessWidget {
             height: 45.h,
             width: width,
             child: TextField(
-              controller: auth.usernameController,
+              controller: register.usernameController,
               textInputAction: TextInputAction.next,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(32),
@@ -216,7 +217,7 @@ class RegisterScreen extends StatelessWidget {
             height: 45.h,
             width: width,
             child: TextField(
-              controller: auth.emailController,
+              controller: register.emailController,
               textInputAction: TextInputAction.next,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(
@@ -258,7 +259,7 @@ class RegisterScreen extends StatelessWidget {
             height: 45.h,
             width: width,
             child: TextField(
-              controller: auth.phoneController,
+              controller: register.phoneController,
               textInputAction: TextInputAction.next,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(14),
@@ -301,7 +302,7 @@ class RegisterScreen extends StatelessWidget {
             height: 45.h,
             width: width,
             child: TextField(
-              controller: auth.passwordController,
+              controller: register.passwordController,
               textInputAction: TextInputAction.next,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(16),
@@ -309,13 +310,13 @@ class RegisterScreen extends StatelessWidget {
                   RegExp("[a-zA-Z0-9 ]"),
                 ),
               ],
-              obscureText: auth.obscureText,
+              obscureText: register.obscureText,
               decoration: InputDecoration(
                 suffixIcon: InkWell(
                   onTap: () {
-                    auth.changeVisibleText(!auth.obscureText);
+                    register.changeVisibleText(!register.obscureText);
                   },
-                  child: auth.obscureText
+                  child: register.obscureText
                       ? const Icon(Icons.visibility_off, color: Colors.grey)
                       : const Icon(Icons.visibility, color: Colors.grey),
                 ),
@@ -353,7 +354,7 @@ class RegisterScreen extends StatelessWidget {
             height: 45.h,
             width: width,
             child: TextField(
-              controller: auth.passwordConfirmationController,
+              controller: register.passwordConfirmationController,
               textInputAction: TextInputAction.next,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(16),
@@ -361,13 +362,13 @@ class RegisterScreen extends StatelessWidget {
                   RegExp("[a-zA-Z0-9 ]"),
                 ),
               ],
-              obscureText: auth.obscureText2,
+              obscureText: register.obscureText2,
               decoration: InputDecoration(
                 suffixIcon: InkWell(
                   onTap: () {
-                    auth.changeVisibleText2(!auth.obscureText2);
+                    register.changeVisibleText2(!register.obscureText2);
                   },
-                  child: auth.obscureText2
+                  child: register.obscureText2
                       ? const Icon(Icons.visibility_off, color: Colors.grey)
                       : const Icon(Icons.visibility, color: Colors.grey),
                 ),

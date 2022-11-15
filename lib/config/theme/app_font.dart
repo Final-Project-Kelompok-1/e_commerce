@@ -112,8 +112,8 @@ class AppFont {
       );
 
   static TextStyle get componentSmall => GoogleFonts.poppins(
-        fontSize: 12.sp,
-        fontWeight: FontWeight.w600,
+        fontSize: 10.sp,
+        fontWeight: FontWeight.w400,
         color: Colors.black,
       );
 

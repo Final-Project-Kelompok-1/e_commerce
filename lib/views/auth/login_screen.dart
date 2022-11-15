@@ -1,6 +1,5 @@
 import 'package:e_commerce/utils/navigator/navigator.dart';
-import 'package:e_commerce/view_models/auth_view_model.dart';
-import 'package:e_commerce/views/auth/register_screen.dart';
+import 'package:e_commerce/view_models/login_view_model.dart';
 import 'package:e_commerce/views/widgets/botnavbar.dart';
 import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+
+import 'register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -76,14 +77,14 @@ class LoginScreen extends StatelessWidget {
             children: [
               _formLogin(width),
               SizedBox(height: AppDimen.h16),
-              Consumer<AuthViewModel>(
-                builder: (context, auth, _) => ButtonWidget(
+              Consumer<LoginViewModel>(
+                builder: (context, login, _) => ButtonWidget(
                     buttonText: "Login",
                     height: 45.h,
                     width: width,
                     onpressed: () async {
                       try {
-                        await auth.postLogin();
+                        await login.postLogin();
 
                         Fluttertoast.showToast(msg: 'Berhasil Login').then(
                           (_) => Navigator.of(context).pushAndRemoveUntil(
@@ -132,8 +133,8 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _formLogin(double width) {
-    return Consumer<AuthViewModel>(
-      builder: (context, auth, _) => Column(
+    return Consumer<LoginViewModel>(
+      builder: (context, login, _) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: AppDimen.h32),
@@ -151,8 +152,8 @@ class LoginScreen extends StatelessWidget {
                   RegExp("[a-zA-Z0-9@. ]"),
                 ),
               ],
-              controller: auth.emailController,
-              onChanged: (value) => auth.emailController.text,
+              controller: login.emailController,
+              onChanged: (value) => login.emailController.text,
               decoration: InputDecoration(
                 contentPadding:
                     const EdgeInsets.only(left: 8, top: 5, right: 8),
@@ -195,15 +196,15 @@ class LoginScreen extends StatelessWidget {
                   RegExp("[a-zA-Z0-9 ]"),
                 ),
               ],
-              obscureText: auth.obscureText,
-              controller: auth.passwordController,
-              onChanged: (value) => auth.passwordController.text,
+              obscureText: login.obscureText,
+              controller: login.passwordController,
+              onChanged: (value) => login.passwordController.text,
               decoration: InputDecoration(
                 suffixIcon: InkWell(
                   onTap: () {
-                    auth.changeVisibleText(!auth.obscureText);
+                    login.changeVisibleText(!login.obscureText);
                   },
-                  child: auth.obscureText
+                  child: login.obscureText
                       ? const Icon(Icons.visibility_off, color: Colors.grey)
                       : const Icon(Icons.visibility, color: Colors.grey),
                 ),

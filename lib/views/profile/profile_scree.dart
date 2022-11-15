@@ -1,5 +1,5 @@
 import 'package:e_commerce/utils/navigator/navigator.dart';
-import 'package:e_commerce/view_models/auth_view_model.dart';
+import 'package:e_commerce/view_models/login_view_model.dart';
 import 'package:e_commerce/views/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,10 +11,10 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Consumer<AuthViewModel>(
-          builder: (context, auth, _) => GestureDetector(
+        child: Consumer<LoginViewModel>(
+          builder: (context, login, _) => GestureDetector(
             onTap: () {
-              auth.logout();
+              login.logout();
               Navigator.of(context).pushAndRemoveUntil(
                   NavigatorFadeTransitionHelper(
                     child: const LoginScreen(),
