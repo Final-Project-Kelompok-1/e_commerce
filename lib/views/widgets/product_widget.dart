@@ -62,13 +62,13 @@ class ProductWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: product.name.length < 20 ? 20.h : 40.h,
+                      height: 40.h,
                       child: Text(
                         product.name,
                         style: AppFont.paragraphSmall
                             .copyWith(fontWeight: FontWeight.w600),
                         overflow: TextOverflow.ellipsis,
-                        maxLines: product.name.length < 20 ? 1 : 2,
+                        maxLines: 2,
                         softWrap: false,
                       ),
                     ),
