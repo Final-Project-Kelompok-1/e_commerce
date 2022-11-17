@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../data/repository/auth_repository.dart';
+import '../data/repository/apps_repository.dart';
 import '../models/login_model.dart';
 import '../models/user_model.dart';
 
 class LoginViewModel extends ChangeNotifier {
-  final AuthRepository _authRepository = AuthRepository();
+  final AppsRepository appsRepository = AppsRepository();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -19,7 +19,7 @@ class LoginViewModel extends ChangeNotifier {
   UserData get userData => _userData;
 
   Future<void> postLogin() async {
-    await _authRepository
+    await appsRepository
         .postLogin(
           LoginModel(
               email: _emailController.text, password: _passwordController.text),
@@ -28,6 +28,7 @@ class LoginViewModel extends ChangeNotifier {
 
     emailController.clear();
     passwordController.clear();
+    _obscureText = true;
     notifyListeners();
   }
 

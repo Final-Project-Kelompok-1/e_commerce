@@ -92,6 +92,7 @@ class RegisterScreen extends StatelessWidget {
                     buttonText: "Register",
                     height: 45.h,
                     width: width,
+                    fontSize: 14,
                     onpressed: () async {
                       if (register.passwordController.text !=
                           register.passwordConfirmationController.text) {
@@ -109,13 +110,10 @@ class RegisterScreen extends StatelessWidget {
                             msg: 'Password min 8 karakter');
                       }
 
-                      if (!register.emailController.text
-                              .contains(RegExp('[a-zA-Z0-9_-]@gmail.com')) ||
-                          !register.emailController.text
-                              .contains(RegExp('[a-zA-Z0-9_-]@yahoo.com'))) {
-                        return Fluttertoast.showToast(msg: 'Enter valid email');
+                      if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                          .hasMatch(register.emailController.text)) {
+                        return "Use valid email";
                       }
-
                       try {
                         await register.postRegister().then(
                               (_) => Navigator.of(context).push(
@@ -295,7 +293,7 @@ class RegisterScreen extends StatelessWidget {
           ),
           SizedBox(height: AppDimen.h16),
 
-          Text("Passowrd", style: AppFont.paragraphMedium),
+          Text("Password", style: AppFont.paragraphMedium),
           SizedBox(height: AppDimen.h12),
           //password field
           SizedBox(
@@ -324,7 +322,7 @@ class RegisterScreen extends StatelessWidget {
                     const EdgeInsets.only(left: 8, top: 5, right: 8),
                 hintStyle: AppFont.paragraphMedium
                     .copyWith(color: Colors.grey.shade400),
-                hintText: "Enter the password",
+                hintText: "Enter the Password",
                 filled: true,
                 border: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey.shade400),

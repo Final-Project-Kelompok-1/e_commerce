@@ -39,6 +39,7 @@ class RegisterSuccessScreen extends StatelessWidget {
                     buttonText: "Continue",
                     height: 45.h,
                     width: width,
+                    fontSize: 14,
                     onpressed: () {
                       Navigator.pushAndRemoveUntil(
                           context,

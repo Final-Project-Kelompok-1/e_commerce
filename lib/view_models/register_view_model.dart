@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../data/repository/auth_repository.dart';
+import '../data/repository/apps_repository.dart';
 import '../models/register_model.dart';
 
 class RegisterViewModel extends ChangeNotifier {
-  final AuthRepository _authRepository = AuthRepository();
+  final AppsRepository appsRepository = AppsRepository();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -27,7 +27,7 @@ class RegisterViewModel extends ChangeNotifier {
   bool get obscureText2 => _obscureText2;
 
   Future<void> postRegister() async {
-    await _authRepository.postRegister(
+    await appsRepository.postRegister(
       RegisterModel(
           name: _usernameController.text,
           email: _emailController.text,
@@ -41,6 +41,7 @@ class RegisterViewModel extends ChangeNotifier {
     _usernameController.clear();
     _phoneController.clear();
     _passwordConfirmationController.clear();
+    _obscureText = true;
     notifyListeners();
   }
 

@@ -79,6 +79,7 @@ class LoginScreen extends StatelessWidget {
               SizedBox(height: AppDimen.h16),
               Consumer<LoginViewModel>(
                 builder: (context, login, _) => ButtonWidget(
+                    fontSize: 14,
                     buttonText: "Login",
                     height: 45.h,
                     width: width,

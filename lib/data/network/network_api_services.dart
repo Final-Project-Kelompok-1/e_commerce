@@ -6,6 +6,8 @@ import 'package:e_commerce/models/login_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../config/config.dart';
+
 class NetworkApiServices implements BaseApiServices {
   dynamic responseJson;
 
@@ -15,7 +17,7 @@ class NetworkApiServices implements BaseApiServices {
 
     try {
       final response = await http.post(
-        Uri.parse(url),
+        Uri.parse('$baseUrl$url'),
         body: data.toJson(),
         headers: {
           "Accept": "application/json",
@@ -39,7 +41,7 @@ class NetworkApiServices implements BaseApiServices {
   Future<void> postRequest(String url, data) async {
     try {
       final response = await http.post(
-        Uri.parse(url),
+        Uri.parse('$baseUrl$url'),
         body: data.toJson(),
         headers: {
           "Accept": "application/json",
@@ -54,8 +56,23 @@ class NetworkApiServices implements BaseApiServices {
   }
 
   @override
-  Future getRequest(String url) {
-    throw UnimplementedError();
+  Future<dynamic> getRequest(String url) async {
+    SharedPreferences? prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token').toString();
+
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl$url'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      return returnResponse(response);
+    } on SocketException {
+      throw 'No Internet Connection';
+    }
   }
 
   dynamic returnResponse(http.Response response) {

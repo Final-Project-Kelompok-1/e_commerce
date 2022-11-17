@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce/views/widgets/icon_button_widget.dart';
+import 'package:e_commerce/models/product_model.dart';
 import 'package:e_commerce/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -7,14 +7,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/config.dart';
 
-class DetailProduct extends StatefulWidget {
-  const DetailProduct({super.key});
+class DetailProduct extends StatelessWidget {
+  final Product product;
+  const DetailProduct({super.key, required this.product});
 
-  @override
-  State<DetailProduct> createState() => _DetailProductState();
-}
-
-class _DetailProductState extends State<DetailProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,8 +28,7 @@ class _DetailProductState extends State<DetailProduct> {
                       height: 270.h,
                       width: 250.w,
                       child: CachedNetworkImage(
-                        imageUrl:
-                            'https://i.ibb.co/MRFbzFX/jade-knight-removebg-preview.png',
+                        imageUrl: product.image,
                         errorWidget: (context, url, error) {
                           return const Center(
                             child: Icon(Icons.error, color: Colors.red),
@@ -116,7 +111,7 @@ class _DetailProductState extends State<DetailProduct> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            "Toys",
+                            product.productCategory.name,
                             textAlign: TextAlign.right,
                             style: AppFont.paragraphSmall.copyWith(
                               color: const Color(0xffD9D9D9),
@@ -127,8 +122,7 @@ class _DetailProductState extends State<DetailProduct> {
                             height: 50.h,
                             child: SingleChildScrollView(
                               scrollDirection: Axis.vertical,
-                              child: Text(
-                                  "Action Figure Honkai Impact - Li Sushang",
+                              child: Text(product.name,
                                   textAlign: TextAlign.right,
                                   style: AppFont.paragraphLargeBold),
                             ),
@@ -145,7 +139,7 @@ class _DetailProductState extends State<DetailProduct> {
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Text(
-                              "Rp 2.500.000",
+                              "Rp ${product.harga}",
                               textAlign: TextAlign.right,
                               style: AppFont.paragraphLargeBold.copyWith(
                                 color: AppColor.mainColor,
@@ -211,11 +205,10 @@ class _DetailProductState extends State<DetailProduct> {
             ],
           ),
           SizedBox(height: AppDimen.h32),
-          Text('Action Figure Honkai Impact - Li Sushang',
-              style: AppFont.componentLarge),
+          Text(product.name, style: AppFont.componentLarge),
           SizedBox(height: AppDimen.h20),
           Text(
-            "Model : Honkai Impact - Li Sushang.\nHarga : 850.000\nMaterial : PVC\nDetail & Cat : High Quality\nTinggi : 31 cm\nKemasan : Box\nKetersediaan Stok : Terbatas ( Grab it Fast )\n\nPacking : Free Bubblewrap + Kardus Pelapis\n\nNOTE : Produk Pre-Order akan dikirimkan sekitar 6-12 hari karena dikirim langsung dari luar negeri dibuat 21 hari untuk menghindari pembatasan otomatis\n\n#actionfigure #actionfigureanime #anime #figureanime #actionfiguremurah #figurejepang #figureanimemurah #figureoriginal #actionfigureoriginal",
+            product.deskripsi,
             textAlign: TextAlign.justify,
             style: AppFont.paragraphSmall.copyWith(
               color: const Color(0xff888888),
@@ -237,6 +230,7 @@ class _DetailProductState extends State<DetailProduct> {
             height: 50,
             width: 240,
             radius: 10,
+            fontSize: 14,
             onpressed: () {},
           ),
           IconButtonWidget(

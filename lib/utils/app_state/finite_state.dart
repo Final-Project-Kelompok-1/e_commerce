@@ -1,1 +1,1 @@
-enum MyState { loading, noData, loaded, failure }
+enum AppState { loading, noData, loaded, failure }

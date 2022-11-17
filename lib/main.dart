@@ -1,5 +1,6 @@
 import 'package:e_commerce/view_models/bot_nav_bar_view_model.dart';
 import 'package:e_commerce/view_models/login_view_model.dart';
+import 'package:e_commerce/view_models/product_view_model.dart';
 import 'package:e_commerce/view_models/register_view_model.dart';
 import 'package:e_commerce/views/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => RegisterViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ProductViewModel(),
         ),
       ],
       child: ScreenUtilInit(
