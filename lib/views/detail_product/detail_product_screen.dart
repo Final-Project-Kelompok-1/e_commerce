@@ -234,7 +234,7 @@ class DetailProduct extends StatelessWidget {
             onpressed: () {},
           ),
           IconButtonWidget(
-            iconAsset: 'assets/icons/shopping_bag.svg',
+            iconAsset: 'assets/icons/cart.svg',
             height: 55,
             width: 50,
             radius: 100,

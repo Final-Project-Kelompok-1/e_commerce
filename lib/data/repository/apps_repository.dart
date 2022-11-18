@@ -25,12 +25,32 @@ class AppsRepository {
     }
   }
 
-  Future<ProductModel> fetchProduct() async {
+  Future<List<Product>> fetchProduct() async {
     try {
       dynamic response = await _apiServices.getRequest('/api/barang');
 
-      return response = ProductModel.fromJson(response);
+      ProductModel product = ProductModel.fromJson(response);
+
+      return product.product;
     } catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<List<Product>> fetchCategoryProduct(String value) async {
+    try {
+      dynamic response = await _apiServices.getRequest('/api/barang');
+
+      ProductModel product = ProductModel.fromJson(response);
+
+      return product.product
+          .where(
+            (element) => element.productCategory.name.toLowerCase().contains(
+                  value.toLowerCase(),
+                ),
+          )
+          .toList();
+    } catch (e) {
       rethrow;
     }
   }

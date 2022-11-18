@@ -1,7 +1,11 @@
 import 'package:e_commerce/models/category_icon_model.dart';
+import 'package:e_commerce/utils/navigator/navigator.dart';
+import 'package:e_commerce/view_models/product_view_model.dart';
+import 'package:e_commerce/views/category/category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../config/config.dart';
 
@@ -10,6 +14,7 @@ class CategoriesHomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: Column(
@@ -24,7 +29,9 @@ class CategoriesHomeWidget extends StatelessWidget {
                     .copyWith(fontWeight: FontWeight.w600),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  _modalSheet(context, width);
+                },
                 child: Text(
                   "See all",
                   style: AppFont.paragraphLarge
@@ -82,7 +89,13 @@ class CategoriesHomeWidget extends StatelessWidget {
               child: Material(
                 color: Colors.transparent,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(
+                      NavigatorFadeTransitionHelper(
+                        child: CategoryScreen(categoryName: data.name),
+                      ),
+                    );
+                  },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -118,6 +131,158 @@ class CategoriesHomeWidget extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  void _modalSheet(BuildContext context, double width) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Container(
+              height: 305.h,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10),
+                ),
+                color: Colors.grey[50],
+              ),
+              child: Consumer<ProductViewModel>(
+                builder: (context, notifier, _) => SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 72.h,
+                        width: width,
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            bottom:
+                                BorderSide(color: Color(0xffEDEDED), width: 2),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "All Categories",
+                                style: AppFont.paragraphLarge
+                                    .copyWith(fontWeight: FontWeight.w500),
+                              ),
+                              Material(
+                                color: Colors.transparent,
+                                child: IconButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  icon: const Icon(Icons.close,
+                                      size: 25, color: Colors.black),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 8),
+                              GridView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount:
+                                    CategoryIconModel.categoriesIcon.length,
+                                shrinkWrap: true,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        mainAxisSpacing: 40.h,
+                                        crossAxisCount: 5),
+                                itemBuilder: (context, index) {
+                                  final data =
+                                      CategoryIconModel.categoriesIcon[index];
+
+                                  return SizedBox(
+                                    width: 50.w,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.of(context).push(
+                                                  NavigatorFadeTransitionHelper(
+                                                    child: CategoryScreen(
+                                                        categoryName:
+                                                            data.name),
+                                                  ),
+                                                );
+                                              },
+                                              child: Container(
+                                                width: 35.w,
+                                                height: 35.h,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                  color: data.color
+                                                      .withOpacity(0.3),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          100),
+                                                ),
+                                                child: SvgPicture.asset(
+                                                    data.assetIcon,
+                                                    width: 20.w,
+                                                    height: 20.h),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: AppDimen.h4),
+                                        SizedBox(
+                                          height: 20.h,
+                                          child: SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: Text(
+                                              data.name,
+                                              style: AppFont.paragraphSmall
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   startTime() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await Future.delayed(
-      const Duration(seconds: 3),
+      const Duration(seconds: 2),
       () => Navigator.of(context).pushReplacement(
         NavigatorFadeTransitionHelper(
           child: prefs.getString('token') != null
