@@ -1,7 +1,11 @@
+import 'package:e_commerce/view_models/best_seller_product_view_model.dart';
 import 'package:e_commerce/view_models/bot_nav_bar_view_model.dart';
+import 'package:e_commerce/view_models/category_product_view_model.dart.dart';
+import 'package:e_commerce/view_models/featured_product_view_model.dart';
 import 'package:e_commerce/view_models/login_view_model.dart';
 import 'package:e_commerce/view_models/product_view_model.dart';
 import 'package:e_commerce/view_models/register_view_model.dart';
+import 'package:e_commerce/view_models/top_rated_product_view_model.dart';
 import 'package:e_commerce/views/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,6 +33,18 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ProductViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => TopRatedProductViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => BestSellerProductViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FeaturedProductViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CategoryProductViewModel(),
         ),
       ],
       child: ScreenUtilInit(

@@ -6,10 +6,16 @@ import 'package:flutter/cupertino.dart';
 class ProductViewModel extends ChangeNotifier {
   final AppsRepository appsRepository = AppsRepository();
 
-  late ProductModel _products;
+  List<Product> _products = [];
+  final List<Product> _productsFeaturedProduct = [];
+  final List<Product> _bestSellerProduct = [];
+  final List<Product> _topRatedProduct = [];
   AppState _appState = AppState.loading;
 
-  ProductModel get products => _products;
+  List<Product> get products => _products;
+  List<Product> get productsFeatured => _productsFeaturedProduct;
+  List<Product> get bestSellerProduct => _bestSellerProduct;
+  List<Product> get topRatedProduct => _topRatedProduct;
   AppState get appState => _appState;
 
   void fetchListProduct() async {
@@ -19,8 +25,45 @@ class ProductViewModel extends ChangeNotifier {
       notifyListeners();
       changeAppState(AppState.loaded);
 
-      if (_products.product.isEmpty) {
+      if (_products.isEmpty) {
         changeAppState(AppState.noData);
+      }
+    } catch (e) {
+      changeAppState(AppState.failure);
+      rethrow;
+    }
+  }
+
+  void filterCategoryProduct() async {
+    try {
+      changeAppState(AppState.loading);
+      final List<Product> products = await appsRepository.fetchProduct();
+
+      for (var i in products) {
+        if (i.productCategory.name == 'k-4-1_featured' &&
+            !_productsFeaturedProduct.contains(i)) {
+          _productsFeaturedProduct.add(i);
+          notifyListeners();
+        }
+
+        if (i.productCategory.name == 'k-4-1_bestseller' &&
+            !_bestSellerProduct.contains(i)) {
+          _productsFeaturedProduct.add(i);
+          notifyListeners();
+        }
+
+        if (i.productCategory.name == 'k-4-1_toprated' &&
+            !_topRatedProduct.contains(i)) {
+          _productsFeaturedProduct.add(i);
+          notifyListeners();
+        }
+      }
+
+      changeAppState(AppState.loaded);
+      notifyListeners();
+      if (_products.isEmpty) {
+        changeAppState(AppState.noData);
+        notifyListeners();
       }
     } catch (e) {
       changeAppState(AppState.failure);
