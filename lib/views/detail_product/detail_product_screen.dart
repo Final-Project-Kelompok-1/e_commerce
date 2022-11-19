@@ -6,6 +6,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/config.dart';
+import 'components/detail_components.dart';
 
 class DetailProduct extends StatelessWidget {
   final Product product;
@@ -46,11 +47,11 @@ class DetailProduct extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: AppDimen.h16),
+            SizedBox(height: 16.h),
             _detailProduct(),
-            SizedBox(height: AppDimen.h40),
-            _buttonChartAndWishlist(),
-            SizedBox(height: AppDimen.h16),
+            SizedBox(height: 40.h),
+            _buttonChartAndWishlist(context),
+            SizedBox(height: 16.h),
           ],
         ),
       ),
@@ -76,7 +77,7 @@ class DetailProduct extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: AppDimen.h32),
+              SizedBox(height: 32.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -97,7 +98,7 @@ class DetailProduct extends StatelessWidget {
                   Container(),
                 ],
               ),
-              SizedBox(height: AppDimen.h10),
+              SizedBox(height: 10.h),
               Row(
                 children: [
                   SizedBox(width: 200.w),
@@ -117,7 +118,7 @@ class DetailProduct extends StatelessWidget {
                               color: const Color(0xffD9D9D9),
                             ),
                           ),
-                          SizedBox(height: AppDimen.h8),
+                          SizedBox(height: 8.h),
                           SizedBox(
                             height: 50.h,
                             child: SingleChildScrollView(
@@ -127,7 +128,7 @@ class DetailProduct extends StatelessWidget {
                                   style: AppFont.paragraphLargeBold),
                             ),
                           ),
-                          SizedBox(height: AppDimen.h16),
+                          SizedBox(height: 16.h),
                           Text(
                             "Price",
                             textAlign: TextAlign.right,
@@ -135,7 +136,7 @@ class DetailProduct extends StatelessWidget {
                               color: const Color(0xffD9D9D9),
                             ),
                           ),
-                          SizedBox(height: AppDimen.h8),
+                          SizedBox(height: 8.h),
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Text(
@@ -204,9 +205,9 @@ class DetailProduct extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: AppDimen.h32),
+          SizedBox(height: 32.h),
           Text(product.name, style: AppFont.componentLarge),
-          SizedBox(height: AppDimen.h20),
+          SizedBox(height: 20.h),
           Text(
             product.deskripsi,
             textAlign: TextAlign.justify,
@@ -219,7 +220,7 @@ class DetailProduct extends StatelessWidget {
     );
   }
 
-  Widget _buttonChartAndWishlist() {
+  Widget _buttonChartAndWishlist(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 22.w),
       child: Row(
@@ -231,7 +232,9 @@ class DetailProduct extends StatelessWidget {
             width: 240,
             radius: 10,
             fontSize: 14,
-            onpressed: () {},
+            onpressed: () {
+              _checkoutModal(context);
+            },
           ),
           IconButtonWidget(
             iconAsset: 'assets/icons/cart.svg',
@@ -244,6 +247,31 @@ class DetailProduct extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void _checkoutModal(BuildContext context) {
+    showGeneralDialog(
+      barrierLabel: "showGeneralDialog",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.6),
+      transitionDuration: const Duration(milliseconds: 200),
+      context: context,
+      pageBuilder: (context, _, __) {
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: ModalContainer(product: product),
+        );
+      },
+      transitionBuilder: (_, animation1, __, child) {
+        return SlideTransition(
+          position: Tween(
+            begin: const Offset(0, 1),
+            end: const Offset(0, 0),
+          ).animate(animation1),
+          child: child,
+        );
+      },
     );
   }
 }

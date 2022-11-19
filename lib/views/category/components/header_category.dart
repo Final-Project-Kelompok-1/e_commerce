@@ -31,7 +31,7 @@ class HeaderCategory extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: AppDimen.h30),
+              SizedBox(height: 30.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -89,12 +89,12 @@ class HeaderCategory extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: AppDimen.h30),
+              SizedBox(height: 30.h),
               Text(
                 category,
                 style: AppFont.heading2.copyWith(fontWeight: FontWeight.w500),
               ),
-              SizedBox(height: AppDimen.h30),
+              SizedBox(height: 30.h),
               _searchTextField(),
             ],
           ),

@@ -76,7 +76,7 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             children: [
               _formLogin(width),
-              SizedBox(height: AppDimen.h16),
+              SizedBox(height: 16.h),
               Consumer<LoginViewModel>(
                 builder: (context, login, _) => ButtonWidget(
                     fontSize: 14,
@@ -138,9 +138,9 @@ class LoginScreen extends StatelessWidget {
       builder: (context, login, _) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: AppDimen.h32),
+          SizedBox(height: 32.h),
           Text("Email", style: AppFont.paragraphMedium),
-          SizedBox(height: AppDimen.h12),
+          SizedBox(height: 12.h),
           //email field
           SizedBox(
             height: 45.h,
@@ -181,10 +181,10 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: AppDimen.h16),
+          SizedBox(height: 16.h),
 
           Text("Password", style: AppFont.paragraphMedium),
-          SizedBox(height: AppDimen.h12),
+          SizedBox(height: 12.h),
           //password field
           SizedBox(
             height: 45.h,

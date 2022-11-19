@@ -41,7 +41,7 @@ class BannerProduct extends StatelessWidget {
                         nameBanner,
                         style: AppFont.heading2.copyWith(color: Colors.white),
                       ),
-                      SizedBox(height: AppDimen.h8),
+                      SizedBox(height: 8.h),
                       Row(
                         children: [
                           Text(
@@ -49,7 +49,7 @@ class BannerProduct extends StatelessWidget {
                             style: AppFont.paragraphMedium
                                 .copyWith(color: Colors.white54),
                           ),
-                          SizedBox(width: AppDimen.w16),
+                          SizedBox(width: 16.w),
                           InkWell(
                             onTap: () {},
                             child: Icon(Icons.arrow_forward,

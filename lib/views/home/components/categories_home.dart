@@ -41,7 +41,7 @@ class CategoriesHome extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: AppDimen.h10,
+            height: 10.h,
           ),
           Container(
             height: 100.h,
@@ -72,7 +72,7 @@ class CategoriesHome extends StatelessWidget {
     return SizedBox(
       height: 80,
       child: ListView.separated(
-        separatorBuilder: (context, index) => SizedBox(width: AppDimen.w8),
+        separatorBuilder: (context, index) => SizedBox(width: 8.w),
         physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
@@ -111,7 +111,7 @@ class CategoriesHome extends StatelessWidget {
                         child: SvgPicture.asset(data.assetIcon,
                             width: 20.w, height: 20.h),
                       ),
-                      SizedBox(height: AppDimen.h4),
+                      SizedBox(height: 4.h),
                       SizedBox(
                         height: 20.h,
                         child: SingleChildScrollView(
@@ -137,6 +137,7 @@ class CategoriesHome extends StatelessWidget {
   void _modalCategory(BuildContext context, double width) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) {
         return Center(
           child: Padding(
@@ -176,12 +177,15 @@ class CategoriesHome extends StatelessWidget {
                                 style: AppFont.paragraphLarge
                                     .copyWith(fontWeight: FontWeight.w500),
                               ),
-                              Material(
-                                color: Colors.transparent,
-                                child: IconButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  icon: const Icon(Icons.close,
-                                      size: 25, color: Colors.black),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: IconButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    icon: const Icon(Icons.close,
+                                        size: 25, color: Colors.black),
+                                  ),
                                 ),
                               ),
                             ],
@@ -252,7 +256,7 @@ class CategoriesHome extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: AppDimen.h4),
+                                        SizedBox(height: 4.h),
                                         SizedBox(
                                           height: 20.h,
                                           child: SingleChildScrollView(

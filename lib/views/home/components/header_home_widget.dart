@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../config/config.dart';
 
-class BannerList extends StatelessWidget {
-  const BannerList({super.key});
+class BannerListWidget extends StatelessWidget {
+  const BannerListWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class BannerList extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [AppColor.mainColor, AppColor.mainColor, AppColor.thirdColor],
+          colors: [AppColor.mainColor, AppColor.thirdColor],
         ),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(50),

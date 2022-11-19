@@ -45,9 +45,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               HeaderCategory(category: widget.categoryName),
-              SizedBox(height: AppDimen.h16),
+              SizedBox(height: 16.h),
               _listProduct(),
-              SizedBox(height: AppDimen.h30),
+              SizedBox(height: 30.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24.w),
                 child: ButtonWidget(

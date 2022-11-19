@@ -73,7 +73,7 @@ class ProductWidget extends StatelessWidget {
                         softWrap: false,
                       ),
                     ),
-                    SizedBox(height: AppDimen.h4),
+                    SizedBox(height: 4.h),
                     SizedBox(
                       height: 20.h,
                       child: Text(
@@ -86,7 +86,7 @@ class ProductWidget extends StatelessWidget {
                         softWrap: false,
                       ),
                     ),
-                    SizedBox(height: AppDimen.h4),
+                    SizedBox(height: 4.h),
                     SizedBox(
                       height: 20.h,
                       child: Row(
@@ -95,11 +95,11 @@ class ProductWidget extends StatelessWidget {
                             children: [
                               Icon(Icons.star,
                                   size: 15.sp, color: Colors.yellow.shade600),
-                              SizedBox(width: AppDimen.w4),
+                              SizedBox(width: 4.w),
                               Text("5.0", style: AppFont.componentSmall),
                             ],
                           ),
-                          SizedBox(width: AppDimen.w12),
+                          SizedBox(width: 12.w),
                           Text("25 Reviews", style: AppFont.componentSmall),
                           const Spacer(),
                           Material(
@@ -127,6 +127,7 @@ class ProductWidget extends StatelessWidget {
   void _modalAction(BuildContext context, double width) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) {
         return Center(
           child: Padding(

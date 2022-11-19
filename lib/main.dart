@@ -1,6 +1,7 @@
 import 'package:e_commerce/view_models/best_seller_product_view_model.dart';
 import 'package:e_commerce/view_models/bot_nav_bar_view_model.dart';
 import 'package:e_commerce/view_models/category_product_view_model.dart.dart';
+import 'package:e_commerce/view_models/checkout_view_model.dart';
 import 'package:e_commerce/view_models/featured_product_view_model.dart';
 import 'package:e_commerce/view_models/login_view_model.dart';
 import 'package:e_commerce/view_models/product_view_model.dart';
@@ -45,6 +46,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => CategoryProductViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CheckoutViewModel(),
         ),
       ],
       child: ScreenUtilInit(

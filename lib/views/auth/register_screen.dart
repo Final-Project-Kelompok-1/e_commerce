@@ -30,7 +30,7 @@ class RegisterScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: 180.h),
                     _form(width, context),
-                    SizedBox(height: AppDimen.w32)
+                    SizedBox(height: 32.w)
                   ],
                 ),
               ),
@@ -86,7 +86,7 @@ class RegisterScreen extends StatelessWidget {
           child: Column(
             children: [
               _formRegister(width),
-              SizedBox(height: AppDimen.h16),
+              SizedBox(height: 16.h),
               Consumer<RegisterViewModel>(
                 builder: (context, register, _) => ButtonWidget(
                     buttonText: "Register",
@@ -164,9 +164,9 @@ class RegisterScreen extends StatelessWidget {
       builder: (context, register, _) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: AppDimen.h32),
+          SizedBox(height: 32.h),
           Text("Username", style: AppFont.paragraphMedium),
-          SizedBox(height: AppDimen.h12),
+          SizedBox(height: 12.h),
           //username field
           SizedBox(
             height: 45.h,
@@ -206,10 +206,10 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: AppDimen.h16),
+          SizedBox(height: 16.h),
 
           Text("Email", style: AppFont.paragraphMedium),
-          SizedBox(height: AppDimen.h12),
+          SizedBox(height: 12.h),
           //email field
           SizedBox(
             height: 45.h,
@@ -248,10 +248,10 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: AppDimen.h16),
+          SizedBox(height: 16.h),
 
           Text("Phone Number", style: AppFont.paragraphMedium),
-          SizedBox(height: AppDimen.h12),
+          SizedBox(height: 12.h),
           //phone number field
           SizedBox(
             height: 45.h,
@@ -291,10 +291,10 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: AppDimen.h16),
+          SizedBox(height: 16.h),
 
           Text("Password", style: AppFont.paragraphMedium),
-          SizedBox(height: AppDimen.h12),
+          SizedBox(height: 12.h),
           //password field
           SizedBox(
             height: 45.h,
@@ -343,10 +343,10 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: AppDimen.h16),
+          SizedBox(height: 16.h),
 
           Text("Confirm Passowrd", style: AppFont.paragraphMedium),
-          SizedBox(height: AppDimen.h12),
+          SizedBox(height: 12.h),
           //confirm password field
           SizedBox(
             height: 45.h,
