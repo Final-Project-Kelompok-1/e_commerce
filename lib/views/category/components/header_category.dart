@@ -1,12 +1,13 @@
-import 'package:e_commerce/models/banner_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../config/config.dart';
 
-class BannerListWidget extends StatelessWidget {
-  const BannerListWidget({super.key});
+class HeaderCategory extends StatelessWidget {
+  final String category;
+  const HeaderCategory({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class BannerListWidget extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [AppColor.mainColor, AppColor.thirdColor],
+          colors: [AppColor.mainColor, AppColor.mainColor, AppColor.thirdColor],
         ),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(50),
@@ -30,64 +31,74 @@ class BannerListWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: AppDimen.h10),
-              ClipRRect(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(100),
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {},
-                    child: Icon(
-                      Icons.menu,
-                      color: Colors.black,
-                      size: 22.sp,
+              SizedBox(height: AppDimen.h30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(100),
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Icon(
+                          Icons.keyboard_arrow_left,
+                          color: Colors.black,
+                          size: 22.sp,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Text(
+                    'Category',
+                    style: AppFont.paragraphLarge
+                        .copyWith(fontWeight: FontWeight.w500),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: SizedBox(
+                      width: 25.w,
+                      child: Stack(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/cart.svg',
+                            color: Colors.black,
+                            width: 22.w,
+                            height: 22.h,
+                          ),
+                          Positioned(
+                            left: 13.w,
+                            child: Container(
+                              width: 10.w,
+                              height: 10.h,
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(
+                                  100,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: AppDimen.h18),
+              SizedBox(height: AppDimen.h30),
+              Text(
+                category,
+                style: AppFont.heading2.copyWith(fontWeight: FontWeight.w500),
+              ),
+              SizedBox(height: AppDimen.h30),
               _searchTextField(),
-              SizedBox(height: AppDimen.h36),
-              _listBanner(),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _listBanner() {
-    return SizedBox(
-      height: 75.h,
-      child: ListView.separated(
-        physics: const BouncingScrollPhysics(),
-        separatorBuilder: (context, index) => SizedBox(width: AppDimen.w16),
-        scrollDirection: Axis.horizontal,
-        shrinkWrap: true,
-        itemCount: BannerModel.banners.length,
-        itemBuilder: (context, index) {
-          final data = BannerModel.banners[index];
-          return Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10),
-              ),
-              image: DecorationImage(
-                image: AssetImage(data.assetImage),
-              ),
-            ),
-            width: 145.w,
-            height: 75.h,
-            child: Text(
-              data.name,
-              style:
-                  AppFont.paragraphLarge.copyWith(fontWeight: FontWeight.w600),
-            ),
-          );
-        },
       ),
     );
   }
@@ -96,7 +107,6 @@ class BannerListWidget extends StatelessWidget {
     return SizedBox(
       height: 40,
       child: TextField(
-        readOnly: true,
         onChanged: (value) {},
         decoration: InputDecoration(
             suffixIcon: IconButton(

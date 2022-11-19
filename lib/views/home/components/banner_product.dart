@@ -2,12 +2,12 @@ import 'package:e_commerce/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class BannerProductWidget extends StatelessWidget {
+class BannerProduct extends StatelessWidget {
   final String nameBanner;
   final String assetImage;
   final Color color;
 
-  const BannerProductWidget(
+  const BannerProduct(
       {super.key,
       required this.nameBanner,
       required this.assetImage,

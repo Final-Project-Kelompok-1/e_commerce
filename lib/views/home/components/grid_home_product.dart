@@ -5,11 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../config/config.dart';
 import '../../widgets/widgets.dart';
 
-class GridHomeProductWidget extends StatelessWidget {
+class GridHomeProduct extends StatelessWidget {
   final Function onTap;
   final String productCategory;
   final List<Product> product;
-  const GridHomeProductWidget(
+  const GridHomeProduct(
       {super.key,
       required this.onTap,
       required this.productCategory,

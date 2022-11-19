@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
 class SkeletonContainer extends StatelessWidget {
@@ -15,8 +16,8 @@ class SkeletonContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SkeletonAnimation(
       child: Container(
-        width: width,
-        height: height,
+        width: width.w,
+        height: height.h,
         decoration: BoxDecoration(
           color: Colors.grey[300],
           borderRadius: BorderRadius.all(

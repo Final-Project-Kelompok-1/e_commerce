@@ -1,7 +1,7 @@
 import 'package:e_commerce/view_models/best_seller_product_view_model.dart';
 import 'package:e_commerce/view_models/featured_product_view_model.dart';
 import 'package:e_commerce/view_models/top_rated_product_view_model.dart';
-import 'package:e_commerce/views/home/widgets/banner_product_widget.dart';
+import 'package:e_commerce/views/home/components/banner_product.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce/config/config.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import '../../utils/app_state/finite_state.dart';
 import '../../view_models/product_view_model.dart';
 import '../widgets/widgets.dart';
-import 'widgets/home_widget.dart';
+import 'components/home_components.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -55,22 +55,22 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const BannerListWidget(),
+              const BannerList(),
               SizedBox(height: AppDimen.h30),
-              const CategoriesHomeWidget(),
+              const CategoriesHome(),
               SizedBox(height: AppDimen.h40),
               _featuredProduct(),
               SizedBox(
                 height: AppDimen.h36,
               ),
-              const BannerProductWidget(
+              const BannerProduct(
                   nameBanner: 'New Era - Handphone',
                   assetImage: 'assets/images/hp.png',
                   color: AppColor.secondColor),
               SizedBox(height: AppDimen.h30),
               _besetSellerProduct(),
               SizedBox(height: AppDimen.h30),
-              const BannerProductWidget(
+              const BannerProduct(
                   nameBanner: 'New Era - Handphone',
                   assetImage: 'assets/images/power_bank.png',
                   color: AppColor.thirdColor),
@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
 
         if (product.appState == AppState.loaded) {
-          return GridHomeProductWidget(
+          return GridHomeProduct(
               onTap: () {},
               productCategory: 'Featured Product',
               product: product.featuredProduct);
@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
 
         if (product.appState == AppState.loaded) {
-          return GridHomeProductWidget(
+          return GridHomeProduct(
               onTap: () {},
               productCategory: 'Best Seller',
               product: product.bestSellerProduct);
@@ -163,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
 
         if (product.appState == AppState.loaded) {
-          return GridHomeProductWidget(
+          return GridHomeProduct(
               onTap: () {},
               productCategory: 'Top Rated',
               product: product.topRatedProduct);
@@ -193,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisSpacing: 12,
             mainAxisSpacing: 12),
         itemBuilder: (context, index) =>
-            SkeletonContainer(width: 150.w, height: 250.h, borderRadius: 20),
+            const SkeletonContainer(width: 150, height: 250, borderRadius: 20),
       ),
     );
   }

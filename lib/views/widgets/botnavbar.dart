@@ -6,14 +6,9 @@ import 'package:provider/provider.dart';
 
 import '../../view_models/bot_nav_bar_view_model.dart';
 
-class BotNavBar extends StatefulWidget {
+class BotNavBar extends StatelessWidget {
   const BotNavBar({super.key});
 
-  @override
-  State<BotNavBar> createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<BotNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

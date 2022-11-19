@@ -13,6 +13,7 @@ class ProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
@@ -104,7 +105,9 @@ class ProductWidget extends StatelessWidget {
                           Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                _modalAction(context, width);
+                              },
                               child: Icon(Icons.more_vert, size: 15.sp),
                             ),
                           ),
@@ -118,6 +121,95 @@ class ProductWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void _modalAction(BuildContext context, double width) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: Padding(
+            padding: EdgeInsets.all(16.sp),
+            child: Container(
+              height: 210.h,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10),
+                ),
+                color: Colors.grey[50],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 72.h,
+                    width: width,
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(color: Color(0xffEDEDED), width: 2),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 24.w, right: 16.w),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("Product Action",
+                              style: AppFont.paragraphLargeBold),
+                          Material(
+                            color: Colors.transparent,
+                            child: IconButton(
+                              onPressed: () => Navigator.pop(context),
+                              icon: const Icon(Icons.close,
+                                  size: 25, color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24.w),
+                    child: Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          height: 60.h,
+                          width: width,
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                  color: Color(0xffEDEDED), width: 2),
+                            ),
+                          ),
+                          child: Text(
+                            "Add to wishlist",
+                            style: AppFont.paragraphMedium
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          height: 60.h,
+                          width: width,
+                          child: Text(
+                            "Add to cart",
+                            style: AppFont.paragraphMedium
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

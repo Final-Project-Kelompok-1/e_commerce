@@ -9,8 +9,8 @@ import 'package:provider/provider.dart';
 
 import '../../../config/config.dart';
 
-class CategoriesHomeWidget extends StatelessWidget {
-  const CategoriesHomeWidget({super.key});
+class CategoriesHome extends StatelessWidget {
+  const CategoriesHome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class CategoriesHomeWidget extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  _modalSheet(context, width);
+                  _modalCategory(context, width);
                 },
                 child: Text(
                   "See all",
@@ -134,13 +134,13 @@ class CategoriesHomeWidget extends StatelessWidget {
     );
   }
 
-  void _modalSheet(BuildContext context, double width) {
+  void _modalCategory(BuildContext context, double width) {
     showDialog(
       context: context,
       builder: (context) {
         return Center(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.sp),
             child: Container(
               height: 305.h,
               decoration: BoxDecoration(
