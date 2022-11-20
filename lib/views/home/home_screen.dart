@@ -3,7 +3,6 @@ import 'package:e_commerce/view_models/best_seller_product_view_model.dart';
 import 'package:e_commerce/view_models/featured_product_view_model.dart';
 import 'package:e_commerce/view_models/top_rated_product_view_model.dart';
 import 'package:e_commerce/views/category/category_screen.dart';
-import 'package:e_commerce/views/home/components/banner_product.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce/config/config.dart';
 import 'package:flutter/services.dart';

@@ -145,7 +145,6 @@ class CategoriesHome extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(16.sp),
             child: Container(
-              height: 305.h,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(
                   Radius.circular(10),
@@ -281,7 +280,8 @@ class CategoriesHome extends StatelessWidget {
                             ],
                           ),
                         ),
-                      )
+                      ),
+                      SizedBox(height: 32.h),
                     ],
                   ),
                 ),

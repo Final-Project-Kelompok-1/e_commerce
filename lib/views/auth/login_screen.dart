@@ -85,15 +85,17 @@ class LoginScreen extends StatelessWidget {
                     width: width,
                     onpressed: () async {
                       try {
-                        await login.postLogin();
-
-                        Fluttertoast.showToast(msg: 'Berhasil Login').then(
-                          (_) => Navigator.of(context).pushAndRemoveUntil(
-                              NavigatorFadeTransitionHelper(
-                                child: const BotNavBar(),
+                        await login.postLogin().then(
+                              (value) =>
+                                  Fluttertoast.showToast(msg: 'Berhasil Login')
+                                      .then(
+                                (_) => Navigator.of(context).pushAndRemoveUntil(
+                                    NavigatorFadeTransitionHelper(
+                                      child: const BotNavBar(),
+                                    ),
+                                    (route) => false),
                               ),
-                              (route) => false),
-                        );
+                            );
                       } catch (e) {
                         Fluttertoast.showToast(msg: e.toString());
                       }

@@ -29,8 +29,16 @@ class NetworkApiServices implements BaseApiServices {
           'token',
           json.decode(response.body)['data']['token'],
         );
+        prefs.setInt(
+            'userid', json.decode(response.body)['data']['user']['id']);
+        prefs.setString(
+            'phone', json.decode(response.body)['data']['user']['handphone']);
+        prefs.setString(
+            'email', json.decode(response.body)['data']['user']['email']);
+        prefs.setString(
+            'name', json.decode(response.body)['data']['user']['name']);
+        return responseJson = returnResponse(response);
       }
-
       return responseJson = returnResponse(response);
     } on SocketException {
       throw 'No Internet Connection';
@@ -38,11 +46,11 @@ class NetworkApiServices implements BaseApiServices {
   }
 
   @override
-  Future<void> postRequest(String url, data) async {
+  Future<dynamic> postRequest(String url, data) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl$url'),
-        body: data.toJson(),
+        body: data is Map ? data : data.toJson(),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/x-www-form-urlencoded"
@@ -68,7 +76,6 @@ class NetworkApiServices implements BaseApiServices {
           'Authorization': 'Bearer $token',
         },
       );
-
       return returnResponse(response);
     } on SocketException {
       throw 'No Internet Connection';

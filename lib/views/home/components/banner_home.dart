@@ -1,4 +1,6 @@
 import 'package:e_commerce/models/banner_model.dart';
+import 'package:e_commerce/utils/navigator/navigator.dart';
+import 'package:e_commerce/views/category/category_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -69,22 +71,32 @@ class BannerList extends StatelessWidget {
         itemCount: BannerModel.banners.length,
         itemBuilder: (context, index) {
           final data = BannerModel.banners[index];
-          return Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10),
+          return InkWell(
+            onTap: () {
+              Navigator.of(context).push(
+                NavigatorFadeTransitionHelper(
+                  child: CategoryScreen(
+                      categoryName: data.name, displayCategoryName: data.name),
+                ),
+              );
+            },
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10),
+                ),
+                image: DecorationImage(
+                  image: AssetImage(data.assetImage),
+                ),
               ),
-              image: DecorationImage(
-                image: AssetImage(data.assetImage),
+              width: 145.w,
+              height: 75.h,
+              child: Text(
+                data.name,
+                style: AppFont.paragraphLarge
+                    .copyWith(fontWeight: FontWeight.w600),
               ),
-            ),
-            width: 145.w,
-            height: 75.h,
-            child: Text(
-              data.name,
-              style:
-                  AppFont.paragraphLarge.copyWith(fontWeight: FontWeight.w600),
             ),
           );
         },

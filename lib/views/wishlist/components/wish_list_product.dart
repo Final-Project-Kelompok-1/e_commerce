@@ -1,27 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce/models/product_model.dart';
-import 'package:e_commerce/view_models/wishlist_view_model.dart';
+import 'package:e_commerce/models/wishlist_model.dart';
+import 'package:e_commerce/utils/navigator/navigator.dart';
+import 'package:e_commerce/views/detail_product/detail_wishlist_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
 
-import '../../config/config.dart';
-import '../../utils/utils.dart';
-import '../detail_product/detail_product_screen.dart';
+import '../../../config/config.dart';
 
-class ProductWidget extends StatelessWidget {
-  final Product product;
-  const ProductWidget({super.key, required this.product});
+class WishListProductCard extends StatelessWidget {
+  final WishListModel wishList;
+  const WishListProductCard({super.key, required this.wishList});
 
   @override
   Widget build(BuildContext context) {
+    final data = wishList.product;
     final width = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
           NavigatorFadeTransitionHelper(
-            child: DetailProduct(product: product),
+            child: DetailWishlistProductScreen(product: wishList),
           ),
         );
       },
@@ -47,7 +45,7 @@ class ProductWidget extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: CachedNetworkImageProvider(product.image),
+                      image: CachedNetworkImageProvider(data.image),
                       fit: BoxFit.fill),
                   color: Colors.grey[50],
                   borderRadius: const BorderRadius.only(
@@ -68,7 +66,7 @@ class ProductWidget extends StatelessWidget {
                     SizedBox(
                       height: 40.h,
                       child: Text(
-                        product.name,
+                        data.name,
                         style: AppFont.paragraphSmall
                             .copyWith(fontWeight: FontWeight.w600),
                         overflow: TextOverflow.ellipsis,
@@ -80,7 +78,7 @@ class ProductWidget extends StatelessWidget {
                     SizedBox(
                       height: 20.h,
                       child: Text(
-                        "Rp. ${product.harga}",
+                        "Rp. ${data.harga}",
                         style: AppFont.paragraphSmall.copyWith(
                             fontWeight: FontWeight.w600,
                             color: Colors.red.shade600),
@@ -181,29 +179,12 @@ class ProductWidget extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        Consumer<WishListViewModel>(
-                          builder: (context, wishlist, _) => _containerAction(
-                              nameAction: 'Add To Wishlist',
-                              function: () async {
-                                try {
-                                  await wishlist
-                                      .postWishList(
-                                        idBarang: product.id,
-                                      )
-                                      .then(
-                                        (_) => Fluttertoast.showToast(
-                                            msg:
-                                                'Berhasil ditambahkan ke wishlist'),
-                                      )
-                                      .then(
-                                        (_) => Navigator.pop(context),
-                                      );
-                                } catch (e) {
-                                  Fluttertoast.showToast(msg: e.toString());
-                                }
-                              },
-                              width: width),
-                        ),
+                        _containerAction(
+                            nameAction: 'Add To Wishlist',
+                            function: () {
+                              Navigator.pop(context);
+                            },
+                            width: width),
                         _containerAction(
                             nameAction: 'Add To Cart',
                             function: () {
