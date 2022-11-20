@@ -1,6 +1,8 @@
+import 'package:e_commerce/utils/navigator/navigator.dart';
 import 'package:e_commerce/view_models/best_seller_product_view_model.dart';
 import 'package:e_commerce/view_models/featured_product_view_model.dart';
 import 'package:e_commerce/view_models/top_rated_product_view_model.dart';
+import 'package:e_commerce/views/category/category_screen.dart';
 import 'package:e_commerce/views/home/components/banner_product.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce/config/config.dart';
@@ -63,16 +65,34 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 36.h,
               ),
-              const BannerProduct(
+              BannerProduct(
                   nameBanner: 'New Era - Handphone',
                   assetImage: 'assets/images/hp.png',
+                  onTap: () {
+                    Navigator.of(context).push(
+                      NavigatorFadeTransitionHelper(
+                        child: const CategoryScreen(
+                            categoryName: 'gadget',
+                            displayCategoryName: 'New Era - Handphone'),
+                      ),
+                    );
+                  },
                   color: AppColor.secondColor),
               SizedBox(height: 30.h),
               _besetSellerProduct(),
               SizedBox(height: 30.h),
-              const BannerProduct(
-                  nameBanner: 'New Era - Handphone',
+              BannerProduct(
+                  nameBanner: 'Save Your Power',
                   assetImage: 'assets/images/power_bank.png',
+                  onTap: () {
+                    Navigator.of(context).push(
+                      NavigatorFadeTransitionHelper(
+                        child: const CategoryScreen(
+                            categoryName: 'powerbank',
+                            displayCategoryName: 'Save Your Power'),
+                      ),
+                    );
+                  },
                   color: AppColor.thirdColor),
               SizedBox(height: 30.h),
               _topRatedProduct(),
@@ -100,7 +120,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
         if (product.appState == AppState.loaded) {
           return GridHomeProduct(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  NavigatorFadeTransitionHelper(
+                    child: const CategoryScreen(
+                        categoryName: 'featured',
+                        displayCategoryName: 'featured product'),
+                  ),
+                );
+              },
               productCategory: 'Featured Product',
               product: product.featuredProduct);
         }
@@ -132,7 +160,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
         if (product.appState == AppState.loaded) {
           return GridHomeProduct(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  NavigatorFadeTransitionHelper(
+                    child: const CategoryScreen(
+                        categoryName: 'bestseller',
+                        displayCategoryName: 'Best Seller'),
+                  ),
+                );
+              },
               productCategory: 'Best Seller',
               product: product.bestSellerProduct);
         }
@@ -164,7 +200,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
         if (product.appState == AppState.loaded) {
           return GridHomeProduct(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  NavigatorFadeTransitionHelper(
+                    child: const CategoryScreen(
+                      categoryName: 'toprated',
+                      displayCategoryName: 'Top Rated',
+                    ),
+                  ),
+                );
+              },
               productCategory: 'Top Rated',
               product: product.topRatedProduct);
         }

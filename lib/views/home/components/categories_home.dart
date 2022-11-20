@@ -92,7 +92,9 @@ class CategoriesHome extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       NavigatorFadeTransitionHelper(
-                        child: CategoryScreen(categoryName: data.name),
+                        child: CategoryScreen(
+                            categoryName: data.name,
+                            displayCategoryName: data.name),
                       ),
                     );
                   },
@@ -232,7 +234,8 @@ class CategoriesHome extends StatelessWidget {
                                                 Navigator.of(context).push(
                                                   NavigatorFadeTransitionHelper(
                                                     child: CategoryScreen(
-                                                        categoryName:
+                                                        categoryName: data.name,
+                                                        displayCategoryName:
                                                             data.name),
                                                   ),
                                                 );

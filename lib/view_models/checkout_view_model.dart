@@ -5,7 +5,7 @@ class CheckoutViewModel extends ChangeNotifier {
   int get quantityProduct => _quantityProduct;
 
   void plusQuantityProduct(int productStock) {
-    if (_quantityProduct <= productStock) {
+    if (_quantityProduct < productStock) {
       _quantityProduct++;
     }
     notifyListeners();
@@ -16,5 +16,9 @@ class CheckoutViewModel extends ChangeNotifier {
       _quantityProduct--;
     }
     notifyListeners();
+  }
+
+  void resetQuantity() {
+    _quantityProduct = 1;
   }
 }

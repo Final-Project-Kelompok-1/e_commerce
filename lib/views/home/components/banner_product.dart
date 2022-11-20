@@ -5,13 +5,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class BannerProduct extends StatelessWidget {
   final String nameBanner;
   final String assetImage;
+  final void Function() onTap;
   final Color color;
 
   const BannerProduct(
       {super.key,
       required this.nameBanner,
       required this.assetImage,
-      required this.color});
+      required this.color,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,7 @@ class BannerProduct extends StatelessWidget {
                           ),
                           SizedBox(width: 16.w),
                           InkWell(
-                            onTap: () {},
+                            onTap: onTap,
                             child: Icon(Icons.arrow_forward,
                                 color: Colors.white, size: 20.sp),
                           ),

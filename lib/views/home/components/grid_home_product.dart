@@ -6,7 +6,7 @@ import '../../../config/config.dart';
 import '../../widgets/widgets.dart';
 
 class GridHomeProduct extends StatelessWidget {
-  final Function onTap;
+  final void Function() onTap;
   final String productCategory;
   final List<Product> product;
   const GridHomeProduct(
@@ -50,9 +50,7 @@ class GridHomeProduct extends StatelessWidget {
           style: AppFont.paragraphLarge.copyWith(fontWeight: FontWeight.w600),
         ),
         InkWell(
-          onTap: () {
-            onTap;
-          },
+          onTap: onTap,
           child: Text(
             "See all",
             style: AppFont.paragraphLarge.copyWith(color: AppColor.secondColor),

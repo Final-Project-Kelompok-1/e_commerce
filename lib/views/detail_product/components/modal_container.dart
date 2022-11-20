@@ -8,9 +8,20 @@ import 'package:provider/provider.dart';
 
 import '../../../models/product_model.dart';
 
-class ModalContainer extends StatelessWidget {
+class ModalContainer extends StatefulWidget {
   final Product product;
   const ModalContainer({super.key, required this.product});
+
+  @override
+  State<ModalContainer> createState() => _ModalContainerState();
+}
+
+class _ModalContainerState extends State<ModalContainer> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<CheckoutViewModel>(context, listen: false).resetQuantity();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +96,7 @@ class ModalContainer extends StatelessWidget {
                 height: 100.h,
                 width: 70.w,
                 child: CachedNetworkImage(
-                  imageUrl: product.image,
+                  imageUrl: widget.product.image,
                   errorWidget: (context, url, error) {
                     return const Center(
                       child: Icon(Icons.error, color: Colors.red),
@@ -105,16 +116,16 @@ class ModalContainer extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(product.name, style: AppFont.paragraphLargeBold),
+                  Text(widget.product.name, style: AppFont.paragraphLargeBold),
                   SizedBox(height: 15.h),
                   Text(
-                    "Rp ${product.harga}",
+                    "Rp ${widget.product.harga}",
                     style: AppFont.paragraphMediumBold
                         .copyWith(color: AppColor.mainColor),
                   ),
                   SizedBox(height: 7.h),
                   Text(
-                    'Stock : ${product.stock}',
+                    'Stock : ${widget.product.stock}',
                     style: AppFont.paragraphMediumBold
                         .copyWith(color: const Color(0xffC4C4C4)),
                   )
@@ -141,7 +152,7 @@ class ModalContainer extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-                      checkout.minusQuantityProduct(product.stock);
+                      checkout.minusQuantityProduct(widget.product.stock);
                     },
                     child: SizedBox(
                       width: 25.w,
@@ -161,7 +172,7 @@ class ModalContainer extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-                      checkout.plusQuantityProduct(product.stock);
+                      checkout.plusQuantityProduct(widget.product.stock);
                     },
                     child: SizedBox(
                       width: 25.w,

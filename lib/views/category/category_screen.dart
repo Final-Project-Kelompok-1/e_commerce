@@ -12,7 +12,11 @@ import '../widgets/skeleton_container.dart';
 
 class CategoryScreen extends StatefulWidget {
   final String categoryName;
-  const CategoryScreen({super.key, required this.categoryName});
+  final String displayCategoryName;
+  const CategoryScreen(
+      {super.key,
+      required this.categoryName,
+      required this.displayCategoryName});
 
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
@@ -44,7 +48,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              HeaderCategory(category: widget.categoryName),
+              HeaderCategory(category: widget.displayCategoryName),
               SizedBox(height: 16.h),
               _listProduct(),
               SizedBox(height: 30.h),
@@ -57,7 +61,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     onpressed: () {},
                     radius: 10,
                     fontSize: 16),
-              )
+              ),
+              SizedBox(height: 30.h),
             ],
           ),
         ),
