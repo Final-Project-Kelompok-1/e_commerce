@@ -82,6 +82,25 @@ class NetworkApiServices implements BaseApiServices {
     }
   }
 
+  @override
+  Future deleteRequest(String url) async {
+    SharedPreferences? prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token').toString();
+
+    try {
+      final response = await http.delete(
+        Uri.parse('$baseUrl$url'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      return returnResponse(response);
+    } on SocketException {
+      throw 'No Internet Connection';
+    }
+  }
+
   dynamic returnResponse(http.Response response) {
     switch (response.statusCode) {
       case 200:

@@ -45,4 +45,13 @@ class WishListViewModel extends ChangeNotifier {
       rethrow;
     }
   }
+
+  Future<void> deleteWishList(int id) async {
+    try {
+      await appsRepository.deleteWishlist(id);
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

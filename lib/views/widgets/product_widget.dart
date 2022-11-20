@@ -200,6 +200,7 @@ class ProductWidget extends StatelessWidget {
                                       );
                                 } catch (e) {
                                   Fluttertoast.showToast(msg: e.toString());
+                                  Navigator.pop(context);
                                 }
                               },
                               width: width),

@@ -84,4 +84,12 @@ class AppsRepository {
       rethrow;
     }
   }
+
+  Future<void> deleteWishlist(int id) async {
+    try {
+      await _apiServices.deleteRequest('/api/wishlist/$id');
+    } catch (_) {
+      rethrow;
+    }
+  }
 }
