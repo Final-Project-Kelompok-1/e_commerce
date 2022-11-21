@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/models/product_model.dart';
+import 'package:e_commerce/utils/navigator/navigator.dart';
+import 'package:e_commerce/views/review/review_screen.dart';
 import 'package:e_commerce/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -48,7 +50,7 @@ class DetailProduct extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16.h),
-            _detailProduct(),
+            _detailProduct(context),
             SizedBox(height: 40.h),
             _buttonChartAndWishlist(context),
             SizedBox(height: 16.h),
@@ -160,7 +162,7 @@ class DetailProduct extends StatelessWidget {
     );
   }
 
-  Widget _detailProduct() {
+  Widget _detailProduct(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 22.w),
       child: Column(
@@ -190,7 +192,13 @@ class DetailProduct extends StatelessWidget {
               ),
               const Spacer(),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    NavigatorFadeTransitionHelper(
+                      child: const ReviewScreen(),
+                    ),
+                  );
+                },
                 child: Row(
                   children: [
                     Text(
