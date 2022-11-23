@@ -226,8 +226,7 @@ class ReviewScreen extends StatelessWidget {
               ),
               child: Text(
                 data.name[0],
-                style:
-                    AppFont.paragraphMediumBold.copyWith(color: Colors.white),
+                style: AppFont.paragraphLargeBold.copyWith(color: Colors.white),
               ),
             ),
             SizedBox(width: 15.w),

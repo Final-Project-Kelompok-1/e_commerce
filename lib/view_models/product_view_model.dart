@@ -6,26 +6,28 @@ import 'package:flutter/cupertino.dart';
 class ProductViewModel extends ChangeNotifier {
   final AppsRepository appsRepository = AppsRepository();
 
-  List<Product> _products = [];
+  List<Product> _filterProduct = [];
   final List<Product> _productsFeaturedProduct = [];
   final List<Product> _bestSellerProduct = [];
   final List<Product> _topRatedProduct = [];
   AppState _appState = AppState.loading;
+  final TextEditingController _searchController = TextEditingController();
 
-  List<Product> get products => _products;
+  List<Product> get products => _filterProduct;
   List<Product> get productsFeatured => _productsFeaturedProduct;
   List<Product> get bestSellerProduct => _bestSellerProduct;
   List<Product> get topRatedProduct => _topRatedProduct;
+  TextEditingController get searchController => _searchController;
   AppState get appState => _appState;
 
-  void fetchListProduct() async {
+  void filterProductByName(String value) async {
     try {
       changeAppState(AppState.loading);
-      _products = await appsRepository.fetchProduct();
+      _filterProduct = await appsRepository.fetchProduct();
       notifyListeners();
       changeAppState(AppState.loaded);
 
-      if (_products.isEmpty) {
+      if (_filterProduct.isEmpty) {
         changeAppState(AppState.noData);
       }
     } catch (e) {
@@ -61,7 +63,7 @@ class ProductViewModel extends ChangeNotifier {
 
       changeAppState(AppState.loaded);
       notifyListeners();
-      if (_products.isEmpty) {
+      if (_filterProduct.isEmpty) {
         changeAppState(AppState.noData);
         notifyListeners();
       }

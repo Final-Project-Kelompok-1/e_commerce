@@ -54,6 +54,24 @@ class AppsRepository {
     }
   }
 
+  Future<List<Product>> filterProductByName(String value) async {
+    try {
+      dynamic response = await _apiServices.getRequest('/api/barang');
+
+      ProductModel product = ProductModel.fromJson(response);
+
+      return product.product
+          .where(
+            (element) => element.name.toLowerCase().contains(
+                  value.toLowerCase(),
+                ),
+          )
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<List<WishListModel>> fetchWishlistProduct() async {
     try {
       dynamic response = await _apiServices.getRequest('/api/wishlist/');

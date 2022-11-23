@@ -28,8 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
     Future.microtask(
       () {
         Provider.of<ProductViewModel>(context, listen: false)
-            .fetchListProduct();
-        Provider.of<ProductViewModel>(context, listen: false)
             .filterCategoryProduct();
         Provider.of<TopRatedProductViewModel>(context, listen: false)
             .filterCategoryProduct();
