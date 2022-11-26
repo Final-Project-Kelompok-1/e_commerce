@@ -7,6 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../models/product_model.dart';
+import '../../../utils/utils.dart';
+import '../../checkout/checkout_screen.dart';
 
 class ModalContainer extends StatefulWidget {
   final Product product;
@@ -21,6 +23,8 @@ class _ModalContainerState extends State<ModalContainer> {
   void initState() {
     super.initState();
     Provider.of<CheckoutViewModel>(context, listen: false).resetQuantity();
+    Provider.of<CheckoutViewModel>(context, listen: false)
+        .addInitialPrice(widget.product.harga);
   }
 
   @override
@@ -67,7 +71,13 @@ class _ModalContainerState extends State<ModalContainer> {
                   buttonText: 'Checkout Cart',
                   height: 45,
                   width: 220,
-                  onpressed: () {},
+                  onpressed: () {
+                    Navigator.of(context).push(
+                      NavigatorFadeTransitionHelper(
+                        child: CheckoutScreen(product: widget.product),
+                      ),
+                    );
+                  },
                   radius: 10,
                   fontSize: 18),
               SizedBox(height: 30.h),
@@ -128,7 +138,7 @@ class _ModalContainerState extends State<ModalContainer> {
                     'Stock : ${widget.product.stock}',
                     style: AppFont.paragraphMediumBold
                         .copyWith(color: const Color(0xffC4C4C4)),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -152,7 +162,8 @@ class _ModalContainerState extends State<ModalContainer> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-                      checkout.minusQuantityProduct(widget.product.stock);
+                      checkout.minusQuantityProduct(
+                          widget.product.stock, widget.product.harga);
                     },
                     child: SizedBox(
                       width: 25.w,
@@ -172,7 +183,8 @@ class _ModalContainerState extends State<ModalContainer> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-                      checkout.plusQuantityProduct(widget.product.stock);
+                      checkout.plusQuantityProduct(
+                          widget.product.stock, widget.product.harga);
                     },
                     child: SizedBox(
                       width: 25.w,

@@ -1,5 +1,6 @@
 import 'package:e_commerce/config/config.dart';
-import 'package:e_commerce/views/cart/components/price_cart_product.dart';
+import 'package:e_commerce/utils/navigator/navigator.dart';
+import 'package:e_commerce/views/checkout/success_checkout_screen.dart';
 import 'package:e_commerce/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,7 +49,13 @@ class CartScreen extends StatelessWidget {
                   buttonText: 'BUY NOW',
                   height: 50,
                   width: 300,
-                  onpressed: () {},
+                  onpressed: () {
+                    Navigator.of(context).push(
+                      NavigatorFadeTransitionHelper(
+                        child: const SuccessCheckoutScreen(),
+                      ),
+                    );
+                  },
                   radius: 10,
                   fontSize: 16),
               SizedBox(height: 40.h),

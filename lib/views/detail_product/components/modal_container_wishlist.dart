@@ -150,9 +150,7 @@ class _ModalContainerState extends State<ModalContainerWishlist> {
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () {
-                      checkout.minusQuantityProduct(widget.product.stock);
-                    },
+                    onTap: () {},
                     child: SizedBox(
                       width: 25.w,
                       height: 25.h,
@@ -170,9 +168,7 @@ class _ModalContainerState extends State<ModalContainerWishlist> {
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () {
-                      checkout.plusQuantityProduct(widget.product.stock);
-                    },
+                    onTap: () {},
                     child: SizedBox(
                       width: 25.w,
                       height: 25.h,

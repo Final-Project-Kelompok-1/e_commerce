@@ -18,6 +18,7 @@ class ProductModel {
 
 class Product {
   final int id;
+  final int quantity = 0;
   final String name;
   final int categoryId;
   final String image;
