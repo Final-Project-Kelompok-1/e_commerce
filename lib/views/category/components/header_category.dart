@@ -1,4 +1,6 @@
+import 'package:e_commerce/utils/navigator/navigator_fade_transition.dart';
 import 'package:e_commerce/view_models/category_product_view_model.dart.dart';
+import 'package:e_commerce/views/cart/cart_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -61,7 +63,13 @@ class HeaderCategory extends StatelessWidget {
                         .copyWith(fontWeight: FontWeight.w500),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        NavigatorFadeTransitionHelper(
+                          child: const CartScreen(),
+                        ),
+                      );
+                    },
                     child: SizedBox(
                       width: 25.w,
                       child: Stack(

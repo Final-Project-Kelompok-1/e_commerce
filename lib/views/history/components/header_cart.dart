@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../config/config.dart';
 
-class HeaderWishlist extends StatelessWidget {
-  const HeaderWishlist({super.key});
+class HeaderTransaction extends StatelessWidget {
+  const HeaderTransaction({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class HeaderWishlist extends StatelessWidget {
         padding:
             EdgeInsets.only(left: 24.w, right: 24.w, top: 40.h, bottom: 12.h),
         child: Center(
-          child: Text("My Wishlist", style: AppFont.heading2),
+          child: Text("My Transaction", style: AppFont.heading2),
         ),
       ),
     );

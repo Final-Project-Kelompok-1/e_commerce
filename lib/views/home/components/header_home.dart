@@ -1,14 +1,16 @@
 import 'package:e_commerce/models/banner_model.dart';
 import 'package:e_commerce/utils/navigator/navigator.dart';
+import 'package:e_commerce/views/cart/cart_screen.dart';
 import 'package:e_commerce/views/category/category_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../config/config.dart';
 
-class BannerList extends StatelessWidget {
-  const BannerList({super.key});
+class HeaderHome extends StatelessWidget {
+  const HeaderHome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,25 +32,10 @@ class BannerList extends StatelessWidget {
             EdgeInsets.only(left: 24.w, right: 24.w, top: 40.h, bottom: 12.h),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               SizedBox(height: 10.h),
-              ClipRRect(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(100),
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {},
-                    child: Icon(
-                      Icons.menu,
-                      color: Colors.black,
-                      size: 22.sp,
-                    ),
-                  ),
-                ),
-              ),
+              _cart(context),
               SizedBox(height: 18.h),
               _searchTextField(),
               SizedBox(height: 36.h),
@@ -151,6 +138,47 @@ class BannerList extends StatelessWidget {
               ),
             ),
             fillColor: Colors.white),
+      ),
+    );
+  }
+
+  Widget _cart(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(
+            NavigatorFadeTransitionHelper(
+              child: const CartScreen(),
+            ),
+          );
+        },
+        child: SizedBox(
+          width: 25.w,
+          child: Stack(
+            children: [
+              SvgPicture.asset(
+                'assets/icons/cart.svg',
+                color: Colors.black,
+                width: 22.w,
+                height: 22.h,
+              ),
+              Positioned(
+                left: 13.w,
+                child: Container(
+                  width: 10.w,
+                  height: 10.h,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(
+                      100,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

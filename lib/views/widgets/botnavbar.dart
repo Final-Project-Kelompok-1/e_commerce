@@ -61,11 +61,10 @@ class BotNavBar extends StatelessWidget {
                   label: 'Wishlist',
                 ),
                 BottomNavigationBarItem(
-                  activeIcon: SvgPicture.asset('assets/icons/cart.svg',
-                      width: 24.w, height: 24.h, color: AppColor.secondColor),
-                  icon: SvgPicture.asset('assets/icons/cart.svg',
-                      width: 24.w, height: 24.h, color: Colors.grey),
-                  label: 'Cart',
+                  activeIcon: Icon(Icons.history,
+                      size: 24.sp, color: AppColor.mainColor),
+                  icon: Icon(Icons.history, size: 24.sp, color: Colors.grey),
+                  label: 'Transaksi',
                 ),
                 const BottomNavigationBarItem(
                   icon: Icon(Icons.person),

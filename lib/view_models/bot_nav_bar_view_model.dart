@@ -1,4 +1,4 @@
-import 'package:e_commerce/views/cart/cart_screen.dart';
+import 'package:e_commerce/views/history/history_screen.dart';
 import 'package:e_commerce/views/home/home_screen.dart';
 import 'package:e_commerce/views/profile/profile_scree.dart';
 import 'package:e_commerce/views/wishlist/wish_list_screen.dart';
@@ -8,7 +8,7 @@ class BotNavBarViewModel extends ChangeNotifier {
   final List<Widget> _pages = [
     const HomeScreen(),
     const WishListScreen(),
-    const CartScreen(),
+    const HistoryScreen(),
     const ProfileScreen(),
   ];
 

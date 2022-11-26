@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const BannerList(),
+              const HeaderHome(),
               SizedBox(height: 30.h),
               const CategoriesHome(),
               SizedBox(height: 40.h),
