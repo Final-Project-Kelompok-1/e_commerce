@@ -4,10 +4,39 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../view_models/best_seller_product_view_model.dart';
 import '../../view_models/bot_nav_bar_view_model.dart';
+import '../../view_models/featured_product_view_model.dart';
+import '../../view_models/product_view_model.dart';
+import '../../view_models/top_rated_product_view_model.dart';
+import '../../view_models/user_view_model.dart';
 
-class BotNavBar extends StatelessWidget {
+class BotNavBar extends StatefulWidget {
   const BotNavBar({super.key});
+
+  @override
+  State<BotNavBar> createState() => _BotNavBarState();
+}
+
+class _BotNavBarState extends State<BotNavBar> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(
+      () {
+        Provider.of<ProductViewModel>(context, listen: false)
+            .filterCategoryProduct();
+        Provider.of<TopRatedProductViewModel>(context, listen: false)
+            .filterCategoryProduct();
+        Provider.of<BestSellerProductViewModel>(context, listen: false)
+            .filterCategoryProduct();
+        Provider.of<FeaturedProductViewModel>(context, listen: false)
+            .filterCategoryProduct();
+        Provider.of<UserViewModel>(context, listen: false).addUserDetail();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

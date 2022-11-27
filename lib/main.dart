@@ -7,6 +7,7 @@ import 'package:e_commerce/view_models/login_view_model.dart';
 import 'package:e_commerce/view_models/product_view_model.dart';
 import 'package:e_commerce/view_models/register_view_model.dart';
 import 'package:e_commerce/view_models/top_rated_product_view_model.dart';
+import 'package:e_commerce/view_models/user_view_model.dart';
 import 'package:e_commerce/view_models/wishlist_view_model.dart';
 import 'package:e_commerce/views/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => WishListViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => UserViewModel(),
         ),
       ],
       child: ScreenUtilInit(

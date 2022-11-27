@@ -27,7 +27,10 @@ class HeaderTransaction extends StatelessWidget {
         padding:
             EdgeInsets.only(left: 24.w, right: 24.w, top: 40.h, bottom: 12.h),
         child: Center(
-          child: Text("My Transaction", style: AppFont.heading2),
+          child: Text(
+            "My Transaction",
+            style: AppFont.heading2.copyWith(color: Colors.white),
+          ),
         ),
       ),
     );

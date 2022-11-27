@@ -9,35 +9,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../utils/app_state/finite_state.dart';
-import '../../view_models/product_view_model.dart';
 import '../widgets/widgets.dart';
 import 'components/home_components.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-
-    Future.microtask(
-      () {
-        Provider.of<ProductViewModel>(context, listen: false)
-            .filterCategoryProduct();
-        Provider.of<TopRatedProductViewModel>(context, listen: false)
-            .filterCategoryProduct();
-        Provider.of<BestSellerProductViewModel>(context, listen: false)
-            .filterCategoryProduct();
-        Provider.of<FeaturedProductViewModel>(context, listen: false)
-            .filterCategoryProduct();
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
