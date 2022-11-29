@@ -26,7 +26,6 @@ class WishListProduct {
   final String deskripsi;
   final int stock;
   final String createDate;
-  final WishListProductCategory productCategory;
 
   WishListProduct(
       {required this.id,
@@ -36,8 +35,7 @@ class WishListProduct {
       required this.harga,
       required this.deskripsi,
       required this.stock,
-      required this.createDate,
-      required this.productCategory});
+      required this.createDate});
 
   factory WishListProduct.fromJson(Map<String, dynamic> json) =>
       WishListProduct(
@@ -49,21 +47,5 @@ class WishListProduct {
         deskripsi: json['deskripsi'] ?? "null",
         stock: json['stock'] ?? 0,
         createDate: json['updated_at'] ?? "null",
-        productCategory: json['category'] != null
-            ? WishListProductCategory.fromJson(
-                json['category'],
-              )
-            : WishListProductCategory(id: 0, name: 'null'),
       );
-}
-
-class WishListProductCategory {
-  final int id;
-  final String name;
-
-  WishListProductCategory({required this.id, required this.name});
-
-  factory WishListProductCategory.fromJson(Map<String, dynamic> json) =>
-      WishListProductCategory(
-          id: json['id'] ?? 0, name: json['name'] ?? "null");
 }

@@ -180,7 +180,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       builder: (context, category, _) => Column(
                         children: [
                           _containerAction(
-                              nameAction: 'Price (Low-High)',
+                              nameAction: 'Name (A-Z)',
                               function: () {
                                 category.changeIndex(0);
                                 category.ascendingSort();

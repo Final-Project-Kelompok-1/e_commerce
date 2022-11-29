@@ -112,14 +112,6 @@ class DetailWishlistProductScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
-                            product.product.productCategory.name,
-                            textAlign: TextAlign.right,
-                            style: AppFont.paragraphSmall.copyWith(
-                              color: const Color(0xffD9D9D9),
-                            ),
-                          ),
-                          SizedBox(height: 8.h),
                           SizedBox(
                             height: 50.h,
                             child: SingleChildScrollView(

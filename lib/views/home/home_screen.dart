@@ -12,8 +12,28 @@ import '../../utils/app_state/finite_state.dart';
 import '../widgets/widgets.dart';
 import 'components/home_components.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(
+      () {
+        Provider.of<TopRatedProductViewModel>(context, listen: false)
+            .filterCategoryProduct();
+        Provider.of<BestSellerProductViewModel>(context, listen: false)
+            .filterCategoryProduct();
+        Provider.of<FeaturedProductViewModel>(context, listen: false)
+            .filterCategoryProduct();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

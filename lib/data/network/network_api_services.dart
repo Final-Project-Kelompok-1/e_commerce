@@ -47,13 +47,15 @@ class NetworkApiServices implements BaseApiServices {
 
   @override
   Future<dynamic> postRequest(String url, data) async {
+    SharedPreferences? prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token').toString();
     try {
       final response = await http.post(
         Uri.parse('$baseUrl$url'),
         body: data is Map ? data : data.toJson(),
         headers: {
           "Accept": "application/json",
-          "Content-Type": "application/x-www-form-urlencoded"
+          'Authorization': 'Bearer $token',
         },
       );
 

@@ -1,7 +1,6 @@
 import 'package:e_commerce/models/wishlist_model.dart';
 import 'package:e_commerce/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/repository/apps_repository.dart';
 
@@ -35,11 +34,9 @@ class WishListViewModel extends ChangeNotifier {
   }
 
   Future<void> postWishList({required int idBarang}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
     try {
-      await appsRepository.postWishlist(
-          idBarang, prefs.getInt('userid') as int);
+      await appsRepository.postWishlist(idBarang);
+      fetchWishlistProduct();
       notifyListeners();
     } catch (e) {
       rethrow;
@@ -49,6 +46,7 @@ class WishListViewModel extends ChangeNotifier {
   Future<void> deleteWishList(int id) async {
     try {
       await appsRepository.deleteWishlist(id);
+      fetchWishlistProduct();
       notifyListeners();
     } catch (e) {
       rethrow;

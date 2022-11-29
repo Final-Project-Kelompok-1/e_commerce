@@ -193,7 +193,9 @@ class WishListProductCard extends StatelessWidget {
                                         (_) => Fluttertoast.showToast(
                                                 msg:
                                                     'Wishlist Berhasil Di Hapus')
-                                            .then((value) => Navigator.pop),
+                                            .then(
+                                          (value) => Navigator.pop(context),
+                                        ),
                                       );
                                 } catch (e) {
                                   Fluttertoast.showToast(

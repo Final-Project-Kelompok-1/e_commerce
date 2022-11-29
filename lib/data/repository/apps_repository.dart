@@ -77,25 +77,18 @@ class AppsRepository {
       dynamic response = await _apiServices.getRequest('/api/wishlist/');
       return (response['data'] as List)
           .map((e) => WishListModel.fromJson(e))
-          .toList()
-          .where(
-            (element) => element.product.productCategory.name
-                .toLowerCase()
-                .contains('k-4-1'),
-          )
           .toList();
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<void> postWishlist(int idBarang, int userId) async {
+  Future<void> postWishlist(int idBarang) async {
     try {
       await _apiServices.postRequest(
-        '/api/wishlist/',
+        '/api/wishlist',
         {
-          'barang_id': idBarang.toString(),
-          'user_id': userId.toString(),
+          'product_id': idBarang.toString(),
         },
       );
     } catch (_) {
