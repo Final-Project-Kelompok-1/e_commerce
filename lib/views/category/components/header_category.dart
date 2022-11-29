@@ -1,11 +1,9 @@
 import 'package:e_commerce/utils/navigator/navigator_fade_transition.dart';
-import 'package:e_commerce/view_models/category_product_view_model.dart.dart';
 import 'package:e_commerce/views/cart/cart_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 
 import '../../../config/config.dart';
 
@@ -116,54 +114,47 @@ class HeaderCategory extends StatelessWidget {
   Widget _searchTextField() {
     return SizedBox(
       height: 40,
-      child: Consumer<CategoryProductViewModel>(
-        builder: (context, category, _) => TextField(
-          controller: category.searchController,
-          onChanged: (value) {
-            category.search();
-          },
-          decoration: InputDecoration(
-              suffixIcon: IconButton(
-                onPressed: () {},
-                icon: const Icon(CupertinoIcons.search, color: Colors.black87),
+      child: TextField(
+        readOnly: true,
+        decoration: InputDecoration(
+            suffixIcon:
+                const Icon(CupertinoIcons.search, color: Colors.black87),
+            contentPadding: EdgeInsets.only(left: 20.w, top: 5, right: 20.h),
+            hintStyle:
+                AppFont.paragraphSmall.copyWith(color: Colors.grey.shade700),
+            hintText: "Search Product Name",
+            filled: true,
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
               ),
-              contentPadding: EdgeInsets.only(left: 20.w, top: 5, right: 20.h),
-              hintStyle:
-                  AppFont.paragraphSmall.copyWith(color: Colors.grey.shade700),
-              hintText: "Search Product Name",
-              filled: true,
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
+            ),
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
               ),
-              errorBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
+            ),
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
               ),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
+            ),
+            disabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
               ),
-              disabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
+            ),
+            focusedErrorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
               ),
-              focusedErrorBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
-              ),
-              fillColor: Colors.white),
-        ),
+            ),
+            fillColor: Colors.white),
       ),
     );
   }

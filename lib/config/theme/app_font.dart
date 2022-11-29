@@ -41,7 +41,7 @@ class AppFont {
 
   static TextStyle get paragraphLarge => GoogleFonts.roboto(
         fontSize: 16.sp,
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
         color: Colors.black,
       );
 
@@ -53,7 +53,7 @@ class AppFont {
 
   static TextStyle get paragraphMedium => GoogleFonts.roboto(
         fontSize: 14.sp,
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
         color: Colors.black,
       );
 
@@ -65,7 +65,7 @@ class AppFont {
 
   static TextStyle get paragraphSmall => GoogleFonts.roboto(
         fontSize: 12.sp,
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
         color: Colors.black,
       );
 
@@ -107,13 +107,13 @@ class AppFont {
 
   static TextStyle get componentMedium => GoogleFonts.roboto(
         fontSize: 14.sp,
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
         color: Colors.black,
       );
 
   static TextStyle get componentSmall => GoogleFonts.roboto(
         fontSize: 10.sp,
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
         color: Colors.black,
       );
 

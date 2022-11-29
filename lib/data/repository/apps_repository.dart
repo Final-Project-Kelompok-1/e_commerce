@@ -61,11 +61,11 @@ class AppsRepository {
       ProductModel product = ProductModel.fromJson(response);
 
       return product.product
-          .where(
-            (element) => element.name.toLowerCase().contains(
-                  value.toLowerCase(),
-                ),
-          )
+          .where((element) =>
+              element.name.toLowerCase().contains(
+                    value.toLowerCase(),
+                  ) &&
+              element.productCategory.name.toLowerCase().contains('k-4-1'))
           .toList();
     } catch (e) {
       rethrow;

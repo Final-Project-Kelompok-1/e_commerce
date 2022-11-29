@@ -18,18 +18,14 @@ class GridCategoryProduct extends StatelessWidget {
         builder: (context, category, _) => GridView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: category.searchController.text.isEmpty
-              ? product.length
-              : category.searchProducts.length,
+          itemCount: product.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               childAspectRatio: 1 / 1.5,
               crossAxisCount: 2,
               crossAxisSpacing: 12,
               mainAxisSpacing: 12),
           itemBuilder: (context, index) {
-            final data = category.searchController.text.isEmpty
-                ? product[index]
-                : category.searchProducts[index];
+            final data = product[index];
             return ProductWidget(product: data);
           },
         ),

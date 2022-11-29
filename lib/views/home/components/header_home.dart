@@ -2,6 +2,7 @@ import 'package:e_commerce/models/banner_model.dart';
 import 'package:e_commerce/utils/navigator/navigator.dart';
 import 'package:e_commerce/views/cart/cart_screen.dart';
 import 'package:e_commerce/views/category/category_screen.dart';
+import 'package:e_commerce/views/search/search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,7 +38,7 @@ class HeaderHome extends StatelessWidget {
               SizedBox(height: 10.h),
               _cart(context),
               SizedBox(height: 18.h),
-              _searchTextField(),
+              _searchTextField(context),
               SizedBox(height: 36.h),
               _listBanner(),
             ],
@@ -91,15 +92,27 @@ class HeaderHome extends StatelessWidget {
     );
   }
 
-  Widget _searchTextField() {
+  Widget _searchTextField(BuildContext context) {
     return SizedBox(
       height: 40,
       child: TextField(
+        onTap: () {
+          Navigator.of(context).push(
+            NavigatorFadeTransitionHelper(
+              child: const SearchScreen(),
+            ),
+          );
+        },
         readOnly: true,
-        onChanged: (value) {},
         decoration: InputDecoration(
             suffixIcon: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  NavigatorFadeTransitionHelper(
+                    child: const SearchScreen(),
+                  ),
+                );
+              },
               icon: const Icon(CupertinoIcons.search, color: Colors.black87),
             ),
             contentPadding: EdgeInsets.only(left: 20.w, top: 5, right: 20.h),

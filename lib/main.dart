@@ -6,6 +6,7 @@ import 'package:e_commerce/view_models/featured_product_view_model.dart';
 import 'package:e_commerce/view_models/login_view_model.dart';
 import 'package:e_commerce/view_models/product_view_model.dart';
 import 'package:e_commerce/view_models/register_view_model.dart';
+import 'package:e_commerce/view_models/search_view_model.dart';
 import 'package:e_commerce/view_models/top_rated_product_view_model.dart';
 import 'package:e_commerce/view_models/user_view_model.dart';
 import 'package:e_commerce/view_models/wishlist_view_model.dart';
@@ -57,6 +58,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => UserViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SearchProductViewModel(),
         ),
       ],
       child: ScreenUtilInit(

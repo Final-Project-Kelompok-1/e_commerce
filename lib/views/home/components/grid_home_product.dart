@@ -22,6 +22,7 @@ class GridHomeProduct extends StatelessWidget {
       child: Column(
         children: [
           titleCategory(),
+          SizedBox(height: 16.h),
           GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
