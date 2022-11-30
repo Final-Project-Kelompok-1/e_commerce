@@ -18,7 +18,6 @@ class ProductModel {
 
 class Product {
   final int id;
-  final int quantity = 0;
   final String name;
   final int categoryId;
   final String image;
@@ -47,7 +46,7 @@ class Product {
         harga: json['harga'] ?? 0,
         deskripsi: json['deskripsi'] ?? "null",
         stock: json['stock'] ?? 0,
-        createDate: json['updated_at'] ?? "null",
+        createDate: json['created_at'] ?? "null",
         productCategory: json['category'] != null
             ? ProductCategory.fromJson(
                 json['category'],
@@ -63,7 +62,7 @@ class Product {
         'harga': harga,
         'deskripsi': deskripsi,
         'storck': stock,
-        'updated_at': createDate,
+        'created_at': createDate,
         'category': productCategory
       };
 }

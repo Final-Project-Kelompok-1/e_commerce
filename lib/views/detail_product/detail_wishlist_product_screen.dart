@@ -253,7 +253,7 @@ class DetailWishlistProductScreen extends StatelessWidget {
       pageBuilder: (context, _, __) {
         return Align(
           alignment: Alignment.bottomCenter,
-          child: ModalContainerWishlist(product: product.product),
+          child: ModalContainerWishList(product: product.product),
         );
       },
       transitionBuilder: (_, animation1, __, child) {

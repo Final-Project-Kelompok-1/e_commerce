@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/models/product_model.dart';
 import 'package:e_commerce/utils/navigator/navigator.dart';
+import 'package:e_commerce/view_models/wishlist_view_model.dart';
 import 'package:e_commerce/views/review/review_screen.dart';
 import 'package:e_commerce/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 import '../../config/config.dart';
 import 'components/detail_components.dart';
@@ -233,24 +236,39 @@ class DetailProduct extends StatelessWidget {
             radius: 10,
             fontSize: 14,
             onpressed: () {
-              _checkoutModal(context);
+              _addToCartBottomSheet(context);
             },
           ),
-          IconButtonWidget(
-            iconAsset: 'assets/icons/cart.svg',
-            height: 55,
-            width: 50,
-            radius: 100,
-            widthIcon: 30,
-            heightIcon: 30,
-            onpressed: () {},
+          Consumer<WishListViewModel>(
+            builder: (context, wishlist, _) => IconButtonWidget(
+              iconAsset: 'assets/icons/shopping_bag.svg',
+              height: 55,
+              width: 50,
+              radius: 100,
+              widthIcon: 30,
+              heightIcon: 30,
+              onpressed: () async {
+                try {
+                  await wishlist
+                      .postWishList(
+                        idBarang: product.id,
+                      )
+                      .then(
+                        (_) => Fluttertoast.showToast(
+                            msg: 'Berhasil ditambahkan ke wishlist'),
+                      );
+                } catch (e) {
+                  Fluttertoast.showToast(msg: e.toString());
+                }
+              },
+            ),
           ),
         ],
       ),
     );
   }
 
-  void _checkoutModal(BuildContext context) {
+  void _addToCartBottomSheet(BuildContext context) {
     showGeneralDialog(
       barrierLabel: "showGeneralDialog",
       barrierDismissible: true,

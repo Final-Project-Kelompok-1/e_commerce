@@ -1,14 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/config/config.dart';
-import 'package:e_commerce/view_models/checkout_view_model.dart';
+import 'package:e_commerce/view_models/cart_view_model.dart';
 import 'package:e_commerce/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
-import '../../../models/product_model.dart';
-import '../../../utils/utils.dart';
-import '../../checkout/checkout_screen.dart';
+import '../../models/product_model.dart';
 
 class ModalContainer extends StatefulWidget {
   final Product product;
@@ -22,9 +21,7 @@ class _ModalContainerState extends State<ModalContainer> {
   @override
   void initState() {
     super.initState();
-    Provider.of<CheckoutViewModel>(context, listen: false).resetQuantity();
-    Provider.of<CheckoutViewModel>(context, listen: false)
-        .addInitialPrice(widget.product.harga);
+    Provider.of<CartViewModel>(context, listen: false).resetQuantity();
   }
 
   @override
@@ -48,7 +45,7 @@ class _ModalContainerState extends State<ModalContainer> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Checkout Cart", style: AppFont.paragraphLargeBold),
+                  Text("Add to Cart", style: AppFont.paragraphLargeBold),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(100),
                     child: Material(
@@ -66,20 +63,34 @@ class _ModalContainerState extends State<ModalContainer> {
               _detailProduct(width),
               SizedBox(height: 27.h),
               _quantityProduct(),
-              SizedBox(height: 81.h),
-              ButtonWidget(
-                  buttonText: 'Checkout Cart',
-                  height: 45,
-                  width: 220,
-                  onpressed: () {
-                    Navigator.of(context).push(
-                      NavigatorFadeTransitionHelper(
-                        child: CheckoutScreen(product: widget.product),
-                      ),
-                    );
-                  },
-                  radius: 10,
-                  fontSize: 18),
+              SizedBox(height: 61.h),
+              Consumer<CartViewModel>(
+                builder: (context, cart, _) => ButtonWidget(
+                    buttonText: 'Confirm',
+                    height: 45,
+                    width: 220,
+                    onpressed: () async {
+                      try {
+                        await cart
+                            .postCart(
+                                productId: widget.product.id,
+                                quantity: cart.quantityProduct)
+                            .then(
+                              (_) => Fluttertoast.showToast(
+                                      msg: "Berhasil ditambahkan ke keranjang")
+                                  .then(
+                                (_) => Navigator.pop(
+                                  context,
+                                ),
+                              ),
+                            );
+                      } catch (e) {
+                        Fluttertoast.showToast(msg: e.toString());
+                      }
+                    },
+                    radius: 10,
+                    fontSize: 18),
+              ),
               SizedBox(height: 30.h),
             ],
           ),
@@ -153,7 +164,7 @@ class _ModalContainerState extends State<ModalContainer> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text("Quantity", style: AppFont.paragraphMediumBold),
-        Consumer<CheckoutViewModel>(
+        Consumer<CartViewModel>(
           builder: (context, checkout, _) => Row(
             children: [
               ClipRRect(

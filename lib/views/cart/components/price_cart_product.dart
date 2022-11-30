@@ -1,4 +1,7 @@
+import 'package:e_commerce/view_models/cart_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import '../../../config/theme/theme.dart';
 
@@ -7,16 +10,21 @@ class PriceCartProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text("Total", style: AppFont.paragraphMediumBold),
-        Text(
-          "Rp 250000",
-          style:
-              AppFont.paragraphMediumBold.copyWith(color: AppColor.mainColor),
+    return Consumer<CartViewModel>(
+      builder: (context, cart, _) => Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Total", style: AppFont.paragraphMediumBold),
+            Text(
+              "Rp ${cart.sumPriceProducts}",
+              style: AppFont.paragraphMediumBold
+                  .copyWith(color: AppColor.mainColor),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

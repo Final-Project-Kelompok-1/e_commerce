@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/models/product_model.dart';
+import 'package:e_commerce/view_models/cart_view_model.dart';
 import 'package:e_commerce/view_models/wishlist_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,10 +11,15 @@ import '../../config/config.dart';
 import '../../utils/utils.dart';
 import '../detail_product/detail_product_screen.dart';
 
-class ProductWidget extends StatelessWidget {
+class ProductWidget extends StatefulWidget {
   final Product product;
   const ProductWidget({super.key, required this.product});
 
+  @override
+  State<ProductWidget> createState() => _ProductWidgetState();
+}
+
+class _ProductWidgetState extends State<ProductWidget> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -21,7 +27,7 @@ class ProductWidget extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           NavigatorFadeTransitionHelper(
-            child: DetailProduct(product: product),
+            child: DetailProduct(product: widget.product),
           ),
         );
       },
@@ -47,7 +53,7 @@ class ProductWidget extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: CachedNetworkImageProvider(product.image),
+                      image: CachedNetworkImageProvider(widget.product.image),
                       fit: BoxFit.fill),
                   color: Colors.grey[50],
                   borderRadius: const BorderRadius.only(
@@ -68,7 +74,7 @@ class ProductWidget extends StatelessWidget {
                     SizedBox(
                       height: 40.h,
                       child: Text(
-                        product.name,
+                        widget.product.name,
                         style: AppFont.paragraphSmall
                             .copyWith(fontWeight: FontWeight.w600),
                         overflow: TextOverflow.ellipsis,
@@ -80,7 +86,7 @@ class ProductWidget extends StatelessWidget {
                     SizedBox(
                       height: 20.h,
                       child: Text(
-                        "Rp. ${product.harga}",
+                        "Rp. ${widget.product.harga}",
                         style: AppFont.paragraphSmall.copyWith(
                             fontWeight: FontWeight.w600,
                             color: Colors.red.shade600),
@@ -188,7 +194,7 @@ class ProductWidget extends StatelessWidget {
                                 try {
                                   await wishlist
                                       .postWishList(
-                                        idBarang: product.id,
+                                        idBarang: widget.product.id,
                                       )
                                       .then(
                                         (_) => Fluttertoast.showToast(
@@ -205,12 +211,29 @@ class ProductWidget extends StatelessWidget {
                               },
                               width: width),
                         ),
-                        _containerAction(
-                            nameAction: 'Add To Cart',
-                            function: () {
-                              Navigator.pop(context);
-                            },
-                            width: width),
+                        Consumer<CartViewModel>(
+                          builder: (context, cart, _) => _containerAction(
+                              nameAction: 'Add To Cart',
+                              function: () async {
+                                try {
+                                  await cart
+                                      .postCart(
+                                          productId: widget.product.id,
+                                          quantity: 1)
+                                      .then(
+                                        (_) => Fluttertoast.showToast(
+                                                msg:
+                                                    "Berhasil menambahkan produk ke keranjang")
+                                            .then(
+                                          (_) => Navigator.pop(context),
+                                        ),
+                                      );
+                                } catch (e) {
+                                  Fluttertoast.showToast(msg: e.toString());
+                                }
+                              },
+                              width: width),
+                        ),
                       ],
                     ),
                   ],
@@ -223,7 +246,7 @@ class ProductWidget extends StatelessWidget {
     );
   }
 
-  _containerAction(
+  Widget _containerAction(
       {required String nameAction,
       required void Function() function,
       required double width}) {

@@ -20,6 +20,7 @@ class TopRatedProductViewModel extends ChangeNotifier {
       for (var i in products) {
         if (i.productCategory.name == 'k-4-1_toprated' &&
             !_topRatedProduct.contains(i)) {
+          _topRatedProduct.add(i);
           notifyListeners();
         }
         notifyListeners();

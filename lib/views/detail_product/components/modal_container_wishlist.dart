@@ -1,25 +1,26 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/config/config.dart';
 import 'package:e_commerce/models/wishlist_model.dart';
-import 'package:e_commerce/view_models/checkout_view_model.dart';
+import 'package:e_commerce/view_models/cart_view_model.dart';
 import 'package:e_commerce/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
-class ModalContainerWishlist extends StatefulWidget {
+class ModalContainerWishList extends StatefulWidget {
   final WishListProduct product;
-  const ModalContainerWishlist({super.key, required this.product});
+  const ModalContainerWishList({super.key, required this.product});
 
   @override
-  State<ModalContainerWishlist> createState() => _ModalContainerState();
+  State<ModalContainerWishList> createState() => _ModalContainerState();
 }
 
-class _ModalContainerState extends State<ModalContainerWishlist> {
+class _ModalContainerState extends State<ModalContainerWishList> {
   @override
   void initState() {
     super.initState();
-    Provider.of<CheckoutViewModel>(context, listen: false).resetQuantity();
+    Provider.of<CartViewModel>(context, listen: false).resetQuantity();
   }
 
   @override
@@ -43,7 +44,7 @@ class _ModalContainerState extends State<ModalContainerWishlist> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Checkout Cart", style: AppFont.paragraphLargeBold),
+                  Text("Add to Cart", style: AppFont.paragraphLargeBold),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(100),
                     child: Material(
@@ -61,14 +62,34 @@ class _ModalContainerState extends State<ModalContainerWishlist> {
               _detailProduct(width),
               SizedBox(height: 27.h),
               _quantityProduct(),
-              SizedBox(height: 81.h),
-              ButtonWidget(
-                  buttonText: 'Checkout Cart',
-                  height: 45,
-                  width: 220,
-                  onpressed: () {},
-                  radius: 10,
-                  fontSize: 18),
+              SizedBox(height: 61.h),
+              Consumer<CartViewModel>(
+                builder: (context, cart, _) => ButtonWidget(
+                    buttonText: 'Confirm',
+                    height: 45,
+                    width: 220,
+                    onpressed: () async {
+                      try {
+                        await cart
+                            .postCart(
+                                productId: widget.product.id,
+                                quantity: cart.quantityProduct)
+                            .then(
+                              (_) => Fluttertoast.showToast(
+                                      msg: "Berhasil ditambahkan ke keranjang")
+                                  .then(
+                                (_) => Navigator.pop(
+                                  context,
+                                ),
+                              ),
+                            );
+                      } catch (e) {
+                        Fluttertoast.showToast(msg: e.toString());
+                      }
+                    },
+                    radius: 10,
+                    fontSize: 18),
+              ),
               SizedBox(height: 30.h),
             ],
           ),
@@ -127,7 +148,7 @@ class _ModalContainerState extends State<ModalContainerWishlist> {
                     'Stock : ${widget.product.stock}',
                     style: AppFont.paragraphMediumBold
                         .copyWith(color: const Color(0xffC4C4C4)),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -142,7 +163,7 @@ class _ModalContainerState extends State<ModalContainerWishlist> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text("Quantity", style: AppFont.paragraphMediumBold),
-        Consumer<CheckoutViewModel>(
+        Consumer<CartViewModel>(
           builder: (context, checkout, _) => Row(
             children: [
               ClipRRect(
@@ -150,7 +171,10 @@ class _ModalContainerState extends State<ModalContainerWishlist> {
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      checkout.minusQuantityProduct(
+                          widget.product.stock, widget.product.harga);
+                    },
                     child: SizedBox(
                       width: 25.w,
                       height: 25.h,
@@ -168,7 +192,10 @@ class _ModalContainerState extends State<ModalContainerWishlist> {
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      checkout.plusQuantityProduct(
+                          widget.product.stock, widget.product.harga);
+                    },
                     child: SizedBox(
                       width: 25.w,
                       height: 25.h,

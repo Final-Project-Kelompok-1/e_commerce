@@ -1,3 +1,4 @@
+import 'package:e_commerce/models/cart_model.dart';
 import 'package:e_commerce/models/login_model.dart';
 import 'package:e_commerce/models/product_model.dart';
 import 'package:e_commerce/models/register_model.dart';
@@ -99,6 +100,39 @@ class AppsRepository {
   Future<void> deleteWishlist(int id) async {
     try {
       await _apiServices.deleteRequest('/api/wishlist/$id');
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<List<CartModel>> fetchCart() async {
+    try {
+      dynamic response = await _apiServices.getRequest('/api/keranjang/');
+      return (response['data'] as List)
+          .map((e) => CartModel.fromJson(e))
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> postCart({required int productId, required int quantity}) async {
+    try {
+      await _apiServices.postRequest(
+        '/api/keranjang',
+        {
+          'product_id': productId.toString(),
+          'qty': quantity.toString(),
+        },
+      );
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteCart(int id) async {
+    try {
+      await _apiServices.deleteRequest('/api/keranjang/$id');
     } catch (_) {
       rethrow;
     }

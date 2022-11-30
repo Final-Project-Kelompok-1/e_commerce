@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/config.dart';
-import '../../../view_models/category_product_view_model.dart.dart';
 import '../../widgets/widgets.dart';
 
 class SortingButtonSearch extends StatelessWidget {
