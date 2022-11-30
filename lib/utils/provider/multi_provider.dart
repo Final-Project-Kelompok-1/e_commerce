@@ -8,6 +8,7 @@ import 'package:e_commerce/view_models/product_view_model.dart';
 import 'package:e_commerce/view_models/register_view_model.dart';
 import 'package:e_commerce/view_models/search_view_model.dart';
 import 'package:e_commerce/view_models/top_rated_product_view_model.dart';
+import 'package:e_commerce/view_models/transaction_view_model.dart';
 import 'package:e_commerce/view_models/user_view_model.dart';
 import 'package:e_commerce/view_models/wishlist_view_model.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,9 @@ Function multiProvider = (Widget widget) {
     ),
     ChangeNotifierProvider(
       create: (_) => CartViewModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => TransactionViewModel(),
     ),
   ], child: widget);
 };

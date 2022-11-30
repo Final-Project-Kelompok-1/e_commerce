@@ -2,12 +2,16 @@ import 'package:e_commerce/config/config.dart';
 import 'package:e_commerce/utils/app_state/app_state.dart';
 import 'package:e_commerce/utils/navigator/navigator.dart';
 import 'package:e_commerce/view_models/cart_view_model.dart';
+import 'package:e_commerce/view_models/transaction_view_model.dart';
+import 'package:e_commerce/view_models/user_view_model.dart';
 import 'package:e_commerce/views/checkout/success_checkout_screen.dart';
+import 'package:e_commerce/views/profile/edit_profil_scren.dart';
 import 'package:e_commerce/views/search/components/feature_product_recommendation.dart';
 import 'package:e_commerce/views/search/search_screen.dart';
 import 'package:e_commerce/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import 'components/cart_components.dart';
@@ -63,7 +67,10 @@ class _CartScreenState extends State<CartScreen> {
                 if (cart.appState == AppState.loaded) {
                   return _hasDataCart();
                 }
-                return _noDataCart(width);
+                if (cart.appState == AppState.noData) {
+                  return _noDataCart(width);
+                }
+                return _hasDataCart();
               },
             ),
             SizedBox(height: 40.h),
@@ -82,19 +89,39 @@ class _CartScreenState extends State<CartScreen> {
         SizedBox(height: 16.h),
         const PriceCartProduct(),
         SizedBox(height: 30.h),
-        ButtonWidget(
-            buttonText: 'BUY NOW',
-            height: 50,
-            width: 300,
-            onpressed: () {
-              Navigator.of(context).push(
-                NavigatorFadeTransitionHelper(
-                  child: const SuccessCheckoutScreen(),
-                ),
-              );
-            },
-            radius: 10,
-            fontSize: 16),
+        Consumer<UserViewModel>(
+          builder: (context, user, _) => Consumer<TransactionViewModel>(
+            builder: (context, transaction, _) => ButtonWidget(
+                buttonText: 'BUY NOW',
+                height: 50,
+                width: 300,
+                onpressed: () async {
+                  if (user.user.alamat!.isEmpty) {
+                    return showDialog(
+                      context: context,
+                      builder: (context) => _modalDataAlert(context),
+                    );
+                  }
+                  try {
+                    await transaction
+                        .postTransaction(user.user.alamat!)
+                        .then((_) => Fluttertoast.showToast(
+                            msg: "Berhasil checkout product"))
+                        .then(
+                          (_) => Navigator.of(context).pushReplacement(
+                            NavigatorFadeTransitionHelper(
+                              child: const SuccessCheckoutScreen(),
+                            ),
+                          ),
+                        );
+                  } catch (e) {
+                    Fluttertoast.showToast(msg: e.toString());
+                  }
+                },
+                radius: 10,
+                fontSize: 16),
+          ),
+        ),
       ],
     );
   }
@@ -141,20 +168,100 @@ class _CartScreenState extends State<CartScreen> {
                   buttonText: "Mulai Belanja",
                   height: 35,
                   width: width,
-                  onpressed: () {
+                  onpressed: () async {
                     Navigator.of(context).pushReplacement(
                       NavigatorFadeTransitionHelper(
-                          child: const SearchScreen()),
+                        child: const SearchScreen(),
+                      ),
                     );
+
+                    Fluttertoast.showToast(msg: "Alamat kamu masih kosong");
                   },
                   radius: 10,
-                  fontSize: 14)
+                  fontSize: 14),
             ],
           ),
         ),
         SizedBox(height: 32.h),
         const FeaturedProductRecommendation(),
       ],
+    );
+  }
+
+  Widget _modalDataAlert(context) {
+    return Center(
+      child: Container(
+        width: 330.w,
+        height: 310.h,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.close,
+                      color: Colors.grey.shade500, size: 32.sp),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                height: 50.h,
+                width: 50.w,
+                child: Image.asset('assets/images/warning.png'),
+              ),
+              SizedBox(
+                height: 32.h,
+              ),
+              Text(
+                "Duh, data dirimu masih belum lengkap!",
+                style: AppFont.paragraphLargeBold,
+              ),
+              SizedBox(
+                height: 12.h,
+              ),
+              Text(
+                "Yuk, lengkapi data profilmu terlebih dahulu sebelum kembali melanjutkan pemesanan.",
+                style: AppFont.paragraphMedium
+                    .copyWith(color: Colors.grey.shade600),
+              ),
+              SizedBox(
+                height: 32.h,
+              ),
+              Center(
+                child: ButtonWidget(
+                    buttonText: "Lengkapi Profil",
+                    height: 45,
+                    width: 200,
+                    onpressed: () {
+                      Navigator.pop(context);
+                      Navigator.of(context).push(
+                        NavigatorFadeTransitionHelper(
+                          child: const EditProfileScreen(),
+                        ),
+                      );
+                    },
+                    radius: 10,
+                    fontSize: 16),
+              ),
+              SizedBox(
+                height: 16.h,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -12,11 +12,11 @@ class UserViewModel extends ChangeNotifier {
   void addUserDetail() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    int id = prefs.getInt('id') ?? 0;
+    int id = prefs.getInt('userid') ?? 0;
     String name = prefs.getString('name') ?? 'null';
     String handphone = prefs.getString('phone') ?? 'null';
     String email = prefs.getString('email') ?? 'null';
-    String alamat = prefs.getString('alamat') ?? '';
+    String alamat = prefs.getString('${id}alamat') ?? '';
 
     _user = UserModel(
         id: id, name: name, email: email, phone: handphone, alamat: alamat);
@@ -25,8 +25,9 @@ class UserViewModel extends ChangeNotifier {
 
   void saveAddress() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt('userid')!;
 
-    prefs.setString('alamat', _addressController.text);
+    prefs.setString('${id}alamat', _addressController.text);
     addUserDetail();
     notifyListeners();
   }
@@ -34,7 +35,9 @@ class UserViewModel extends ChangeNotifier {
   void initialValueController() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    _addressController.text = prefs.getString('alamat') ?? '';
+    int id = prefs.getInt('userid')!;
+
+    _addressController.text = prefs.getString('${id}alamat') ?? '';
 
     notifyListeners();
   }

@@ -104,10 +104,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               height: 45,
                               width: width,
                               onpressed: () {
-                                user.saveAddress();
-                                Fluttertoast.showToast(
-                                    msg: "Berhasil update profil");
-                                Navigator.pop(context);
+                                if (user.addressController.text.isEmpty) {
+                                  Fluttertoast.showToast(
+                                      msg: "Form tidak boleh kosong");
+                                } else {
+                                  user.saveAddress();
+                                  Fluttertoast.showToast(
+                                      msg: "Berhasil update profil");
+                                  Navigator.pop(context);
+                                }
                               },
                               radius: 10,
                               fontSize: 16),

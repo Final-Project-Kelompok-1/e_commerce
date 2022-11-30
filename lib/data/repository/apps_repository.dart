@@ -137,4 +137,17 @@ class AppsRepository {
       rethrow;
     }
   }
+
+  Future<void> postTransaction(String address) async {
+    try {
+      await _apiServices.postRequest(
+        '/api/transaksi',
+        {
+          'alamat': address,
+        },
+      );
+    } catch (_) {
+      rethrow;
+    }
+  }
 }
