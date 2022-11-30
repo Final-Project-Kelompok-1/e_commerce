@@ -4,8 +4,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserViewModel extends ChangeNotifier {
   late UserModel _user;
+  final TextEditingController _addressController = TextEditingController();
 
   UserModel get user => _user;
+  TextEditingController get addressController => _addressController;
 
   void addUserDetail() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -14,8 +16,26 @@ class UserViewModel extends ChangeNotifier {
     String name = prefs.getString('name') ?? 'null';
     String handphone = prefs.getString('phone') ?? 'null';
     String email = prefs.getString('email') ?? 'null';
+    String alamat = prefs.getString('alamat') ?? '';
 
-    _user = UserModel(id: id, name: name, email: email, phone: handphone);
+    _user = UserModel(
+        id: id, name: name, email: email, phone: handphone, alamat: alamat);
+    notifyListeners();
+  }
+
+  void saveAddress() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    prefs.setString('alamat', _addressController.text);
+    addUserDetail();
+    notifyListeners();
+  }
+
+  void initialValueController() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    _addressController.text = prefs.getString('alamat') ?? '';
+
     notifyListeners();
   }
 }

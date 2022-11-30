@@ -3,6 +3,7 @@ import 'package:e_commerce/utils/navigator/navigator.dart';
 import 'package:e_commerce/view_models/login_view_model.dart';
 import 'package:e_commerce/view_models/user_view_model.dart';
 import 'package:e_commerce/views/auth/login_screen.dart';
+import 'package:e_commerce/views/profile/edit_profil_scren.dart';
 import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,15 +17,17 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [AppColor.thirdColor, AppColor.secondColor])),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [AppColor.thirdColor, AppColor.secondColor],
+          ),
+        ),
         child: SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
           child: SizedBox(
             width: width,
             child: Column(
@@ -39,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 40.h),
-                _profileContainer(width),
+                _profileContainer(width, context, height),
               ],
             ),
           ),
@@ -48,8 +51,9 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _profileContainer(double width) {
+  Widget _profileContainer(double width, BuildContext context, double height) {
     return Container(
+      height: height * 0.7,
       width: width,
       decoration: BoxDecoration(
         color: Colors.grey[50],
@@ -74,27 +78,24 @@ class ProfileScreen extends StatelessWidget {
             ),
             SizedBox(height: 16.h),
             _detailProfile(),
-            SizedBox(height: 40.h),
+            SizedBox(height: 24.h),
             Consumer<LoginViewModel>(
               builder: (context, logout, _) => ButtonWidget(
-                  buttonText: "Logout",
+                  buttonText: "Edit Profil",
                   height: 45,
                   width: width,
-                  onpressed: () async {
-                    await logout.logout().then(
-                          (_) => Fluttertoast.showToast(msg: "Berhasil Logout")
-                              .then(
-                            (_) => Navigator.of(context).pushAndRemoveUntil(
-                                NavigatorFadeTransitionHelper(
-                                    child: const LoginScreen()),
-                                (route) => false),
-                          ),
-                        );
+                  onpressed: () {
+                    Navigator.of(context).push(
+                      NavigatorFadeTransitionHelper(
+                        child: const EditProfileScreen(),
+                      ),
+                    );
                   },
                   radius: 10,
                   fontSize: 16),
             ),
-            SizedBox(height: 120.h),
+            SizedBox(height: 8.h),
+            _logout(context: context),
           ],
         ),
       ),
@@ -108,6 +109,7 @@ class ProfileScreen extends StatelessWidget {
           customProfile(icon: Icons.person, title: user.user.name),
           customProfile(icon: Icons.email, title: user.user.email),
           customProfile(icon: Icons.phone, title: user.user.phone),
+          customProfile(icon: Icons.location_on, title: user.user.alamat!),
         ],
       ),
     );
@@ -136,6 +138,37 @@ class ProfileScreen extends StatelessWidget {
             color: Colors.grey.shade300,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _logout({required BuildContext context}) {
+    return Consumer<LoginViewModel>(
+      builder: (context, login, _) => SizedBox(
+        width: 140.w,
+        child: TextButton(
+          onPressed: () async {
+            await login.logout().then(
+                  (_) => Fluttertoast.showToast(msg: "Berhasil Logout").then(
+                    (_) => Navigator.of(context).pushAndRemoveUntil(
+                        NavigatorFadeTransitionHelper(
+                            child: const LoginScreen()),
+                        (route) => false),
+                  ),
+                );
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SvgPicture.asset('assets/icons/logout.svg',
+                  width: 24.w, height: 24.h, color: AppColor.secondColor),
+              SizedBox(width: 8.w),
+              Text("Keluar Akun",
+                  style: AppFont.paragraphMediumBold
+                      .copyWith(color: AppColor.secondColor)),
+            ],
+          ),
+        ),
       ),
     );
   }
