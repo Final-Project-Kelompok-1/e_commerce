@@ -22,7 +22,7 @@ class WishListProductCard extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           NavigatorFadeTransitionHelper(
-            child: DetailWishlistProductScreen(product: wishList),
+            child: DetailWishlistProductScreen(product: wishList.product),
           ),
         );
       },

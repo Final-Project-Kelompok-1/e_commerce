@@ -5,15 +5,18 @@ import 'package:e_commerce/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import '../../config/config.dart';
 import '../../utils/utils.dart';
 import '../../view_models/review_view_model.dart';
+import '../../view_models/wishlist_view_model.dart';
+import '../review/review_screen.dart';
 import 'components/detail_components.dart';
 
 class DetailWishlistProductScreen extends StatefulWidget {
-  final WishListModel product;
+  final WishListProduct product;
   const DetailWishlistProductScreen({super.key, required this.product});
 
   @override
@@ -28,7 +31,7 @@ class _DetailWishlistProductScreenState
     super.initState();
     Future.microtask(
       () => Provider.of<ReviewViewModel>(context, listen: false)
-          .fetchReviews(widget.product.product.id),
+          .fetchReviews(widget.product.id),
     );
   }
 
@@ -49,7 +52,7 @@ class _DetailWishlistProductScreenState
                       height: 270.h,
                       width: 250.w,
                       child: CachedNetworkImage(
-                        imageUrl: widget.product.product.image,
+                        imageUrl: widget.product.image,
                         errorWidget: (context, url, error) {
                           return const Center(
                             child: Icon(Icons.error, color: Colors.red),
@@ -135,7 +138,7 @@ class _DetailWishlistProductScreenState
                             height: 50.h,
                             child: SingleChildScrollView(
                               scrollDirection: Axis.vertical,
-                              child: Text(widget.product.product.name,
+                              child: Text(widget.product.name,
                                   textAlign: TextAlign.right,
                                   style: AppFont.paragraphLargeBold),
                             ),
@@ -152,7 +155,7 @@ class _DetailWishlistProductScreenState
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Text(
-                              "Rp ${widget.product.product.harga}",
+                              "Rp ${widget.product.harga}",
                               textAlign: TextAlign.right,
                               style: AppFont.paragraphLargeBold.copyWith(
                                 color: AppColor.mainColor,
@@ -180,65 +183,86 @@ class _DetailWishlistProductScreenState
         children: [
           Row(
             children: [
-              Row(
-                children: [
-                  RatingBarIndicator(
-                    itemSize: 16.sp,
-                    rating: double.parse('5.0'),
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Colors.yellow.shade600,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8.w,
-                  ),
-                  Text(
-                    '5.0',
-                    style: AppFont.paragraphMedium
-                        .copyWith(color: Colors.yellow.shade600),
-                  ),
-                ],
+              Consumer<ReviewViewModel>(
+                builder: (context, review, _) {
+                  if (review.appState == AppState.loading) {
+                    return const SkeletonContainer(
+                        width: 100, height: 10, borderRadius: 0);
+                  }
+
+                  return Row(
+                    children: [
+                      RatingBarIndicator(
+                        itemSize: 16.sp,
+                        rating: review.reviews.isEmpty
+                            ? 0.0
+                            : double.parse(
+                                review.averageSumRating.toStringAsPrecision(2)),
+                        itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: Colors.yellow.shade600,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8.w,
+                      ),
+                      Text(
+                        review.reviews.isEmpty
+                            ? '0.0'
+                            : review.averageSumRating.toStringAsPrecision(2),
+                        style: AppFont.paragraphMedium
+                            .copyWith(color: Colors.yellow.shade600),
+                      ),
+                    ],
+                  );
+                },
               ),
               const Spacer(),
-              InkWell(
-                onTap: () {},
-                child: Row(
-                  children: [
-                    Consumer<ReviewViewModel>(
-                      builder: (context, review, _) {
-                        if (review.appState == AppState.loading) {
-                          return const SkeletonContainer(
-                              width: 80, height: 10, borderRadius: 0);
-                        }
-                        if (review.appState == AppState.loaded) {
-                          return Text(
-                            "${review.reviews.length} reviews",
-                            style: AppFont.paragraphMedium.copyWith(
-                              color: const Color(0xff888888),
+              Consumer<ReviewViewModel>(
+                builder: (context, review, _) => review.reviews.isEmpty
+                    ? Text(
+                        "Belum Ada Review",
+                        style: AppFont.paragraphMedium.copyWith(
+                          color: const Color(0xff888888),
+                        ),
+                      )
+                    : InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            NavigatorFadeTransitionHelper(
+                              child: const ReviewScreen(),
                             ),
                           );
-                        }
+                        },
+                        child: Row(
+                          children: [
+                            Consumer<ReviewViewModel>(
+                              builder: (context, review, _) {
+                                if (review.appState == AppState.loading) {
+                                  return const SkeletonContainer(
+                                      width: 80, height: 10, borderRadius: 0);
+                                }
 
-                        return Text(
-                          "0 reviews",
-                          style: AppFont.paragraphMedium.copyWith(
-                            color: const Color(0xff888888),
-                          ),
-                        );
-                      },
-                    ),
-                    Icon(Icons.keyboard_arrow_right, size: 16.sp),
-                  ],
-                ),
+                                return Text(
+                                  "${review.reviews.length} reviews",
+                                  style: AppFont.paragraphMedium.copyWith(
+                                    color: const Color(0xff888888),
+                                  ),
+                                );
+                              },
+                            ),
+                            Icon(Icons.keyboard_arrow_right, size: 16.sp),
+                          ],
+                        ),
+                      ),
               ),
             ],
           ),
           SizedBox(height: 32.h),
-          Text(widget.product.product.name, style: AppFont.componentLarge),
+          Text(widget.product.name, style: AppFont.componentLarge),
           SizedBox(height: 20.h),
           Text(
-            widget.product.product.deskripsi,
+            widget.product.deskripsi,
             textAlign: TextAlign.justify,
             style: AppFont.paragraphSmall.copyWith(
               color: const Color(0xff888888),
@@ -252,22 +276,49 @@ class _DetailWishlistProductScreenState
   Widget _buttonChartAndWishlist(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 22.w),
-      child: Center(
-        child: ButtonWidget(
-          buttonText: 'ADD TO CART',
-          height: 50,
-          width: 240,
-          radius: 10,
-          fontSize: 14,
-          onpressed: () {
-            _checkoutModal(context);
-          },
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ButtonWidget(
+            buttonText: 'ADD TO CART',
+            height: 50,
+            width: 240,
+            radius: 10,
+            fontSize: 14,
+            onpressed: () {
+              _addToCartBottomSheet(context);
+            },
+          ),
+          Consumer<WishListViewModel>(
+            builder: (context, wishlist, _) => IconButtonWidget(
+              iconAsset: 'assets/icons/shopping_bag.svg',
+              height: 55,
+              width: 50,
+              radius: 100,
+              widthIcon: 30,
+              heightIcon: 30,
+              onpressed: () async {
+                try {
+                  await wishlist
+                      .postWishList(
+                        idBarang: widget.product.id,
+                      )
+                      .then(
+                        (_) => Fluttertoast.showToast(
+                            msg: 'Berhasil ditambahkan ke wishlist'),
+                      );
+                } catch (e) {
+                  Fluttertoast.showToast(msg: e.toString());
+                }
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  void _checkoutModal(BuildContext context) {
+  void _addToCartBottomSheet(BuildContext context) {
     showGeneralDialog(
       barrierLabel: "showGeneralDialog",
       barrierDismissible: true,
@@ -277,7 +328,7 @@ class _DetailWishlistProductScreenState
       pageBuilder: (context, _, __) {
         return Align(
           alignment: Alignment.bottomCenter,
-          child: ModalContainerWishList(product: widget.product.product),
+          child: ModalContainerWishList(product: widget.product),
         );
       },
       transitionBuilder: (_, animation1, __, child) {

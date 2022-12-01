@@ -3,6 +3,7 @@ import 'package:e_commerce/models/login_model.dart';
 import 'package:e_commerce/models/product_model.dart';
 import 'package:e_commerce/models/register_model.dart';
 import 'package:e_commerce/models/review_model.dart';
+import 'package:e_commerce/models/transaction_model.dart';
 
 import '../../models/wishlist_model.dart';
 import '../network/network_api_services.dart';
@@ -158,6 +159,17 @@ class AppsRepository {
           await _apiServices.getRequest('/api/review/$productId');
       return (response['data'] as List)
           .map((e) => ReviewModel.fromJson(e))
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<TransactionModel>> fetchTransaction() async {
+    try {
+      dynamic response = await _apiServices.getRequest('/api/transaksi/');
+      return (response['data'] as List)
+          .map((e) => TransactionModel.fromJson(e))
           .toList();
     } catch (e) {
       rethrow;
