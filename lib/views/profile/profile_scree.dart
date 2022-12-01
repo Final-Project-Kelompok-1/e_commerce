@@ -24,7 +24,12 @@ class ProfileScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [AppColor.thirdColor, AppColor.secondColor],
+            colors: [
+              AppColor.mainColor,
+              AppColor.thirdColor,
+              AppColor.thirdColor,
+              AppColor.thirdColor
+            ],
           ),
         ),
         child: SingleChildScrollView(

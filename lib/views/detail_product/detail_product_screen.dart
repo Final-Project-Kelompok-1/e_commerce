@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/models/product_model.dart';
+import 'package:e_commerce/utils/app_state/app_state.dart';
 import 'package:e_commerce/utils/navigator/navigator.dart';
+import 'package:e_commerce/view_models/review_view_model.dart';
 import 'package:e_commerce/view_models/wishlist_view_model.dart';
 import 'package:e_commerce/views/review/review_screen.dart';
 import 'package:e_commerce/views/widgets/widgets.dart';
@@ -13,9 +15,23 @@ import 'package:provider/provider.dart';
 import '../../config/config.dart';
 import 'components/detail_components.dart';
 
-class DetailProduct extends StatelessWidget {
+class DetailProduct extends StatefulWidget {
   final Product product;
   const DetailProduct({super.key, required this.product});
+
+  @override
+  State<DetailProduct> createState() => _DetailProductState();
+}
+
+class _DetailProductState extends State<DetailProduct> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(
+      () => Provider.of<ReviewViewModel>(context, listen: false)
+          .fetchReviews(widget.product.id),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +50,7 @@ class DetailProduct extends StatelessWidget {
                       height: 270.h,
                       width: 250.w,
                       child: CachedNetworkImage(
-                        imageUrl: product.image,
+                        imageUrl: widget.product.image,
                         errorWidget: (context, url, error) {
                           return const Center(
                             child: Icon(Icons.error, color: Colors.red),
@@ -120,7 +136,7 @@ class DetailProduct extends StatelessWidget {
                             height: 50.h,
                             child: SingleChildScrollView(
                               scrollDirection: Axis.vertical,
-                              child: Text(product.name,
+                              child: Text(widget.product.name,
                                   textAlign: TextAlign.right,
                                   style: AppFont.paragraphLargeBold),
                             ),
@@ -137,7 +153,7 @@ class DetailProduct extends StatelessWidget {
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Text(
-                              "Rp ${product.harga}",
+                              "Rp ${widget.product.harga}",
                               textAlign: TextAlign.right,
                               style: AppFont.paragraphLargeBold.copyWith(
                                 color: AppColor.mainColor,
@@ -165,54 +181,86 @@ class DetailProduct extends StatelessWidget {
         children: [
           Row(
             children: [
-              Row(
-                children: [
-                  RatingBarIndicator(
-                    itemSize: 16.sp,
-                    rating: double.parse('5.0'),
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Colors.yellow.shade600,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8.w,
-                  ),
-                  Text(
-                    '5.0',
-                    style: AppFont.paragraphMedium
-                        .copyWith(color: Colors.yellow.shade600),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    NavigatorFadeTransitionHelper(
-                      child: const ReviewScreen(),
-                    ),
+              Consumer<ReviewViewModel>(
+                builder: (context, review, _) {
+                  if (review.appState == AppState.loading) {
+                    return const SkeletonContainer(
+                        width: 100, height: 10, borderRadius: 0);
+                  }
+
+                  return Row(
+                    children: [
+                      RatingBarIndicator(
+                        itemSize: 16.sp,
+                        rating: review.reviews.isEmpty
+                            ? 0.0
+                            : double.parse(
+                                review.averageSumRating.toStringAsPrecision(2)),
+                        itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: Colors.yellow.shade600,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8.w,
+                      ),
+                      Text(
+                        review.reviews.isEmpty
+                            ? '0.0'
+                            : review.averageSumRating.toStringAsPrecision(2),
+                        style: AppFont.paragraphMedium
+                            .copyWith(color: Colors.yellow.shade600),
+                      ),
+                    ],
                   );
                 },
-                child: Row(
-                  children: [
-                    Text(
-                      "25 reviews",
-                      style: AppFont.paragraphMedium.copyWith(
-                        color: const Color(0xff888888),
+              ),
+              const Spacer(),
+              Consumer<ReviewViewModel>(
+                builder: (context, review, _) => review.reviews.isEmpty
+                    ? Text(
+                        "Belum Ada Review",
+                        style: AppFont.paragraphMedium.copyWith(
+                          color: const Color(0xff888888),
+                        ),
+                      )
+                    : InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            NavigatorFadeTransitionHelper(
+                              child: const ReviewScreen(),
+                            ),
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Consumer<ReviewViewModel>(
+                              builder: (context, review, _) {
+                                if (review.appState == AppState.loading) {
+                                  return const SkeletonContainer(
+                                      width: 80, height: 10, borderRadius: 0);
+                                }
+
+                                return Text(
+                                  "${review.reviews.length} reviews",
+                                  style: AppFont.paragraphMedium.copyWith(
+                                    color: const Color(0xff888888),
+                                  ),
+                                );
+                              },
+                            ),
+                            Icon(Icons.keyboard_arrow_right, size: 16.sp),
+                          ],
+                        ),
                       ),
-                    ),
-                    Icon(Icons.keyboard_arrow_right, size: 16.sp),
-                  ],
-                ),
               ),
             ],
           ),
           SizedBox(height: 32.h),
-          Text(product.name, style: AppFont.componentLarge),
+          Text(widget.product.name, style: AppFont.componentLarge),
           SizedBox(height: 20.h),
           Text(
-            product.deskripsi,
+            widget.product.deskripsi,
             textAlign: TextAlign.justify,
             style: AppFont.paragraphSmall.copyWith(
               color: const Color(0xff888888),
@@ -251,7 +299,7 @@ class DetailProduct extends StatelessWidget {
                 try {
                   await wishlist
                       .postWishList(
-                        idBarang: product.id,
+                        idBarang: widget.product.id,
                       )
                       .then(
                         (_) => Fluttertoast.showToast(
@@ -278,7 +326,7 @@ class DetailProduct extends StatelessWidget {
       pageBuilder: (context, _, __) {
         return Align(
           alignment: Alignment.bottomCenter,
-          child: ModalContainer(product: product),
+          child: ModalContainer(product: widget.product),
         );
       },
       transitionBuilder: (_, animation1, __, child) {

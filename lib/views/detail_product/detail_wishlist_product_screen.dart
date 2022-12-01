@@ -5,13 +5,32 @@ import 'package:e_commerce/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import '../../config/config.dart';
+import '../../utils/utils.dart';
+import '../../view_models/review_view_model.dart';
 import 'components/detail_components.dart';
 
-class DetailWishlistProductScreen extends StatelessWidget {
+class DetailWishlistProductScreen extends StatefulWidget {
   final WishListModel product;
   const DetailWishlistProductScreen({super.key, required this.product});
+
+  @override
+  State<DetailWishlistProductScreen> createState() =>
+      _DetailWishlistProductScreenState();
+}
+
+class _DetailWishlistProductScreenState
+    extends State<DetailWishlistProductScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(
+      () => Provider.of<ReviewViewModel>(context, listen: false)
+          .fetchReviews(widget.product.product.id),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +49,7 @@ class DetailWishlistProductScreen extends StatelessWidget {
                       height: 270.h,
                       width: 250.w,
                       child: CachedNetworkImage(
-                        imageUrl: product.product.image,
+                        imageUrl: widget.product.product.image,
                         errorWidget: (context, url, error) {
                           return const Center(
                             child: Icon(Icons.error, color: Colors.red),
@@ -116,7 +135,7 @@ class DetailWishlistProductScreen extends StatelessWidget {
                             height: 50.h,
                             child: SingleChildScrollView(
                               scrollDirection: Axis.vertical,
-                              child: Text(product.product.name,
+                              child: Text(widget.product.product.name,
                                   textAlign: TextAlign.right,
                                   style: AppFont.paragraphLargeBold),
                             ),
@@ -133,7 +152,7 @@ class DetailWishlistProductScreen extends StatelessWidget {
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Text(
-                              "Rp ${product.product.harga}",
+                              "Rp ${widget.product.product.harga}",
                               textAlign: TextAlign.right,
                               style: AppFont.paragraphLargeBold.copyWith(
                                 color: AppColor.mainColor,
@@ -186,11 +205,28 @@ class DetailWishlistProductScreen extends StatelessWidget {
                 onTap: () {},
                 child: Row(
                   children: [
-                    Text(
-                      "25 reviews",
-                      style: AppFont.paragraphMedium.copyWith(
-                        color: const Color(0xff888888),
-                      ),
+                    Consumer<ReviewViewModel>(
+                      builder: (context, review, _) {
+                        if (review.appState == AppState.loading) {
+                          return const SkeletonContainer(
+                              width: 80, height: 10, borderRadius: 0);
+                        }
+                        if (review.appState == AppState.loaded) {
+                          return Text(
+                            "${review.reviews.length} reviews",
+                            style: AppFont.paragraphMedium.copyWith(
+                              color: const Color(0xff888888),
+                            ),
+                          );
+                        }
+
+                        return Text(
+                          "0 reviews",
+                          style: AppFont.paragraphMedium.copyWith(
+                            color: const Color(0xff888888),
+                          ),
+                        );
+                      },
                     ),
                     Icon(Icons.keyboard_arrow_right, size: 16.sp),
                   ],
@@ -199,10 +235,10 @@ class DetailWishlistProductScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 32.h),
-          Text(product.product.name, style: AppFont.componentLarge),
+          Text(widget.product.product.name, style: AppFont.componentLarge),
           SizedBox(height: 20.h),
           Text(
-            product.product.deskripsi,
+            widget.product.product.deskripsi,
             textAlign: TextAlign.justify,
             style: AppFont.paragraphSmall.copyWith(
               color: const Color(0xff888888),
@@ -216,29 +252,17 @@ class DetailWishlistProductScreen extends StatelessWidget {
   Widget _buttonChartAndWishlist(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 22.w),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ButtonWidget(
-            buttonText: 'ADD TO CART',
-            height: 50,
-            width: 240,
-            radius: 10,
-            fontSize: 14,
-            onpressed: () {
-              _checkoutModal(context);
-            },
-          ),
-          IconButtonWidget(
-            iconAsset: 'assets/icons/cart.svg',
-            height: 55,
-            width: 50,
-            radius: 100,
-            widthIcon: 30,
-            heightIcon: 30,
-            onpressed: () {},
-          ),
-        ],
+      child: Center(
+        child: ButtonWidget(
+          buttonText: 'ADD TO CART',
+          height: 50,
+          width: 240,
+          radius: 10,
+          fontSize: 14,
+          onpressed: () {
+            _checkoutModal(context);
+          },
+        ),
       ),
     );
   }
@@ -253,7 +277,7 @@ class DetailWishlistProductScreen extends StatelessWidget {
       pageBuilder: (context, _, __) {
         return Align(
           alignment: Alignment.bottomCenter,
-          child: ModalContainerWishList(product: product.product),
+          child: ModalContainerWishList(product: widget.product.product),
         );
       },
       transitionBuilder: (_, animation1, __, child) {

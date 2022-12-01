@@ -1,5 +1,6 @@
 import 'package:e_commerce/utils/navigator/navigator_fade_transition.dart';
 import 'package:e_commerce/views/cart/cart_screen.dart';
+import 'package:e_commerce/views/search/search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -103,7 +104,7 @@ class HeaderCategory extends StatelessWidget {
                 style: AppFont.heading2.copyWith(fontWeight: FontWeight.w500),
               ),
               SizedBox(height: 30.h),
-              _searchTextField(),
+              _searchTextField(context),
             ],
           ),
         ),
@@ -111,10 +112,17 @@ class HeaderCategory extends StatelessWidget {
     );
   }
 
-  Widget _searchTextField() {
+  Widget _searchTextField(BuildContext context) {
     return SizedBox(
       height: 40,
       child: TextField(
+        onTap: () {
+          Navigator.of(context).push(
+            NavigatorFadeTransitionHelper(
+              child: const SearchScreen(),
+            ),
+          );
+        },
         readOnly: true,
         decoration: InputDecoration(
             suffixIcon:

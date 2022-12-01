@@ -35,7 +35,7 @@ class _ProductWidgetState extends State<ProductWidget> {
         decoration: BoxDecoration(
           color: Colors.grey[50],
           borderRadius: const BorderRadius.all(
-            Radius.circular(20),
+            Radius.circular(10),
           ),
           boxShadow: [
             BoxShadow(
@@ -84,40 +84,31 @@ class _ProductWidgetState extends State<ProductWidget> {
                     ),
                     SizedBox(height: 4.h),
                     SizedBox(
-                      height: 20.h,
-                      child: Text(
-                        "Rp. ${widget.product.harga}",
-                        style: AppFont.paragraphSmall.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.red.shade600),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        softWrap: false,
-                      ),
-                    ),
-                    SizedBox(height: 4.h),
-                    SizedBox(
-                      height: 20.h,
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              Icon(Icons.star,
-                                  size: 15.sp, color: Colors.yellow.shade600),
-                              SizedBox(width: 4.w),
-                              Text("5.0", style: AppFont.componentSmall),
-                            ],
+                          SizedBox(
+                            height: 20.h,
+                            width: 100.w,
+                            child: SingleChildScrollView(
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              child: Text(
+                                "Rp. ${widget.product.harga}",
+                                style: AppFont.paragraphSmall.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.red.shade600),
+                              ),
+                            ),
                           ),
-                          SizedBox(width: 12.w),
-                          Text("25 Reviews", style: AppFont.componentSmall),
-                          const Spacer(),
                           Material(
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
                                 _modalAction(context, width);
                               },
-                              child: Icon(Icons.more_vert, size: 15.sp),
+                              child: Icon(Icons.more_vert, size: 17.sp),
                             ),
                           ),
                         ],

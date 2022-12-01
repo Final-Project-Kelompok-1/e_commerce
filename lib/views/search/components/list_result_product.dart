@@ -21,7 +21,7 @@ class ListResultProduct extends StatelessWidget {
               shrinkWrap: true,
               itemCount: search.searchResult.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 1 / 1.5,
+                  childAspectRatio: 1 / 1.2,
                   crossAxisCount: 2,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12),

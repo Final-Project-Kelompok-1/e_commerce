@@ -1,45 +1,51 @@
 class ReviewModel {
-  final String name;
-  final double rating;
+  final int id;
+  final int productId;
+  final int userId;
+  final int star;
   final String review;
+  final String image;
+  final String createdAt;
+  final ReviewUserModel user;
 
-  ReviewModel({required this.name, required this.rating, required this.review});
+  ReviewModel(
+      {required this.id,
+      required this.productId,
+      required this.user,
+      required this.userId,
+      required this.review,
+      required this.image,
+      required this.createdAt,
+      required this.star});
 
-  static List<ReviewModel> reviews = [
-    ReviewModel(
-        name: 'Yelena Belova',
-        rating: 4.0,
-        review:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
-    ReviewModel(
-        name: 'Stephen Strange',
-        rating: 3.0,
-        review:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
-    ReviewModel(
-        name: 'Peter Parker',
-        rating: 4.0,
-        review:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
-    ReviewModel(
-        name: "t'chala",
-        rating: 3.0,
-        review:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
-    ReviewModel(
-        name: 'Tony Stark',
-        rating: 5.0,
-        review:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
-    ReviewModel(
-        name: 'Peter Quil',
-        rating: 4.0,
-        review:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
-    ReviewModel(
-        name: 'Wanda Maximof',
-        rating: 5.0,
-        review:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
-  ];
+  factory ReviewModel.fromJson(Map<String, dynamic> json) => ReviewModel(
+        id: json['id'],
+        productId: json['product_id'],
+        userId: json['user_id'],
+        review: json['review'],
+        image: json['image'],
+        createdAt: json['created_at'],
+        star: json['star'],
+        user: ReviewUserModel.fromJson(json['user']),
+      );
+}
+
+class ReviewUserModel {
+  final int id;
+  final String email;
+  final String name;
+  final String handphone;
+
+  ReviewUserModel(
+      {required this.id,
+      required this.email,
+      required this.name,
+      required this.handphone});
+
+  factory ReviewUserModel.fromJson(Map<String, dynamic> json) =>
+      ReviewUserModel(
+          id: json['id'],
+          email: json['email'],
+          name: json['name'],
+          handphone: json['handphone']);
 }
