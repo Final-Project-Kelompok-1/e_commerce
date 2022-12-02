@@ -39,10 +39,12 @@ class ReviewScreen extends StatelessWidget {
             children: [
               Icon(Icons.star, color: Colors.yellow.shade700, size: 20.sp),
               SizedBox(width: 4.w),
-              Text(
-                "4.6",
-                style: AppFont.paragraphLarge
-                    .copyWith(fontWeight: FontWeight.w500),
+              Consumer<ReviewViewModel>(
+                builder: (context, review, _) => Text(
+                  review.averageSumRating.toStringAsFixed(1),
+                  style: AppFont.paragraphLarge
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
               ),
               SizedBox(width: 16.w),
             ],
@@ -102,7 +104,8 @@ class ReviewScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 5.h),
-                      Text("25 Reviews", style: AppFont.paragraphMedium),
+                      Text("${review.reviews.length} Reviews",
+                          style: AppFont.paragraphMedium),
                       SizedBox(height: 16.h),
                     ],
                   ),

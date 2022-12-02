@@ -319,7 +319,7 @@ class _DetailProductState extends State<DetailProduct> {
   void _addToCartBottomSheet(BuildContext context) {
     showGeneralDialog(
       barrierLabel: "showGeneralDialog",
-      barrierDismissible: true,
+      barrierDismissible: false,
       barrierColor: Colors.black.withOpacity(0.6),
       transitionDuration: const Duration(milliseconds: 200),
       context: context,

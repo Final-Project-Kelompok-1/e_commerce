@@ -22,7 +22,7 @@ class WishListProductCard extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           NavigatorFadeTransitionHelper(
-            child: DetailWishlistProductScreen(product: wishList.product),
+            child: DetailWishlistProductScreen(product: data),
           ),
         );
       },
@@ -30,7 +30,7 @@ class WishListProductCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.grey[50],
           borderRadius: const BorderRadius.all(
-            Radius.circular(20),
+            Radius.circular(10),
           ),
           boxShadow: [
             BoxShadow(
@@ -79,40 +79,31 @@ class WishListProductCard extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     SizedBox(
-                      height: 20.h,
-                      child: Text(
-                        "Rp. ${data.harga}",
-                        style: AppFont.paragraphSmall.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.red.shade600),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        softWrap: false,
-                      ),
-                    ),
-                    SizedBox(height: 4.h),
-                    SizedBox(
-                      height: 20.h,
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              Icon(Icons.star,
-                                  size: 15.sp, color: Colors.yellow.shade600),
-                              SizedBox(width: 4.w),
-                              Text("5.0", style: AppFont.componentSmall),
-                            ],
+                          SizedBox(
+                            height: 20.h,
+                            width: 100.w,
+                            child: SingleChildScrollView(
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              child: Text(
+                                "Rp. ${data.harga}",
+                                style: AppFont.paragraphSmall.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.red.shade600),
+                              ),
+                            ),
                           ),
-                          SizedBox(width: 12.w),
-                          Text("25 Reviews", style: AppFont.componentSmall),
-                          const Spacer(),
                           Material(
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                _modalAction(context, width);
+                                _modalAction(context, width, wishList);
                               },
-                              child: Icon(Icons.more_vert, size: 15.sp),
+                              child: Icon(Icons.more_vert, size: 17.sp),
                             ),
                           ),
                         ],
@@ -127,130 +118,126 @@ class WishListProductCard extends StatelessWidget {
       ),
     );
   }
+}
 
-  void _modalAction(BuildContext context, double width) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return Center(
-          child: Padding(
-            padding: EdgeInsets.all(16.sp),
-            child: IntrinsicHeight(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                  color: Colors.grey[50],
+void _modalAction(BuildContext context, double width, WishListModel wishlist) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) {
+      return Center(
+        child: Padding(
+          padding: EdgeInsets.all(16.sp),
+          child: IntrinsicHeight(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 72.h,
-                      width: width,
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom:
-                              BorderSide(color: Color(0xffEDEDED), width: 2),
-                        ),
+                color: Colors.grey[50],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 72.h,
+                    width: width,
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(color: Color(0xffEDEDED), width: 2),
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 24.w, right: 16.w),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text("Product Action",
-                                style: AppFont.paragraphLargeBold),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: Material(
-                                color: Colors.transparent,
-                                child: IconButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  icon: const Icon(Icons.close,
-                                      size: 25, color: Colors.black),
-                                ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 24.w, right: 16.w),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("Product Action",
+                              style: AppFont.paragraphLargeBold),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: IconButton(
+                                onPressed: () => Navigator.pop(context),
+                                icon: const Icon(Icons.close,
+                                    size: 25, color: Colors.black),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                    Column(
-                      children: [
-                        Consumer<WishListViewModel>(
-                          builder: (context, notifier, _) => _containerAction(
-                              nameAction: 'Delete Wishlist',
-                              function: () async {
-                                try {
-                                  await notifier
-                                      .deleteWishList(wishList.id)
-                                      .then(
-                                        (_) => Fluttertoast.showToast(
-                                                msg:
-                                                    'Wishlist Berhasil Di Hapus')
-                                            .then(
-                                          (value) => Navigator.pop(context),
-                                        ),
-                                      );
-                                } catch (e) {
-                                  Fluttertoast.showToast(
-                                    msg: e.toString(),
-                                  );
-                                  Navigator.pop(context);
-                                }
-                              },
-                              width: width),
-                        ),
-                        _containerAction(
-                            nameAction: 'Add To Cart',
-                            function: () {
-                              Navigator.pop(context);
+                  ),
+                  Column(
+                    children: [
+                      Consumer<WishListViewModel>(
+                        builder: (context, notifier, _) => _containerAction(
+                            nameAction: 'Delete Wishlist',
+                            function: () async {
+                              try {
+                                await notifier.deleteWishList(wishlist.id).then(
+                                      (_) => Fluttertoast.showToast(
+                                              msg: 'Wishlist Berhasil Di Hapus')
+                                          .then(
+                                        (value) => Navigator.pop(context),
+                                      ),
+                                    );
+                              } catch (e) {
+                                Fluttertoast.showToast(
+                                  msg: e.toString(),
+                                );
+                                Navigator.pop(context);
+                              }
                             },
                             width: width),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                      _containerAction(
+                          nameAction: 'Add To Cart',
+                          function: () {
+                            Navigator.pop(context);
+                          },
+                          width: width),
+                    ],
+                  ),
+                ],
               ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  _containerAction(
-      {required String nameAction,
-      required void Function() function,
-      required double width}) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: function,
-        child: Padding(
-          padding: EdgeInsets.only(left: 24.w, right: 16.w),
-          child: Container(
-            alignment: Alignment.centerLeft,
-            height: 60.h,
-            width: width,
-            decoration: const BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: Color(0xffEDEDED), width: 2),
-              ),
-            ),
-            child: Text(
-              nameAction,
-              style:
-                  AppFont.paragraphMedium.copyWith(fontWeight: FontWeight.w400),
             ),
           ),
         ),
+      );
+    },
+  );
+}
+
+_containerAction(
+    {required String nameAction,
+    required void Function() function,
+    required double width}) {
+  return Material(
+    color: Colors.transparent,
+    child: InkWell(
+      onTap: function,
+      child: Padding(
+        padding: EdgeInsets.only(left: 24.w, right: 16.w),
+        child: Container(
+          alignment: Alignment.centerLeft,
+          height: 60.h,
+          width: width,
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: Color(0xffEDEDED), width: 2),
+            ),
+          ),
+          child: Text(
+            nameAction,
+            style:
+                AppFont.paragraphMedium.copyWith(fontWeight: FontWeight.w400),
+          ),
+        ),
       ),
-    );
-  }
+    ),
+  );
 }

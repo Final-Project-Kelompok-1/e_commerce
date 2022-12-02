@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:e_commerce/models/cart_model.dart';
 import 'package:e_commerce/models/login_model.dart';
 import 'package:e_commerce/models/product_model.dart';
@@ -161,6 +163,23 @@ class AppsRepository {
           .map((e) => ReviewModel.fromJson(e))
           .toList();
     } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> postReview(
+      {required int productId,
+      required String review,
+      required File image,
+      required String star}) async {
+    try {
+      try {
+        await _apiServices.postMulipart('/api/review/$productId', [image],
+            {'review': review, 'star': star}, 'image');
+      } catch (_) {
+        rethrow;
+      }
+    } catch (_) {
       rethrow;
     }
   }

@@ -3,6 +3,7 @@ import 'package:e_commerce/models/transaction_model.dart';
 import 'package:e_commerce/models/wishlist_model.dart';
 import 'package:e_commerce/utils/navigator/navigator.dart';
 import 'package:e_commerce/views/detail_product/detail_wishlist_product_screen.dart';
+import 'package:e_commerce/views/history/components/history_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -157,7 +158,9 @@ class ListDetialProduct extends StatelessWidget {
             height: 30.h,
             width: 80.w,
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                _reviewDialog(context, data);
+              },
               child: Text(
                 "Beri Review",
                 style: AppFont.paragraphSmall
@@ -167,6 +170,31 @@ class ListDetialProduct extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+
+  void _reviewDialog(BuildContext context, TransactionProductModel data) {
+    showGeneralDialog(
+      barrierLabel: "showGeneralDialog",
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.6),
+      transitionDuration: const Duration(milliseconds: 200),
+      context: context,
+      pageBuilder: (context, _, __) {
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: ModalContainerReview(product: data),
+        );
+      },
+      transitionBuilder: (_, animation1, __, child) {
+        return SlideTransition(
+          position: Tween(
+            begin: const Offset(0, 1),
+            end: const Offset(0, 0),
+          ).animate(animation1),
+          child: child,
+        );
+      },
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/config.dart';
@@ -53,17 +54,20 @@ class FeaturedProductRecommendation extends StatelessWidget {
   }
 
   Widget _loadingContainer() {
-    return GridView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: 2,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 1 / 1.5,
-          crossAxisCount: 2,
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12),
-      itemBuilder: (context, index) =>
-          const SkeletonContainer(width: 150, height: 250, borderRadius: 20),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 24.w),
+      child: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: 2,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            childAspectRatio: 1 / 1.3,
+            crossAxisCount: 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12),
+        itemBuilder: (context, index) =>
+            const SkeletonContainer(width: 150, height: 250, borderRadius: 20),
+      ),
     );
   }
 }

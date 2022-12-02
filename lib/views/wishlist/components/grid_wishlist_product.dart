@@ -27,7 +27,7 @@ class GridWishlistProduct extends StatelessWidget {
               shrinkWrap: true,
               itemCount: wishlist.wishListProduct.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 1 / 1.5,
+                  childAspectRatio: 1 / 1.3,
                   crossAxisCount: 2,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12),
@@ -64,7 +64,7 @@ class GridWishlistProduct extends StatelessWidget {
         shrinkWrap: true,
         itemCount: 6,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: 1 / 1.5,
+            childAspectRatio: 1 / 1.3,
             crossAxisCount: 2,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12),

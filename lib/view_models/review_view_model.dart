@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:e_commerce/models/review_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../data/repository/apps_repository.dart';
 import '../utils/utils.dart';
@@ -20,7 +23,16 @@ class ReviewViewModel extends ChangeNotifier {
   double averageRating2 = 0.0;
   double averageRating1 = 0.0;
   double averageSumRating = 0.0;
+  double _userRating = 5.0;
+  String _satisfactionText = "";
+  String _hintText = "";
+  String _imageCheck = "";
+  String _input = "";
+  late File _image;
+  final _imagePicker = ImagePicker();
+  final TextEditingController _reviewController = TextEditingController();
 
+  double get userRating => _userRating;
   List<ReviewModel> get reviews => _reviews;
   AppState get appState => _appState;
   List<ReviewModel> get oneRatingReviews => _oneRatingReviews;
@@ -28,6 +40,12 @@ class ReviewViewModel extends ChangeNotifier {
   List<ReviewModel> get threeRatingReviews => _threeRatingReviews;
   List<ReviewModel> get fourRatingReviews => _fourRatingReviews;
   List<ReviewModel> get fiveRatingReviews => _fiveRatingReviews;
+  TextEditingController get reviewController => _reviewController;
+  String get satisfactionText => _satisfactionText;
+  String get hintText => _hintText;
+  String get imageCheck => _imageCheck;
+  String get input => _input;
+  File get image => _image;
 
   Future<void> fetchReviews(int productId) async {
     await clearRating();
@@ -45,6 +63,20 @@ class ReviewViewModel extends ChangeNotifier {
       }
     } catch (e) {
       changeAppState(AppState.failure);
+      rethrow;
+    }
+  }
+
+  Future<void> postReview(
+      {required int productId,
+      required String review,
+      required File image,
+      required String star}) async {
+    try {
+      await appsRepository.postReview(
+          productId: productId, review: review, image: image, star: star);
+      notifyListeners();
+    } catch (e) {
       rethrow;
     }
   }
@@ -105,6 +137,60 @@ class ReviewViewModel extends ChangeNotifier {
     averageRating2 = 0.0;
     averageRating1 = 0.0;
     averageSumRating = 0.0;
+    notifyListeners();
+  }
+
+  void inputRating(double userRating) {
+    _imageCheck = "Kasih liat foto barang";
+    _satisfactionText = "";
+    _hintText = "";
+    _userRating = userRating;
+    notifyListeners();
+
+    if (_userRating == 5) {
+      _satisfactionText = "Apa yang bikin kamu puas?";
+      _hintText = "Yuk, ceritain kepuasanmu tentang kualitas barangnya";
+      notifyListeners();
+    }
+
+    if (_userRating == 4) {
+      _satisfactionText = "Apa yang bikin kamu puas?";
+      _hintText = "Yuk, ceritain kepuasanmu tentang kualitas barangnya";
+      notifyListeners();
+    }
+
+    if (_userRating == 3) {
+      _satisfactionText = "Apa yang bikin kamu kurang puas?";
+      _hintText = "Kasih tau apa yang kurang dan yang perlu ditingkatkan";
+      notifyListeners();
+    }
+
+    if (_userRating == 2) {
+      _satisfactionText = "Apa yang bikin kamu tidak puas?";
+      _hintText =
+          "Ceritain lebih lengkap apa yang bikin kamu tidak puas dan perlu ditingkatkan";
+      notifyListeners();
+    }
+
+    if (_userRating == 1) {
+      _satisfactionText = "Apa yang bikin kamu kecewa?";
+      _hintText =
+          "Ceritain lebih lengkap apa yang bikin kamu kecewa dan perlu ditingkatkan";
+      notifyListeners();
+    }
+  }
+
+  void getImage() async {
+    final image = await _imagePicker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      _image = File(image.path);
+      _imageCheck = "Foto berhasil disimpan";
+      notifyListeners();
+    }
+  }
+
+  void changeInput(String value) {
+    _input = value;
     notifyListeners();
   }
 

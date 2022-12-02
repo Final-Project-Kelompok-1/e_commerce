@@ -51,8 +51,8 @@ class _ModalContainerState extends State<ModalContainerWishList> {
                       color: Colors.transparent,
                       child: IconButton(
                         onPressed: () => Navigator.pop(context),
-                        icon: const Icon(Icons.close,
-                            size: 25, color: Colors.black),
+                        icon:
+                            Icon(Icons.close, size: 25.sp, color: Colors.black),
                       ),
                     ),
                   ),

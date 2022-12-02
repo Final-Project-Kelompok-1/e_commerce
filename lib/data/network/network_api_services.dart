@@ -9,8 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../config/config.dart';
 
 class NetworkApiServices implements BaseApiServices {
-  dynamic responseJson;
-
   @override
   Future<dynamic> postLogin(String url, LoginModel data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -37,9 +35,9 @@ class NetworkApiServices implements BaseApiServices {
             'email', json.decode(response.body)['data']['user']['email']);
         prefs.setString(
             'name', json.decode(response.body)['data']['user']['name']);
-        return responseJson = returnResponse(response);
+        return returnResponse(response);
       }
-      return responseJson = returnResponse(response);
+      return returnResponse(response);
     } on SocketException {
       throw 'No Internet Connection';
     }
@@ -54,12 +52,10 @@ class NetworkApiServices implements BaseApiServices {
         Uri.parse('$baseUrl$url'),
         body: data is Map ? data : data.toJson(),
         headers: {
-          "Accept": "application/json",
           'Authorization': 'Bearer $token',
         },
       );
-
-      return responseJson = returnResponse(response);
+      return returnResponse(response);
     } on SocketException {
       throw 'No Internet Connection';
     }
@@ -97,6 +93,34 @@ class NetworkApiServices implements BaseApiServices {
           'Authorization': 'Bearer $token',
         },
       );
+      return returnResponse(response);
+    } on SocketException {
+      throw 'No Internet Connection';
+    }
+  }
+
+  @override
+  Future postMulipart(String url, List<File>? files, Map<String, String> body,
+      String imageKey) async {
+    SharedPreferences? prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token').toString();
+
+    try {
+      var request = http.MultipartRequest("POST", Uri.parse('$baseUrl$url'));
+
+      request.headers.addAll({"Authorization": "Bearer $token"});
+
+      request.fields.addAll(body);
+
+      if (files != null) {
+        for (var file in files) {
+          request.files
+              .add(await http.MultipartFile.fromPath(imageKey, file.path));
+        }
+      }
+
+      var sendRequest = await request.send();
+      var response = await http.Response.fromStream(sendRequest);
       return returnResponse(response);
     } on SocketException {
       throw 'No Internet Connection';
