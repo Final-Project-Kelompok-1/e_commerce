@@ -228,7 +228,7 @@ class _DetailProductState extends State<DetailProduct> {
                         onTap: () {
                           Navigator.of(context).push(
                             NavigatorFadeTransitionHelper(
-                              child: const ReviewScreen(),
+                              child: ReviewScreen(product: widget.product),
                             ),
                           );
                         },

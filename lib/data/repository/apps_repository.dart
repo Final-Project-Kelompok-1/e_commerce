@@ -109,6 +109,14 @@ class AppsRepository {
     }
   }
 
+  Future<void> deleteReview(int id) async {
+    try {
+      await _apiServices.deleteRequest('/api/review/$id');
+    } catch (_) {
+      rethrow;
+    }
+  }
+
   Future<List<CartModel>> fetchCart() async {
     try {
       dynamic response = await _apiServices.getRequest('/api/keranjang/');

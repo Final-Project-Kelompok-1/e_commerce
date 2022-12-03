@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dashed_rect/dashed_rect.dart';
 import 'package:e_commerce/config/config.dart';
-import 'package:e_commerce/models/transaction_model.dart';
+import 'package:e_commerce/models/review_model.dart';
 import 'package:e_commerce/view_models/review_view_model.dart';
 import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
@@ -11,15 +11,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
-class ModalContainerReview extends StatefulWidget {
-  final TransactionProductModel product;
-  const ModalContainerReview({super.key, required this.product});
+class ModalEditReview extends StatefulWidget {
+  final ReviewModel review;
+  final dynamic product;
+  const ModalEditReview(
+      {super.key, required this.review, required this.product});
 
   @override
-  State<ModalContainerReview> createState() => _ModalContainerReviewState();
+  State<ModalEditReview> createState() => _ModalContainerReviewState();
 }
 
-class _ModalContainerReviewState extends State<ModalContainerReview> {
+class _ModalContainerReviewState extends State<ModalEditReview> {
   @override
   void initState() {
     super.initState();
@@ -70,7 +72,7 @@ class _ModalContainerReviewState extends State<ModalContainerReview> {
                     ),
                     child: Column(
                       children: [
-                        _productDetail(widget.product),
+                        _productDetail(),
                         SizedBox(height: 8.h),
                         _ratingBuilder(),
                         SizedBox(height: 8.h),
@@ -91,19 +93,11 @@ class _ModalContainerReviewState extends State<ModalContainerReview> {
                         width: width,
                         onpressed: () async {
                           try {
-                            await review
-                                .postReview(
-                                    productId: widget.product.id,
-                                    review: review.input,
-                                    image: review.image,
-                                    star: review.userRating.toInt().toString())
+                            await Fluttertoast.showToast(
+                                    msg: "Berhasil edit review")
                                 .then(
-                                  (_) => Fluttertoast.showToast(
-                                      msg: "Berhasil membuat review"),
-                                )
-                                .then(
-                                  (_) => Navigator.pop(context),
-                                );
+                              (_) => Navigator.pop(context),
+                            );
                           } catch (e) {
                             Fluttertoast.showToast(msg: e.toString());
                           }
@@ -140,7 +134,7 @@ class _ModalContainerReviewState extends State<ModalContainerReview> {
     );
   }
 
-  Widget _productDetail(TransactionProductModel product) {
+  Widget _productDetail() {
     return SizedBox(
       height: 50.h,
       child: Row(
@@ -150,7 +144,7 @@ class _ModalContainerReviewState extends State<ModalContainerReview> {
           Expanded(
             flex: 1,
             child: CachedNetworkImage(
-              imageUrl: product.image,
+              imageUrl: widget.product.image,
               errorWidget: (context, url, error) {
                 return const Center(
                   child: Icon(Icons.error, color: Colors.red),
@@ -170,7 +164,7 @@ class _ModalContainerReviewState extends State<ModalContainerReview> {
           Expanded(
             flex: 3,
             child: Text(
-              product.name,
+              widget.product.name,
               style:
                   AppFont.paragraphMedium.copyWith(fontWeight: FontWeight.w400),
               maxLines: 2,

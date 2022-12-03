@@ -230,7 +230,7 @@ class _DetailWishlistProductScreenState
                         onTap: () {
                           Navigator.of(context).push(
                             NavigatorFadeTransitionHelper(
-                              child: const ReviewScreen(),
+                              child: ReviewScreen(product: widget.product),
                             ),
                           );
                         },

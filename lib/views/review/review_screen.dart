@@ -1,15 +1,28 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/config/config.dart';
 import 'package:e_commerce/view_models/review_view_model.dart';
+import 'package:e_commerce/views/review/components/review_components.dart';
+import 'package:e_commerce/views/widgets/skeleton_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
-class ReviewScreen extends StatelessWidget {
-  const ReviewScreen({super.key});
+import '../../models/review_model.dart';
+import '../../view_models/user_view_model.dart';
 
+class ReviewScreen extends StatefulWidget {
+  final dynamic product;
+  const ReviewScreen({super.key, required this.product});
+
+  @override
+  State<ReviewScreen> createState() => _ReviewScreenState();
+}
+
+class _ReviewScreenState extends State<ReviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -222,10 +235,75 @@ class ReviewScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    data.user.name,
-                    style: AppFont.paragraphMedium
-                        .copyWith(fontWeight: FontWeight.w500),
+                  SizedBox(
+                    width: 250.w,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          data.user.name,
+                          style: AppFont.paragraphMedium
+                              .copyWith(fontWeight: FontWeight.w500),
+                        ),
+                        Consumer<UserViewModel>(
+                          builder: (context, user, _) => data.userId ==
+                                  user.user.id
+                              ? PopupMenuButton(
+                                  offset: const Offset(0, 20),
+                                  itemBuilder: (context) => [
+                                    PopupMenuItem(
+                                      value: 0,
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.delete,
+                                              size: 20.sp, color: Colors.grey),
+                                          SizedBox(width: 8.w),
+                                          Text("Delete Review",
+                                              style: AppFont.paragraphMedium),
+                                        ],
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      value: 1,
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.edit,
+                                              size: 20.sp, color: Colors.grey),
+                                          SizedBox(width: 8.w),
+                                          Text("Edit Review",
+                                              style: AppFont.paragraphMedium),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                  onSelected: (value) async {
+                                    if (value == 1) {
+                                      _reviewDialog(context, data);
+                                    }
+
+                                    if (value == 0) {
+                                      try {
+                                        await review
+                                            .deleteReview(
+                                                reviewId: data.id,
+                                                productId: data.productId)
+                                            .then((value) =>
+                                                Fluttertoast.showToast(
+                                                  msg:
+                                                      "Berhasil Menghapus Review",
+                                                ));
+                                      } catch (e) {
+                                        Fluttertoast.showToast(
+                                            msg: e.toString());
+                                      }
+                                    }
+                                  },
+                                  child: Icon(Icons.more_vert, size: 20.sp),
+                                )
+                              : const SizedBox(),
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: 6.h),
                   RatingBarIndicator(
@@ -243,12 +321,53 @@ class ReviewScreen extends StatelessWidget {
                         style: AppFont.paragraphSmall,
                         textAlign: TextAlign.justify),
                   ),
+                  SizedBox(height: 12.h),
+                  CachedNetworkImage(
+                    imageUrl: data.image,
+                    errorWidget: (context, url, error) {
+                      return const Center(
+                        child: Icon(Icons.error, color: Colors.red),
+                      );
+                    },
+                    placeholder: (context, url) {
+                      return const SkeletonContainer(
+                          width: 50, height: 50, borderRadius: 0);
+                    },
+                    height: 50.h,
+                    width: 50.w,
+                    fit: BoxFit.fill,
+                  ),
                 ],
               ),
             ],
           );
         },
       ),
+    );
+  }
+
+  void _reviewDialog(BuildContext context, ReviewModel data) {
+    showGeneralDialog(
+      barrierLabel: "showGeneralDialog",
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.6),
+      transitionDuration: const Duration(milliseconds: 300),
+      context: context,
+      pageBuilder: (context, _, __) {
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: ModalEditReview(product: widget.product, review: data),
+        );
+      },
+      transitionBuilder: (_, animation1, __, child) {
+        return SlideTransition(
+          position: Tween(
+            begin: const Offset(0, 1),
+            end: const Offset(0, 0),
+          ).animate(animation1),
+          child: child,
+        );
+      },
     );
   }
 }

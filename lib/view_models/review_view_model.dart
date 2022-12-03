@@ -67,6 +67,17 @@ class ReviewViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> deleteReview(
+      {required int reviewId, required int productId}) async {
+    try {
+      await appsRepository.deleteReview(reviewId).then(
+            (_) async => await fetchReviews(productId),
+          );
+    } catch (_) {
+      rethrow;
+    }
+  }
+
   Future<void> postReview(
       {required int productId,
       required String review,
@@ -126,6 +137,8 @@ class ReviewViewModel extends ChangeNotifier {
   }
 
   Future<void> clearRating() async {
+    _input = "";
+    _reviewController.clear();
     _oneRatingReviews.clear();
     _twoRatingReviews.clear();
     _threeRatingReviews.clear();
@@ -181,7 +194,7 @@ class ReviewViewModel extends ChangeNotifier {
   }
 
   void getImage() async {
-    final image = await _imagePicker.pickImage(source: ImageSource.gallery);
+    final image = await _imagePicker.pickImage(source: ImageSource.camera);
     if (image != null) {
       _image = File(image.path);
       _imageCheck = "Foto berhasil disimpan";
