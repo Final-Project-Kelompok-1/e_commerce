@@ -7,11 +7,11 @@ import '../utils/utils.dart';
 class CategoryProductViewModel extends ChangeNotifier {
   final AppsRepository appsRepository = AppsRepository();
 
-  List<Product> _products = [];
+  List<ProductDetailModel> _products = [];
   AppState _appState = AppState.loading;
   int _selectedIndex = 0;
 
-  List<Product> get products => _products;
+  List<ProductDetailModel> get products => _products;
   AppState get appState => _appState;
   int get selectedIndex => _selectedIndex;
 

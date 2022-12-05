@@ -12,7 +12,7 @@ import '../../utils/utils.dart';
 import '../detail_product/detail_product_screen.dart';
 
 class ProductWidget extends StatefulWidget {
-  final Product product;
+  final ProductDetailModel product;
   const ProductWidget({super.key, required this.product});
 
   @override

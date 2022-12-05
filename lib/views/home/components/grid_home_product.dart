@@ -8,7 +8,7 @@ import '../../widgets/widgets.dart';
 class GridHomeProduct extends StatelessWidget {
   final void Function() onTap;
   final String productCategory;
-  final List<Product> product;
+  final List<ProductDetailModel> product;
   const GridHomeProduct(
       {super.key,
       required this.onTap,

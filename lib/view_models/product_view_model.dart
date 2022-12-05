@@ -6,11 +6,11 @@ import 'package:flutter/cupertino.dart';
 class ProductViewModel extends ChangeNotifier {
   final AppsRepository appsRepository = AppsRepository();
 
-  List<Product> _filterProduct = [];
+  List<ProductDetailModel> _filterProduct = [];
   AppState _appState = AppState.loading;
   final TextEditingController _searchController = TextEditingController();
 
-  List<Product> get products => _filterProduct;
+  List<ProductDetailModel> get products => _filterProduct;
   TextEditingController get searchController => _searchController;
   AppState get appState => _appState;
 

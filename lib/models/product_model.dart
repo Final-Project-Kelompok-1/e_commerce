@@ -1,5 +1,5 @@
 class ProductModel {
-  final List<Product> product;
+  final List<ProductDetailModel> product;
 
   ProductModel({required this.product});
 
@@ -7,16 +7,14 @@ class ProductModel {
         product: json['data'] != null
             ? (json['data'] as List)
                 .map(
-                  (e) => Product.fromJson(e),
+                  (e) => ProductDetailModel.fromJson(e),
                 )
                 .toList()
             : [],
       );
-
-  Map<String, dynamic> toJson() => {'data': product};
 }
 
-class Product {
+class ProductDetailModel {
   final int id;
   final String name;
   final int categoryId;
@@ -25,9 +23,9 @@ class Product {
   final String deskripsi;
   final int stock;
   final String createDate;
-  final ProductCategory productCategory;
+  final ProductCategoryModel productCategory;
 
-  Product(
+  ProductDetailModel(
       {required this.id,
       required this.name,
       required this.categoryId,
@@ -38,7 +36,8 @@ class Product {
       required this.createDate,
       required this.productCategory});
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
+  factory ProductDetailModel.fromJson(Map<String, dynamic> json) =>
+      ProductDetailModel(
         id: json['id'] ?? 0,
         name: json['name'] ?? "null",
         categoryId: json['category_id'] ?? 0,
@@ -48,33 +47,19 @@ class Product {
         stock: json['stock'] ?? 0,
         createDate: json['created_at'] ?? "null",
         productCategory: json['category'] != null
-            ? ProductCategory.fromJson(
+            ? ProductCategoryModel.fromJson(
                 json['category'],
               )
-            : ProductCategory(id: 0, name: 'null'),
+            : ProductCategoryModel(id: 0, name: 'null'),
       );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'image': image,
-        'category_id': categoryId,
-        'harga': harga,
-        'deskripsi': deskripsi,
-        'storck': stock,
-        'created_at': createDate,
-        'category': productCategory
-      };
 }
 
-class ProductCategory {
+class ProductCategoryModel {
   final int id;
   final String name;
 
-  ProductCategory({required this.id, required this.name});
+  ProductCategoryModel({required this.id, required this.name});
 
-  factory ProductCategory.fromJson(Map<String, dynamic> json) =>
-      ProductCategory(id: json['id'] ?? 0, name: json['name'] ?? "null");
-
-  Map<String, dynamic> toJson() => {'id': id, 'name': name};
+  factory ProductCategoryModel.fromJson(Map<String, dynamic> json) =>
+      ProductCategoryModel(id: json['id'] ?? 0, name: json['name'] ?? "null");
 }

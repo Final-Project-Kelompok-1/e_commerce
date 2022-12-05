@@ -24,6 +24,15 @@ class ReviewScreen extends StatefulWidget {
 
 class _ReviewScreenState extends State<ReviewScreen> {
   @override
+  void initState() {
+    super.initState();
+    Future.microtask(
+      () => Provider.of<ReviewViewModel>(context, listen: false)
+          .fetchReviews(widget.product.id),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -179,7 +188,8 @@ class _ReviewScreenState extends State<ReviewScreen> {
                 borderRadius: BorderRadius.circular(100),
               ),
             ),
-            Container(
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
               height: 4.h,
               width: 90.w * percentageRating,
               decoration: BoxDecoration(
@@ -287,11 +297,12 @@ class _ReviewScreenState extends State<ReviewScreen> {
                                             .deleteReview(
                                                 reviewId: data.id,
                                                 productId: data.productId)
-                                            .then((value) =>
-                                                Fluttertoast.showToast(
-                                                  msg:
-                                                      "Berhasil Menghapus Review",
-                                                ));
+                                            .then(
+                                              (value) => Fluttertoast.showToast(
+                                                msg:
+                                                    "Berhasil Menghapus Review",
+                                              ),
+                                            );
                                       } catch (e) {
                                         Fluttertoast.showToast(
                                             msg: e.toString());

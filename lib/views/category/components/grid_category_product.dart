@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import '../../widgets/widgets.dart';
 
 class GridCategoryProduct extends StatelessWidget {
-  final List<Product> product;
+  final List<ProductDetailModel> product;
   const GridCategoryProduct({super.key, required this.product});
 
   @override

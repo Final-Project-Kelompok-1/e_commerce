@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import '../../models/product_model.dart';
 
 class ModalContainer extends StatefulWidget {
-  final Product product;
+  final ProductDetailModel product;
   const ModalContainer({super.key, required this.product});
 
   @override

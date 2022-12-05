@@ -10,14 +10,14 @@ class SearchProductViewModel extends ChangeNotifier {
   final List<String> _recentSearch = [];
   final TextEditingController _searchController = TextEditingController();
   String _input = '';
-  List<Product> _searchResult = [];
+  List<ProductDetailModel> _searchResult = [];
   AppState _appState = AppState.loading;
   int _selectedIndex = 0;
 
   List<String> get recentSearch => _recentSearch;
   TextEditingController get searchController => _searchController;
   String get input => _input;
-  List<Product> get searchResult => _searchResult;
+  List<ProductDetailModel> get searchResult => _searchResult;
   AppState get appState => _appState;
   int get selectedIndex => _selectedIndex;
 

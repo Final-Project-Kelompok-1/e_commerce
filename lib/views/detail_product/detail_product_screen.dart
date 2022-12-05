@@ -16,7 +16,7 @@ import '../../config/config.dart';
 import 'components/detail_components.dart';
 
 class DetailProduct extends StatefulWidget {
-  final Product product;
+  final ProductDetailModel product;
   const DetailProduct({super.key, required this.product});
 
   @override

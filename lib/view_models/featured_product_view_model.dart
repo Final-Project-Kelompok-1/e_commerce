@@ -6,16 +6,17 @@ import 'package:flutter/cupertino.dart';
 class FeaturedProductViewModel extends ChangeNotifier {
   final AppsRepository appsRepository = AppsRepository();
 
-  final List<Product> _featuredProduct = [];
+  final List<ProductDetailModel> _featuredProduct = [];
   AppState _appState = AppState.loading;
 
-  List<Product> get featuredProduct => _featuredProduct;
+  List<ProductDetailModel> get featuredProduct => _featuredProduct;
   AppState get appState => _appState;
 
   void filterCategoryProduct() async {
     try {
       changeAppState(AppState.loading);
-      final List<Product> products = await appsRepository.fetchProduct();
+      final List<ProductDetailModel> products =
+          await appsRepository.fetchProduct();
 
       for (var i in products) {
         if (i.productCategory.name == 'k-4-1_featured' &&

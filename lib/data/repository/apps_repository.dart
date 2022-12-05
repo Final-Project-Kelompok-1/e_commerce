@@ -29,7 +29,7 @@ class AppsRepository {
     }
   }
 
-  Future<List<Product>> fetchProduct() async {
+  Future<List<ProductDetailModel>> fetchProduct() async {
     try {
       dynamic response = await _apiServices.getRequest('/api/barang');
 
@@ -41,7 +41,7 @@ class AppsRepository {
     }
   }
 
-  Future<List<Product>> fetchCategoryProduct(String value) async {
+  Future<List<ProductDetailModel>> fetchCategoryProduct(String value) async {
     try {
       dynamic response = await _apiServices.getRequest('/api/barang');
 
@@ -59,7 +59,7 @@ class AppsRepository {
     }
   }
 
-  Future<List<Product>> filterProductByName(String value) async {
+  Future<List<ProductDetailModel>> filterProductByName(String value) async {
     try {
       dynamic response = await _apiServices.getRequest('/api/barang');
 
