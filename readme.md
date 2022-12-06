@@ -1,4 +1,4 @@
-# HonkaiLab
+# E-Commerce
 
 E commerce app build with flutter framework using provider as state management and MVVM pattern
 
