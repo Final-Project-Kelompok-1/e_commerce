@@ -154,7 +154,7 @@ class ReviewViewModel extends ChangeNotifier {
   }
 
   void inputRating(double userRating) {
-    _imageCheck = "Kasih liat foto barang";
+    _imageCheck = "Kasih liat gambar barang";
     _satisfactionText = "";
     _hintText = "";
     _userRating = userRating;
@@ -194,10 +194,10 @@ class ReviewViewModel extends ChangeNotifier {
   }
 
   void getImage() async {
-    final image = await _imagePicker.pickImage(source: ImageSource.camera);
+    final image = await _imagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       _image = File(image.path);
-      _imageCheck = "Foto berhasil disimpan";
+      _imageCheck = "gambar berhasil disimpan";
       notifyListeners();
     }
   }
