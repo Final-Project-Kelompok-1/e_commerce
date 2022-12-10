@@ -154,7 +154,7 @@ class ReviewViewModel extends ChangeNotifier {
   }
 
   void inputRating(double userRating) {
-    _imageCheck = "Kasih liat gambar barang";
+    _imageCheck = "Masukan gambar barangnya";
     _satisfactionText = "";
     _hintText = "";
     _userRating = userRating;
