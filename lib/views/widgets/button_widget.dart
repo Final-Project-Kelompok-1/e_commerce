@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:e_commerce/config/config.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../config/config.dart';
 
 class ButtonWidget extends StatelessWidget {
   final String buttonText;

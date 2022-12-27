@@ -1,9 +1,9 @@
-import 'package:e_commerce/utils/app_state/app_state.dart';
-import 'package:e_commerce/view_models/search_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../../utils/utils.dart';
+import '../../../view_models/search_view_model.dart';
 import '../../widgets/widgets.dart';
 
 class ListResultProduct extends StatelessWidget {

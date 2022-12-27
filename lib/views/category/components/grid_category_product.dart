@@ -1,9 +1,9 @@
-import 'package:e_commerce/models/product_model.dart';
-import 'package:e_commerce/view_models/category_product_view_model.dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../../models/product_model.dart';
+import '../../../view_models/category_product_view_model.dart.dart';
 import '../../widgets/widgets.dart';
 
 class GridCategoryProduct extends StatelessWidget {

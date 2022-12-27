@@ -1,7 +1,7 @@
-import 'package:e_commerce/models/transaction_model.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../data/repository/apps_repository.dart';
+import '../models/transaction_model.dart';
 import '../utils/utils.dart';
 
 class TransactionViewModel extends ChangeNotifier {

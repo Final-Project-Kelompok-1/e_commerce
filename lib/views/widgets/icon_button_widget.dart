@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:e_commerce/config/config.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../config/config.dart';
 
 class IconButtonWidget extends StatelessWidget {
   final String iconAsset;

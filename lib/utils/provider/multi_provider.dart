@@ -1,19 +1,20 @@
-import 'package:e_commerce/view_models/best_seller_product_view_model.dart';
-import 'package:e_commerce/view_models/bot_nav_bar_view_model.dart';
-import 'package:e_commerce/view_models/cart_view_model.dart';
-import 'package:e_commerce/view_models/category_product_view_model.dart.dart';
-import 'package:e_commerce/view_models/featured_product_view_model.dart';
-import 'package:e_commerce/view_models/login_view_model.dart';
-import 'package:e_commerce/view_models/product_view_model.dart';
-import 'package:e_commerce/view_models/register_view_model.dart';
-import 'package:e_commerce/view_models/review_view_model.dart';
-import 'package:e_commerce/view_models/search_view_model.dart';
-import 'package:e_commerce/view_models/top_rated_product_view_model.dart';
-import 'package:e_commerce/view_models/transaction_view_model.dart';
-import 'package:e_commerce/view_models/user_view_model.dart';
-import 'package:e_commerce/view_models/wishlist_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../view_models/best_seller_product_view_model.dart';
+import '../../view_models/bot_nav_bar_view_model.dart';
+import '../../view_models/cart_view_model.dart';
+import '../../view_models/category_product_view_model.dart.dart';
+import '../../view_models/featured_product_view_model.dart';
+import '../../view_models/login_view_model.dart';
+import '../../view_models/product_view_model.dart';
+import '../../view_models/register_view_model.dart';
+import '../../view_models/review_view_model.dart';
+import '../../view_models/search_view_model.dart';
+import '../../view_models/top_rated_product_view_model.dart';
+import '../../view_models/transaction_view_model.dart';
+import '../../view_models/user_view_model.dart';
+import '../../view_models/wishlist_view_model.dart';
 
 Function multiProvider = (Widget widget) {
   return MultiProvider(providers: [

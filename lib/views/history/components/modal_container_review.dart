@@ -1,15 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dashed_rect/dashed_rect.dart';
-import 'package:e_commerce/config/config.dart';
-import 'package:e_commerce/models/transaction_model.dart';
-import 'package:e_commerce/view_models/review_view_model.dart';
-import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+
+import '../../../config/config.dart';
+import '../../../models/transaction_model.dart';
+import '../../../view_models/review_view_model.dart';
+import '../../widgets/widgets.dart';
 
 class ModalContainerReview extends StatefulWidget {
   final TransactionProductModel product;
@@ -265,7 +266,8 @@ class _ModalContainerReviewState extends State<ModalContainerReview> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.image, size: 24.sp, color: AppColor.thirdColor),
+                Icon(Icons.browse_gallery,
+                    size: 24.sp, color: AppColor.thirdColor),
                 SizedBox(width: 8.w),
                 Text(
                   review.imageCheck,

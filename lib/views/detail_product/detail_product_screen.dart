@@ -1,11 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce/models/product_model.dart';
-import 'package:e_commerce/utils/app_state/app_state.dart';
-import 'package:e_commerce/utils/navigator/navigator.dart';
-import 'package:e_commerce/view_models/review_view_model.dart';
-import 'package:e_commerce/view_models/wishlist_view_model.dart';
-import 'package:e_commerce/views/review/review_screen.dart';
-import 'package:e_commerce/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +6,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import '../../config/config.dart';
+import '../../models/product_model.dart';
+import '../../utils/utils.dart';
+import '../../view_models/review_view_model.dart';
+import '../../view_models/wishlist_view_model.dart';
+import '../review/review_screen.dart';
+import '../widgets/widgets.dart';
 import 'components/detail_components.dart';
 
 class DetailProduct extends StatefulWidget {

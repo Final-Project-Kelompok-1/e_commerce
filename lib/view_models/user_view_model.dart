@@ -1,6 +1,7 @@
-import 'package:e_commerce/models/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/user_model.dart';
 
 class UserViewModel extends ChangeNotifier {
   late UserModel _user;

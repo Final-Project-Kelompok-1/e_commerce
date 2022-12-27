@@ -1,12 +1,11 @@
 import 'dart:io';
 
-import 'package:e_commerce/models/cart_model.dart';
-import 'package:e_commerce/models/login_model.dart';
-import 'package:e_commerce/models/product_model.dart';
-import 'package:e_commerce/models/register_model.dart';
-import 'package:e_commerce/models/review_model.dart';
-import 'package:e_commerce/models/transaction_model.dart';
-
+import '../../models/cart_model.dart';
+import '../../models/login_model.dart';
+import '../../models/product_model.dart';
+import '../../models/register_model.dart';
+import '../../models/review_model.dart';
+import '../../models/transaction_model.dart';
 import '../../models/wishlist_model.dart';
 import '../network/network_api_services.dart';
 
@@ -184,6 +183,23 @@ class AppsRepository {
       try {
         await _apiServices.postMulipart('/api/review/$productId', [image],
             {'review': review, 'star': star}, 'image');
+      } catch (_) {
+        rethrow;
+      }
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<void> updateReview(
+      {required int reviewId,
+      required String review,
+      required File image,
+      required String star}) async {
+    try {
+      try {
+        await _apiServices.postMulipart('/api/review/$reviewId/product',
+            [image], {'review': review, 'star': star}, 'image');
       } catch (_) {
         rethrow;
       }

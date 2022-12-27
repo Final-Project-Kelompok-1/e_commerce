@@ -1,12 +1,12 @@
-import 'package:e_commerce/utils/navigator/navigator_fade_transition.dart';
-import 'package:e_commerce/views/cart/cart_screen.dart';
-import 'package:e_commerce/views/search/search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../config/config.dart';
+import '../../../utils/utils.dart';
+import '../../cart/cart_screen.dart';
+import '../../search/search_screen.dart';
 
 class HeaderCategory extends StatelessWidget {
   final String category;

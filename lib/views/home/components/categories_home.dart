@@ -1,13 +1,13 @@
-import 'package:e_commerce/models/category_icon_model.dart';
-import 'package:e_commerce/utils/navigator/navigator.dart';
-import 'package:e_commerce/view_models/product_view_model.dart';
-import 'package:e_commerce/views/category/category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/config.dart';
+import '../../../models/category_icon_model.dart';
+import '../../../utils/utils.dart';
+import '../../../view_models/product_view_model.dart';
+import '../../category/category_screen.dart';
 
 class CategoriesHome extends StatelessWidget {
   const CategoriesHome({super.key});

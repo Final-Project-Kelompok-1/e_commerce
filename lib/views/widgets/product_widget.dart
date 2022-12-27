@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce/models/product_model.dart';
-import 'package:e_commerce/view_models/cart_view_model.dart';
-import 'package:e_commerce/view_models/wishlist_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import '../../config/config.dart';
+import '../../models/product_model.dart';
 import '../../utils/utils.dart';
+import '../../view_models/cart_view_model.dart';
+import '../../view_models/wishlist_view_model.dart';
 import '../detail_product/detail_product_screen.dart';
 
 class ProductWidget extends StatefulWidget {

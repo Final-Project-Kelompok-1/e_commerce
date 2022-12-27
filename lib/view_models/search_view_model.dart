@@ -1,8 +1,9 @@
-import 'package:e_commerce/data/repository/apps_repository.dart';
-import 'package:e_commerce/models/product_model.dart';
-import 'package:e_commerce/utils/app_state/app_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../data/repository/apps_repository.dart';
+import '../models/product_model.dart';
+import '../utils/utils.dart';
 
 class SearchProductViewModel extends ChangeNotifier {
   final AppsRepository repository = AppsRepository();

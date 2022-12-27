@@ -1,8 +1,9 @@
-import 'package:e_commerce/views/history/history_screen.dart';
-import 'package:e_commerce/views/home/home_screen.dart';
-import 'package:e_commerce/views/profile/profile_scree.dart';
-import 'package:e_commerce/views/wishlist/wish_list_screen.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../views/history/history_screen.dart';
+import '../views/home/home_screen.dart';
+import '../views/profile/profile_scree.dart';
+import '../views/wishlist/wish_list_screen.dart';
 
 class BotNavBarViewModel extends ChangeNotifier {
   final List<Widget> _pages = [

@@ -1,8 +1,8 @@
-import 'package:e_commerce/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../config/config.dart';
+import '../../../models/product_model.dart';
 import '../../widgets/widgets.dart';
 
 class GridHomeProduct extends StatelessWidget {

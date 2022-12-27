@@ -1,9 +1,9 @@
-import 'package:e_commerce/views/history/components/history_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/config.dart';
 import '../../models/transaction_model.dart';
+import 'components/history_components.dart';
 
 class DetailTransactionScreen extends StatelessWidget {
   final List<TransactionProductModel> product;

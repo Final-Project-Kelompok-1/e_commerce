@@ -1,9 +1,9 @@
-import 'package:e_commerce/config/config.dart';
-import 'package:e_commerce/utils/navigator/navigator.dart';
-import 'package:e_commerce/views/widgets/botnavbar.dart';
-import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../config/theme/theme.dart';
+import '../../utils/utils.dart';
+import '../widgets/widgets.dart';
 
 class SuccessCheckoutScreen extends StatelessWidget {
   const SuccessCheckoutScreen({super.key});

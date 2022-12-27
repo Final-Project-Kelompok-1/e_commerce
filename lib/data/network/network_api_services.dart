@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:e_commerce/data/network/base_api_service.dart';
-import 'package:e_commerce/models/login_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../config/config.dart';
+import '../../models/login_model.dart';
+import 'base_api_service.dart';
 
 class NetworkApiServices implements BaseApiServices {
   @override

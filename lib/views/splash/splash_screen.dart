@@ -1,10 +1,11 @@
-import 'package:e_commerce/utils/navigator/navigator.dart';
-import 'package:e_commerce/views/auth/login_screen.dart';
-import 'package:e_commerce/views/widgets/botnavbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:e_commerce/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../config/config.dart';
+import '../../utils/utils.dart';
+import '../auth/login_screen.dart';
+import '../widgets/widgets.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

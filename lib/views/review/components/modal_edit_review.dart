@@ -1,15 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dashed_rect/dashed_rect.dart';
-import 'package:e_commerce/config/config.dart';
-import 'package:e_commerce/models/review_model.dart';
-import 'package:e_commerce/view_models/review_view_model.dart';
-import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+
+import '../../../config/config.dart';
+import '../../../models/review_model.dart';
+import '../../../view_models/review_view_model.dart';
+import '../../widgets/widgets.dart';
 
 class ModalEditReview extends StatefulWidget {
   final ReviewModel review;
@@ -93,11 +94,20 @@ class _ModalContainerReviewState extends State<ModalEditReview> {
                         width: width,
                         onpressed: () async {
                           try {
-                            await Fluttertoast.showToast(
-                                    msg: "Berhasil edit review")
+                            await review
+                                .updateReview(
+                                    productId: widget.review.productId,
+                                    reviewId: widget.review.id,
+                                    review: review.input,
+                                    image: review.image,
+                                    star: review.userRating.toInt().toString())
                                 .then(
-                              (_) => Navigator.pop(context),
-                            );
+                                  (_) => Fluttertoast.showToast(
+                                          msg: "Berhasil edit review")
+                                      .then(
+                                    (_) => Navigator.pop(context),
+                                  ),
+                                );
                           } catch (e) {
                             Fluttertoast.showToast(msg: e.toString());
                           }

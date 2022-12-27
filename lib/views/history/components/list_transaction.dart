@@ -1,16 +1,15 @@
-import 'package:e_commerce/utils/app_state/app_state.dart';
-import 'package:e_commerce/utils/navigator/navigator.dart';
-import 'package:e_commerce/views/history/detail_transaction_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce/config/config.dart';
-import 'package:e_commerce/models/transaction_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../../config/config.dart';
+import '../../../models/transaction_model.dart';
+import '../../../utils/utils.dart';
 import '../../../view_models/transaction_view_model.dart';
 import '../../widgets/widgets.dart';
+import '../detail_transaction_screen.dart';
 
 class ListTransaction extends StatelessWidget {
   const ListTransaction({super.key});

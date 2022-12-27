@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:e_commerce/models/review_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../data/repository/apps_repository.dart';
+import '../models/review_model.dart';
 import '../utils/utils.dart';
 
 class ReviewViewModel extends ChangeNotifier {
@@ -92,6 +92,22 @@ class ReviewViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> updateReview(
+      {required int reviewId,
+      required int productId,
+      required String review,
+      required File image,
+      required String star}) async {
+    try {
+      await appsRepository.updateReview(
+          reviewId: reviewId, review: review, image: image, star: star);
+      fetchReviews(productId);
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> filterRating() async {
     for (var i in _reviews) {
       if (i.star == 1 && !_oneRatingReviews.contains(i)) {
@@ -154,7 +170,7 @@ class ReviewViewModel extends ChangeNotifier {
   }
 
   void inputRating(double userRating) {
-    _imageCheck = "Masukan gambar barangnya";
+    _imageCheck = "Kasih liat foto barang";
     _satisfactionText = "";
     _hintText = "";
     _userRating = userRating;
@@ -197,7 +213,7 @@ class ReviewViewModel extends ChangeNotifier {
     final image = await _imagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       _image = File(image.path);
-      _imageCheck = "gambar berhasil disimpan";
+      _imageCheck = "Foto berhasil disimpan";
       notifyListeners();
     }
   }

@@ -1,12 +1,12 @@
-import 'package:e_commerce/config/config.dart';
-import 'package:e_commerce/utils/app_state/app_state.dart';
-import 'package:e_commerce/view_models/wishlist_view_model.dart';
-import 'package:e_commerce/views/wishlist/components/wish_list_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../../config/config.dart';
+import '../../../utils/utils.dart';
+import '../../../view_models/wishlist_view_model.dart';
 import '../../widgets/widgets.dart';
+import 'wish_list_product.dart';
 
 class GridWishlistProduct extends StatelessWidget {
   const GridWishlistProduct({super.key});

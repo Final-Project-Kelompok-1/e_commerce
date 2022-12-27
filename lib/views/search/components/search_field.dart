@@ -1,12 +1,12 @@
-import 'package:e_commerce/utils/navigator/navigator.dart';
-import 'package:e_commerce/views/search/result_search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/config.dart';
+import '../../../utils/utils.dart';
 import '../../../view_models/search_view_model.dart';
+import '../result_search_screen.dart';
 
 class SearchField extends StatelessWidget {
   final bool readOnly;

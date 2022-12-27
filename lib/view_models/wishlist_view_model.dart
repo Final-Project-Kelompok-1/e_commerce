@@ -1,8 +1,8 @@
-import 'package:e_commerce/models/wishlist_model.dart';
-import 'package:e_commerce/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../data/repository/apps_repository.dart';
+import '../models/wishlist_model.dart';
+import '../utils/utils.dart';
 
 class WishListViewModel extends ChangeNotifier {
   final AppsRepository appsRepository = AppsRepository();

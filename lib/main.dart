@@ -1,7 +1,8 @@
-import 'package:e_commerce/utils/provider/multi_provider.dart';
-import 'package:e_commerce/views/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'utils/utils.dart';
+import 'views/splash/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());

@@ -1,5 +1,3 @@
-import 'package:e_commerce/view_models/user_view_model.dart';
-import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,6 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import '../../config/config.dart';
+import '../../view_models/user_view_model.dart';
+import '../widgets/widgets.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});

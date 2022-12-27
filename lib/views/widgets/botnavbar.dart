@@ -1,9 +1,9 @@
-import 'package:e_commerce/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../config/config.dart';
 import '../../view_models/bot_nav_bar_view_model.dart';
 import '../../view_models/user_view_model.dart';
 

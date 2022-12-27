@@ -1,15 +1,14 @@
-import 'package:e_commerce/config/config.dart';
-import 'package:e_commerce/view_models/category_product_view_model.dart.dart';
-import 'package:e_commerce/views/category/components/category_components.dart';
-import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../config/config.dart';
 import '../../utils/utils.dart';
-import '../widgets/skeleton_container.dart';
+import '../../view_models/category_product_view_model.dart.dart';
+import '../widgets/widgets.dart';
+import 'components/category_components.dart';
 
 class CategoryScreen extends StatefulWidget {
   final String categoryName;

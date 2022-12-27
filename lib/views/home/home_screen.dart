@@ -1,14 +1,13 @@
-import 'package:e_commerce/utils/navigator/navigator.dart';
-import 'package:e_commerce/view_models/best_seller_product_view_model.dart';
-import 'package:e_commerce/view_models/featured_product_view_model.dart';
-import 'package:e_commerce/view_models/top_rated_product_view_model.dart';
-import 'package:e_commerce/views/category/category_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:e_commerce/config/config.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import '../../utils/app_state/finite_state.dart';
+import '../../config/config.dart';
+import '../../utils/utils.dart';
+import '../../view_models/best_seller_product_view_model.dart';
+import '../../view_models/featured_product_view_model.dart';
+import '../../view_models/top_rated_product_view_model.dart';
+import '../category/category_screen.dart';
 import '../widgets/widgets.dart';
 import 'components/home_components.dart';
 

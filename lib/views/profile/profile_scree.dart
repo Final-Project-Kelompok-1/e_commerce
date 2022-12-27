@@ -1,15 +1,16 @@
-import 'package:e_commerce/config/config.dart';
-import 'package:e_commerce/utils/navigator/navigator.dart';
-import 'package:e_commerce/view_models/login_view_model.dart';
-import 'package:e_commerce/view_models/user_view_model.dart';
-import 'package:e_commerce/views/auth/login_screen.dart';
-import 'package:e_commerce/views/profile/edit_profil_scren.dart';
-import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+
+import '../../config/config.dart';
+import '../../utils/utils.dart';
+import '../../view_models/login_view_model.dart';
+import '../../view_models/user_view_model.dart';
+import '../auth/login_screen.dart';
+import '../widgets/widgets.dart';
+import 'edit_profil_scren.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

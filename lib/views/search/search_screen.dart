@@ -1,10 +1,11 @@
-import 'package:e_commerce/config/config.dart';
-import 'package:e_commerce/view_models/search_view_model.dart';
-import 'package:e_commerce/views/search/components/search_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+
+import '../../config/config.dart';
+import '../../view_models/search_view_model.dart';
+import 'components/search_components.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});

@@ -1,8 +1,9 @@
-import 'package:e_commerce/view_models/wishlist_view_model.dart';
-import 'package:e_commerce/views/wishlist/components/wishlist_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+
+import '../../view_models/wishlist_view_model.dart';
+import 'components/wishlist_components.dart';
 
 class WishListScreen extends StatefulWidget {
   const WishListScreen({super.key});

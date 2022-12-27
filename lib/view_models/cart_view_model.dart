@@ -1,7 +1,7 @@
-import 'package:e_commerce/models/cart_model.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../data/repository/apps_repository.dart';
+import '../models/cart_model.dart';
 import '../utils/utils.dart';
 
 class CartViewModel extends ChangeNotifier {

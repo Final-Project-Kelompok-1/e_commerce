@@ -1,9 +1,10 @@
-import 'package:e_commerce/utils/navigator/navigator.dart';
-import 'package:e_commerce/views/auth/login_screen.dart';
-import 'package:e_commerce/views/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:e_commerce/config/config.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../config/config.dart';
+import '../../utils/utils.dart';
+import '../widgets/widgets.dart';
+import 'login_screen.dart';
 
 class RegisterSuccessScreen extends StatelessWidget {
   const RegisterSuccessScreen({super.key});

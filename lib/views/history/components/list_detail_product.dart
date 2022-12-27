@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce/models/transaction_model.dart';
-import 'package:e_commerce/models/wishlist_model.dart';
-import 'package:e_commerce/utils/navigator/navigator.dart';
-import 'package:e_commerce/views/detail_product/detail_wishlist_product_screen.dart';
-import 'package:e_commerce/views/history/components/history_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../config/config.dart';
+import '../../../models/transaction_model.dart';
+import '../../../models/wishlist_model.dart';
+import '../../../utils/utils.dart';
+import '../../detail_product/detail_wishlist_product_screen.dart';
+import 'history_components.dart';
 
 class ListDetialProduct extends StatelessWidget {
   final List<TransactionProductModel> product;

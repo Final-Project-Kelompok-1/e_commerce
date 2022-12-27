@@ -1,10 +1,10 @@
-import 'package:e_commerce/utils/navigator/navigator.dart';
-import 'package:e_commerce/views/search/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/config.dart';
+import '../../utils/utils.dart';
 import 'components/search_components.dart';
+import 'search_screen.dart';
 
 class ResultSearchScreen extends StatelessWidget {
   const ResultSearchScreen({super.key});
